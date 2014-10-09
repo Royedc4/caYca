@@ -1,0 +1,128 @@
+<div class="page">
+
+	<div class="panel panel-default">
+		<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Informacion Temporal</strong></div>
+		<div class="panel-body">
+			<p><span class="dropcap-circle colored">R</span>
+				En esta pagina hace falta >> Cambios de tipos de letras, ajuste de campos de texto y de regionalizacion de moneda y lenguaje.</p>
+			</div>
+		</div>
+
+		<!-- Accordion -->
+		<section class="panel panel-default">
+			<div class="panel-heading"><span class="glyphicon glyphicon-th"></span>  Nueva Factura Modo Acordeon</div>
+			<div class="panel-body" data-ng-controller="AccordionDemoCtrl">
+				<accordion class="ui-accordion">
+			
+					<!-- Fecha -->
+					<div class="panel-body" data-ng-controller="DatepickerDemoCtrl">
+						<label for="" class="col-sm-1">Fecha: </label>
+						<div class="col-sm-11 input-group ui-datepicker">
+							<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+							<input type="text" 
+							class="form-control"
+							datepicker-popup="{{format}}"
+							ng-model="dt"
+							is-open="opened"
+							min="minDate"
+							max="'2015-06-22'"
+							datepicker-options="dateOptions" 
+							date-disabled="disabled(date, mode)"
+							ng-required="true" 
+							close-text="Close">
+						</div>
+					</div>
+					<!-- Typeahead -->
+					<div class="panel-body" data-ng-controller="TypeaheadCtrl">
+
+						<label for="" class="col-sm-1">Cliente: </label>
+
+						<div class="col-sm-11 input-group">
+							<span class="input-group-addon"><i class="fa fa-user"></i></span>
+							<input type="text" 
+							ng-model="selected"
+							typeahead="state for state in states | filter:$viewValue | limitTo:8"
+							class="form-control"
+							placeholder="Escriba aquí el nombre del cliente.">                    
+						</div>
+					</div>
+
+					<div class="panel-body" data-ng-controller="TypeaheadCtrl">
+						<label for="" class="col-sm-1">Factura: </label>
+						<div class="col-sm-11 input-group">
+							<span class="input-group-addon"><i class="fa fa-file-text-o"></i></span><input ng-model="numFactura" type="text" class="form-control" placeholder="Escriba aquí el numero de factura, recuerde: debe ser unico en su facturación.">
+						</div>
+					</div>
+
+
+				<accordion-group heading="Información de los compresores" is-open="true">
+				Lista de compresores
+			</accordion-group>
+
+			<!-- Roy:Just this easy		 -->
+		<!-- <accordion-group heading="{{group.title}}" ng-repeat="group in groups">
+			{{group.content}}
+		</accordion-group> -->
+	</accordion>
+</div>
+</section>
+<!-- end Accordion -->
+
+<!-- <section class="panel panel-default">
+	<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Nueva Factura Modo Wizard</strong></div>
+	<div class="panel-body">
+		<div data-ui-wizard-form>
+			<h1>Factura</h1>
+			<div>
+				<div class="panel-body" data-ng-controller="DatepickerDemoCtrl">
+					<label for="" class="col-sm-1">Fecha: </label>
+					<div class="col-sm-11 input-group ui-datepicker">
+						<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+						<input type="text" 
+						class="form-control"
+						datepicker-popup="{{format}}"
+						ng-model="dt"
+						is-open="opened"
+						min="minDate"
+						max="'2015-06-22'"
+						datepicker-options="dateOptions" 
+						date-disabled="disabled(date, mode)"
+						ng-required="true" 
+						close-text="Close">
+					</div>
+				</div>
+				<div class="panel-body" data-ng-controller="TypeaheadCtrl">
+
+					<label for="" class="col-sm-1">Cliente: </label>
+
+					<div class="col-sm-11 input-group">
+						<span class="input-group-addon"><i class="fa fa-user"></i></span>
+						<input type="text" 
+						ng-model="selected"
+						typeahead="state for state in states | filter:$viewValue | limitTo:8"
+						class="form-control"
+						placeholder="Escriba aquí el nombre del cliente.">                    
+					</div>
+				</div>
+
+				<div class="panel-body" data-ng-controller="TypeaheadCtrl">
+					<label for="" class="col-sm-1">Factura: </label>
+					<div class="col-sm-11 input-group">
+						<span class="input-group-addon"><i class="fa fa-file-text-o"></i></span><input ng-model="numFactura" type="text" class="form-control" placeholder="Escriba aquí el numero de factura, recuerde: debe ser unico en su facturación.">
+					</div>
+				</div>
+			</div>
+
+			<h1>Detalle de factura</h1>
+			<div>Lista de compresores</div>
+
+			<h1>Confirmación</h1>
+			<div>Third Content</div>  
+		</div>
+
+	</div>
+</section>
+ -->
+
+
+</div>
