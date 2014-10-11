@@ -1,5 +1,4 @@
 {
-    "panel inicial":"Dashboard",
     "cuentas":"Accounts",
         "crear nueva cuenta":"Create new account",
     "compresores":"Compressors",
@@ -24,6 +23,10 @@
     "mi perfil":"My Profile",
     "cerrar sesion":"Log out",
     "bloquear":"Lock",
+
+
+    "panel inicial":"Panel de Operaciones",
+        "points": "Points",
 
     
     "john doe": "",

@@ -26,6 +26,9 @@
     "bloquear":"Bloquear",
 
     
+ 
+    "panel inicial":"Panel de Operaciones",
+        "points": "Puntos",
 
 
     "john doe": "Roy Calderon",

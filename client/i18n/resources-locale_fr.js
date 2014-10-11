@@ -20,6 +20,10 @@
     "arrastre el documento aquí":"Le dossier de baisse ici",
     "visualización de la información procesada":"Visualisation des données traitées",
 
+    
+    "dashboard": "tableau de bord",
+        "points": "點",
+
     "john doe": "John Doe",
     "my profile": "mon profil",
     "settings": "Paramètres",
@@ -35,7 +39,6 @@
     "pink": "rose",
     "yellow": "jaune",
     "brown": "brun",
-    "dashboard": "tableau de bord",
     "ui kit": "kit ui",
     "typography": "typographie",
     "buttons": "boutons",

@@ -1,4 +1,37 @@
 {
+
+    "panel inicial":"儀表板",
+    "cuentas":"帳戶",
+        "crear nueva cuenta":"創建新帳號",
+    "compresores":"壓縮機",
+        "carga de seriales":"載入新連續",
+    "etiquetas":"標籤",
+        "modus operandi":"Modus Operandi",
+        "nueva etiqueta":"新標籤",
+        "nueva factura":"新發票",
+    "garantías":"擔保",
+        "nueva garantía":"New Warranty",
+        "chequear garantía":"Check Warranty",
+    "promociones":"促銷",
+        "registrar cupon":"Get Coupon",
+        "ver resultados":"Check Results",
+
+
+    "cargar un archivo de excel":"Load an excel file",
+    "arrastre el documento aquí":"Drop file here",
+    "visualización de la información procesada":"Visualization of processed data",
+
+
+    "mi perfil":"My Profile",
+    "cerrar sesion":"Log out",
+    "bloquear":"Lock",
+
+    "dashboard": "儀表板",
+        "points": "點",
+
+
+
+
     "john doe": "李四",
     "my profile": "個人資料",
     "settings": "設置",
@@ -14,7 +47,6 @@
     "pink": "粉紅色",
     "yellow": "黃色",
     "brown": "棕色",
-    "dashboard": "儀表板",
     "ui kit": "UI工具包",
     "typography": "印刷樣式",
     "buttons": "按鈕",
