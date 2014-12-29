@@ -24,7 +24,7 @@ angular.module('app.controllers', [])
             ], path )
 
         $scope.main =
-            brand: 'Samsung caYca'
+            brand: 'SAMSUNG'
             name: 'Roy Calderón' # those which uses i18n can not be replaced for now.
 
 ])

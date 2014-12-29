@@ -48,10 +48,14 @@ angular.module('app', [
     ($routeProvider) ->
         $routeProvider
             # dashboard
+            # .when(
+            #     '/'
+            #     redirectTo: '/accounts/signIn'
+            #     controller: 'LoginCtrl'
+            #     )
             .when(
                 '/'
-                redirectTo: '/accounts/signIn'
-                controller: 'LoginCtrl'
+                redirectTo: '/dashboard'
                 )
             .when(
                 '/dashboard'
@@ -65,6 +69,11 @@ angular.module('app', [
             .when(
                 '/accounts/signIn'
                 templateUrl: 'views/accounts/signIn.html'                
+                )
+            #Companies
+            .when(
+                '/companies/newCompany'
+                templateUrl: 'views/companies/newCompany.html'                
                 )
             #Compressors
             .when(
@@ -84,22 +93,46 @@ angular.module('app', [
                 '/records/makeLabels'
                 templateUrl: 'views/records/makeLabels.html'                
                 )
+            # Redemptions
             .when(
-                '/warranties/newWarranty'
-                templateUrl: 'views/warranties/newWarranty.html'                
+                '/redemptions/newRedemption'
+                templateUrl: 'views/redemptions/newRedemption.html'                
                 )
             .when(
-                '/warranties/checkWarranty'
-                templateUrl: 'views/warranties/checkWarranty.html'                
-                )                           
+                '/redemptions/checkRedemptions'
+                templateUrl: 'views/redemptions/checkRedemptions.html'                
+                )
+            .when(
+                '/redemptions/checkPoints'
+                templateUrl: 'views/redemptions/checkPoints.html'
+                )  
+            # Raffles                         
+            .when(
+                '/raffles/checkCoupons'
+                templateUrl: 'views/raffles/checkCoupons.html'                
+                )
+            .when(
+                '/raffles/results'
+                templateUrl: 'views/raffles/results.html'                
+                )
+            # Promotions
             .when(
                 '/promotions/newCoupon'
                 templateUrl: 'views/promotions/newCoupon.html'                
                 )
             .when(
-                '/promotions/results'
-                templateUrl: 'views/promotions/results.html'                
-                )            
+                '/promotions/totalCoupons'
+                templateUrl: 'views/promotions/totalCoupons.html'                
+                )
+            .when(
+                '/promotions/totalPoints'
+                templateUrl: 'views/promotions/totalPoints.html'                
+                )
+            .when(
+                '/promotions/totalRedemptions'
+                templateUrl: 'views/promotions/totalRedemptions.html'                
+                )
+            # Commons
             .when(
                 '/pages/signin'
                 templateUrl: 'views/pages/signin.html'                

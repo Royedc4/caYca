@@ -109,7 +109,7 @@ angular.module('app.records.ctrls', [])
             originalContents = document.body.innerHTML;        
             popupWin = window.open();
             popupWin.document.open()
-            popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="styles/main.css" /></head><body onload="window.print()">' + printContents + '</html>');
+            popupWin.document.write('<html><head></head><body onload="window.print()">' + printContents + '</html>');
             popupWin.document.close();
 
 
