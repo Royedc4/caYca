@@ -5,11 +5,8 @@ header("Access-Control-Allow-Headers: Content-Type, Origin, X-Requested-With, Ac
 
 
 // header('Access-Control-Allow-Headers: Content-Type, x-xsrf-token');
-
 //Add certain amounts of serials to the database.
-
 // echo $_POST;
-
 // echo $HTTP_RAW_POST_DATA;
 
 
@@ -17,8 +14,40 @@ header("Access-Control-Allow-Headers: Content-Type, Origin, X-Requested-With, Ac
 $data =  (json_decode($HTTP_RAW_POST_DATA));
 $array=json_decode($data, true);
 echo sizeof($array);
-echo sizeof($array["countrySelected"]);
+echo sizeof($array["companySelected"]);
 echo sizeof($array["serialsSelected"]);
+
+
+$success = array('loggedIn' => true, 'success' => 'Fuck yeaH... U did it.');
+
+//Lopping
+for ($i = 0; $i < sizeof($array["serialsSelected"]); $i++) {
+	// echo "<br> Inserting " . $i . " ";
+	$query="INSERT INTO serial VALUES ('" . $array["serialsSelected"][$i]["serialID"] . "', '" . $array["serialsSelected"][$i]["compressorID"] . "', DEFAULT, NULL, '" . $array["companySelected"]["companyID"] . "')";
+	// echo $query;
+	$result = $mysqli->query($query) or die($mysqli->error.__LINE__);
+	$result = $mysqli->affected_rows;
+	// echo $json_response = json_encode($query);		
+}
+echo $json_response = json_encode($result);	
+
+
+// $success = array('loggedIn' => true, 'success' => 'Fuck yeaH You are logged in.');
+
+// //Lopping
+// for ($i = 0; $i < sizeof($array["serialsSelected"]); $i++) {
+// 	// echo "<br> Inserting " . $i . " ";
+// 	$query="INSERT INTO serial VALUES ('" . $array["serialsSelected"][$i]["serialID"] . "', '" . $array["countrySelected"]["countryID"] . "', '" . $array["serialsSelected"][$i]["compressorID"] . "')";
+// 	// echo $query;
+// 	$result = $mysqli->query($query) or die($mysqli->error.__LINE__);
+// 	$result = $mysqli->affected_rows;
+// 	// echo $json_response = json_encode($query);		
+// }
+// echo $json_response = json_encode($result);	
+
+
+
+
 // echo sizeof($array["object"]);
 
 // $object=json_decode($foo);
@@ -43,18 +72,6 @@ echo sizeof($array["serialsSelected"]);
 
 
 
-$success = array('loggedIn' => true, 'success' => 'Fuck yeaH You are logged in.');
-
-//Lopping
-for ($i = 0; $i < sizeof($array["serialsSelected"]); $i++) {
-	// echo "<br> Inserting " . $i . " ";
-	$query="INSERT INTO serial VALUES ('" . $array["serialsSelected"][$i]["serialID"] . "', '" . $array["countrySelected"]["countryID"] . "', '" . $array["serialsSelected"][$i]["compressorID"] . "')";
-	// echo $query;
-	$result = $mysqli->query($query) or die($mysqli->error.__LINE__);
-	$result = $mysqli->affected_rows;
-	// echo $json_response = json_encode($query);		
-}
-echo $json_response = json_encode($result);	
 
 
 

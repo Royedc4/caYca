@@ -6,7 +6,9 @@ angular.module('app.compressors', [])
     '$scope', '$filter', '$http'
     ($scope, $filter, $http) ->
         # filter
+        $scope.companies = []
         $scope.countries = []
+
         $scope.serials = []
         $scope.searchKeywords = ''
         $scope.filteredSerials = []
@@ -141,9 +143,17 @@ angular.module('app.compressors', [])
             return
         getTask()
 
+                #Load Countries
+        getCompanies = ->
+            $http.post("http://cayca:8888/server/ajax/Tables/getCompany.php").success (data) ->
+                $scope.companies = data
+                return
+            return
+        getCompanies()
+
         #Save Serials
         $scope.addSerials = ->
-            $scope.data = { countrySelected: [], serialsSelected: [] };
+            $scope.data = { companySelected: [], serialsSelected: [] };
             # Arreglando serials sin no
             $serialsWithoutNo = []
             indexNo=0
@@ -152,7 +162,7 @@ angular.module('app.compressors', [])
                 $serialsWithoutNo.push $scope.serials[indexNo]
                 ++indexNo
             # console.log ($scope.data)
-            $scope.data["countrySelected"] = $scope.countrySelected
+            $scope.data["companySelected"] = $scope.companySelected
             $scope.data["serialsSelected"] = $serialsWithoutNo
             $http.defaults.headers.post["Content-Type"] = "application/json"            
             console.log ($scope.data)
