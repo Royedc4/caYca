@@ -27,16 +27,38 @@ angular.module('app.account.ctrls', [])
 .controller('NewAccountCtrl', [
     '$scope', 'logger', '$http'
     ($scope, logger, $http ) ->
-        console.log "@NewAccountCtrl :)"
+        console.log "@NewAccountCtrl 4 Mayor->GerenteComercial :)"
         # ng-model 4 user
         $scope.user = 
+            userTypeSelected: ''
             fullName: ''
             email: ''
-            userTypeSelected: ''
-            password: ''
+            address: ''
+            phone: ''
+            celphone: ''
+            citySelected: ''
+
 
         # var 4 select
         $scope.userTypes = []
+        $scope.selected = undefined
+
+
+        #Load companies
+        getRetailerCompanies = ->
+            $http.post("http://cayca:8888/server/ajax/Tables/getRetailerCompanies.php").success (data) ->
+                $scope.retailers = data
+                return
+            return
+        getRetailerCompanies()
+
+         #Load cities
+        getCities = ->
+            $http.post("http://cayca:8888/server/ajax/Tables/getCity.php").success (data) ->
+                $scope.cities = data
+                return
+            return
+        getCities()
 
         $scope.showInfoOnSubmit = false
 
@@ -59,7 +81,7 @@ angular.module('app.account.ctrls', [])
         
         #Load userTypes
         getUserType = ->
-            $http.post("http://cayca:8888/server/ajax/Users/getUserType.php").success (data) ->
+            $http.post("http://cayca:8888/server/ajax/Users/m_getUserType.php").success (data) ->
                 $scope.userTypes = data
                 return
             return
