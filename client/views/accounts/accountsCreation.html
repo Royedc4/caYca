@@ -33,7 +33,7 @@
                                 <div class="form-group text-center">
                                     <div class="select-group">
                                         <span class="ui-select">
-                                            <select ng-model="user.city_geoID" ng-options="city.name for city in cities" required>
+                                            <select ng-model="user.citySelected" ng-options="city.name for city in cities" required>
                                                 <option value="">- Seleccione la ciudad-</option>
                                             </select>
                                         </span> 
@@ -44,7 +44,8 @@
                                 <!-- Typeahead -->
                                 <div class="form-group"
                                 >
-                                    <div class="input-group input-group-lg">
+                                    <div class="input-group input-group-lg"
+                                    ng-show="user.userTypeSelected.userTypeID=='DV'">
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-briefcase"></span>
                                         </span>
@@ -54,7 +55,7 @@
                                         typeahead="retailer.businessName for retailer in retailers | filter:$viewValue | limitTo:20"
                                         class="form-control"
                                         placeholder="Nombre de empresa"
-                                        required>
+                                        >
 
                                     </div>
                                 </div>

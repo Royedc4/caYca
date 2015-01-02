@@ -26,13 +26,16 @@ if ( $data != NULL )
 	$password = $array['password'];
 	$fullName = $array['fullName'];
 	$userTypeID = $array['userTypeID'];
+	// Important
+	$geoID = $array['geoID'];
+	$companyID = $array['companyID'];
+	// $companyID ='NULL';
+	// if(isset($array['companyID']))
+	// 	$companyID = $array['companyID'];
 	// Other Values
 	$address ='NULL';
 	$celphone ='NULL';
 	$phone ='NULL';
-	$position ='NULL';
-	$cityID ='NULL';
-	$companyID ='NULL';
 	$lastLogOn = 'NULL';
 	//Getting
 	if(isset($_GET['address']))
@@ -41,21 +44,18 @@ if ( $data != NULL )
 		$celphone = $_GET['celphone'];
 	if(isset($_GET['phone']))
 		$phone = $_GET['phone'];
-	if(isset($_GET['position']))
-		$position = $_GET['position'];
-	if(isset($_GET['cityID']))
-		$cityID = $_GET['cityID'];
-	if(isset($_GET['companyID']))
-		$companyID = $_GET['companyID'];
 	
 	// Hashing Password
 	$hashed_password = password_hash($password, PASSWORD_BCRYPT);
 	// echo "Hashed Pass: " . $hashed_password;
 	// echo "<br />";
+									// (<{userID: }>,<{userTypeID: }>,<{email: }>,<{passWord: }>,<{fullName: }>,<{city_geoID: }>,<{companyID: }>,<{address: }>,<{celphone: }>,<{phone: }>,<{lastLogOn: }>,<{userCreation: }>,<{isActive: 1}>,<{addi1: }>,<{addi2: }>);
 
 	$hoy = date("Y-m-d H:i:s");
 	// echo $json_response = ('Time: ' . $hoy . "<br />");
-	$query="INSERT INTO user  VALUES (NULL, '$email', '$hashed_password', '$fullName', '$address', '$celphone', '$phone', '$position', '$userTypeID',". $cityID .", ". $companyID .", NULL, '$hoy', DEFAULT, NULL, NULL)";
+	$query="INSERT INTO user VALUES (NULL, '$userTypeID','$email', '$hashed_password', '$fullName',  '$geoID', NULL, '$address', '$celphone', '$phone', NULL, '$hoy', DEFAULT, NULL, NULL)";
+	// $query="INSERT INTO user VALUES (NULL, '$userTypeID','$email', '$hashed_password', '$fullName',  '$geoID', '$companyID', '$address', '$celphone', '$phone', NULL, '$hoy', DEFAULT, NULL, NULL)";
+	// $query="INSERT INTO user  VALUES (NULL, '$email', '$hashed_password', '$fullName', '$address', '$celphone', '$phone', '$position', '$userTypeID',". $geoID .", ". $companyID .", NULL, '$hoy', DEFAULT, NULL, NULL)";
 	$result = $mysqli->query($query) or die($mysqli->error.__LINE__);
 	$result = $mysqli->affected_rows;
 	// echo $json_response = json_encode($query);
@@ -84,9 +84,9 @@ if ( $data != NULL )
 		// Send the message
 		$mailerResult = $mailer->send($message);
 		// echo json_encode($mailerResult);
-		$success = (array('AddUser' => true, 'AddUserInfo' => 'Roy says: User Inserted Successfully.', 'EmailSend' => false, 'EmailSendInfo' => 'Roy says: Email Not Sended.'));
+		$success = (array('AddUser' => true, 'AddUserInfo' => 'Roy says: '. $email .' Inserted Successfully.', 'EmailSend' => false, 'EmailSendInfo' => 'Roy says: Email Not Sended.', 'Mensaje' => $message));
 		if ($mailerResult==3)
-			$success = (array('AddUser' => true, 'AddUserInfo' => 'Roy says: User Inserted Successfully.', 'EmailSend' => true, 'EmailSendInfo' => 'Roy says: Email Send Successfully.'));
+			$success = (array('AddUser' => true, 'AddUserInfo' => 'Roy says: '. $email .' Inserted Successfully.', 'EmailSend' => true, 'EmailSendInfo' => 'Roy says: Email Send Successfully.', 'Mensaje' => $message));
 		echo json_encode($success);
 	}
 	else

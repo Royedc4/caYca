@@ -37,6 +37,7 @@ angular.module('app.account.ctrls', [])
             phone: ''
             celphone: ''
             citySelected: ''
+            companySelected: ''
 
 
         # var 4 select
@@ -91,11 +92,19 @@ angular.module('app.account.ctrls', [])
         $scope.createNewAccount = ->
             # Defining my data Object
             $scope.user.password = generatePassword(18, false);
+            # $scope.user.companySelected.companyID = null unless $scope.user.companySelected?
+
+
+            # $scope.user.companySelected.companyID=null
+            
+
             $scope.data = 
                 email: $scope.user.email
                 fullName: $scope.user.fullName
                 password: $scope.user.password
                 userTypeID: $scope.user.userTypeSelected.userTypeID
+                geoID: $scope.user.citySelected.geoID
+                companyID: $scope.user.companySelected.companyID
             # console.log $scope.user.email + " " + $scope.user.password
             console.log ($scope.data)
             # $scope.data["countrySelected"] = $scope.countrySelected
