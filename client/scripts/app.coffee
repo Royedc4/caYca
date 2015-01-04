@@ -34,6 +34,7 @@ angular.module('app', [
     'app.account.ctrls'
     'app.account.directives'
     'app.account.services'
+    'app.company.ctrls'
     'app.admin.ctrls'
     'app.admin.directives'
     'app.admin.services'

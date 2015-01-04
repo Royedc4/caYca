@@ -1,70 +1,81 @@
 <div class="page">
-
-	<!-- Roy: Generar -->
+	<!-- Roy: Crear nueva compañia -->
 	<section class="panel panel-default">
-		<div class="col-md-12" data-ng-controller="formConstraintsCtrl">
+		<div class="col-md-12" data-ng-controller="NewCompanyCtrl">
 			<div class="panel panel-default">
-				<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Registrar Cupón</strong></div>
+				<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Crear nueva compañia</strong></div>
 				<div class="panel-body">
-					<form name="form_constraints" class="form-validation" novalidate data-ng-submit="submitForm()">
+					<form name="form_NewCompany" novalidate class="form-validation">
 						<div class="form-group">
-							<label for="">Ingrese el serial Del Compresor</label>
+							<label for="">Nombre</label>
 							<input  type="text"
 							class="form-control"
-							required
-							data-ng-minlength=15
-							data-ng-model="form.compressorID"
+							autofocus required
+							data-ng-minlength=5
+							data-ng-model="company.businessName"
 							>
-							<label for="">Ingrese el codigo de seguridad: </label>
+
+							<label for="">Numero de identificación tributaria</label>
+							<input  type="text"
+							class="form-control"
+							required
+							data-ng-minlength=9
+							data-ng-model="company.nit">
+
+							<label for="">Email</label>
+							<input  type="email"
+							class="form-control"
+							required
+							name="email"
+							data-ng-minlength=15
+							data-ng-model="company.email">
+
+							<p ng-show="form_NewCompany.email.$invalid && form_NewCompany.email.$dirty" class="text-danger">Verifique la validez del correo.</p>	
+
+							<label for="">Dirección</label>
 							<input  type="text"
 							class="form-control"
 							required
 							data-ng-minlength=15
-							data-ng-model="form.PIN"
+							data-ng-model="company.address">
+
+							<label for="">Telefono</label>
+							<input type="tel"
+							class="form-control"
+							name="phone"
+							required
+							data-ng-minlength=10
+							data-ng-maxlength=12
+							data-ng-pattern="/^[0-9]+$/"
+							data-ng-model="company.phone"
 							>
-							<!-- <label for="">Ingrese el numero de factura de compra: </label>
-							<input  type="text"
-							class="form-control"
-							required
-							data-ng-minlength=15
-							data-ng-model="form.numfact"
-							> -->
-							
-							<!-- Fecha -->
-							<!-- <div data-ng-controller="DatepickerDemoCtrl">
-								<label for="">Ingrese la fecha de la factura de compra: </label>
-								<div class="col-sm-11 input-group ui-datepicker">
-									<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-									<input type="text" 
-									class="form-control"
-									datepicker-popup="{{format}}"
-									ng-model="dt"
-									is-open="opened"
-									min="minDate"
-									max="'2015-06-22'"
-									datepicker-options="dateOptions" 
-									date-disabled="disabled(date, mode)"
-									ng-required="true" 
-									close-text="Close">
+							<p ng-show="form_NewCompany.phone.$invalid && form_NewCompany.phone.$dirty" class="text-danger">El numero de telefono debe tener entre 10 y 12 números unicamente. Recuerdo incluir el codigo de pais.</p>			
+
+							<!-- Roy: City Select -->
+							<div class="form-group text-center">
+								<div class="select-group">
+									<span class="ui-select">
+										<select ng-model="company.citySelected" ng-options="city.name for city in cities" required>
+											<option value="">- Seleccione la ciudad-</option>
+										</select>
+									</span> 
 								</div>
-							</div> -->
-							<br>
-							<input  type="checkbox"
-							id="required_checkbox"
-							required
-							data-ng-model="form.required_checkbox"> 
-							<label required for="required_checkbox">Tengo conocimiento y estoy de acuerdo con las politicas de promociones</label>
+							</div>
+							<!-- Roy: City Select -->
+
 						</div>
 						<button type="submit"
 						class="btn btn-success"
 						data-ng-disabled="!canSubmit()"
-						>Procesar promocion</button>
+						ng-click="createNewCompany()"
+						>Crear empresa</button>
 						<button class="btn btn-default"
 						data-ng-disabled="!canRevert()"
 						data-ng-click="revert()"
 						>Limpiar Información</button>
 						<div class="callout callout-info">
-							<p>El Boton de procesar promocion estara disponible cuando se llenen todos los campos requeridos.</p>
+							<p>Recuerda que al crear una empresa ya se podran relacionar facturas de venta hacia la misma, tambien que todos los datos que introduzcas deben ser validos.</p>
+							<p>El Boton de crear empresa estara disponible cuando se llenen todos los campos requeridos.</p>
 							<p>El Boton de borrar estara disponible cuando algun campo este lleno.</p>
 						</div>
 					</form>
@@ -72,5 +83,4 @@
 			</div>
 		</div>
 	</section>
-
 </div>
