@@ -3,74 +3,99 @@
 	<!-- Roy: Generar -->
 	<section class="panel panel-default">
 		<div class="col-md-12" data-ng-controller="formConstraintsCtrl">
-			<div class="panel panel-default">
-				<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Registrar Cupón</strong></div>
-				<div class="panel-body">
-					<form name="form_constraints" class="form-validation" novalidate data-ng-submit="submitForm()">
-						<div class="form-group">
-							<label for="">Ingrese el serial Del Compresor</label>
-							<input  type="text"
-							class="form-control"
-							required
-							data-ng-minlength=15
-							data-ng-model="form.compressorID"
-							>
-							<label for="">Ingrese el codigo de seguridad: </label>
-							<input  type="text"
-							class="form-control"
-							required
-							data-ng-minlength=15
-							data-ng-model="form.PIN"
-							>
-							<!-- <label for="">Ingrese el numero de factura de compra: </label>
-							<input  type="text"
-							class="form-control"
-							required
-							data-ng-minlength=15
-							data-ng-model="form.numfact"
-							> -->
-							
-							<!-- Fecha -->
-							<!-- <div data-ng-controller="DatepickerDemoCtrl">
-								<label for="">Ingrese la fecha de la factura de compra: </label>
-								<div class="col-sm-11 input-group ui-datepicker">
-									<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-									<input type="text" 
+			
+
+				<section class="panel panel-default table-dynamic">
+					<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span><span data-i18n="Visualización de la información procesada"></span></strong></div>
+
+					<div class="table-filters">
+						<div class="row">
+							<div class="col-sm-4 col-xs-6">
+								<form>
+									<input type="text"
+									placeholder="buscar"
 									class="form-control"
-									datepicker-popup="{{format}}"
-									ng-model="dt"
-									is-open="opened"
-									min="minDate"
-									max="'2015-06-22'"
-									datepicker-options="dateOptions" 
-									date-disabled="disabled(date, mode)"
-									ng-required="true" 
-									close-text="Close">
-								</div>
-							</div> -->
-							<br>
-							<input  type="checkbox"
-							id="required_checkbox"
-							required
-							data-ng-model="form.required_checkbox"> 
-							<label required for="required_checkbox">Tengo conocimiento y estoy de acuerdo con las politicas de promociones</label>
+									data-ng-model="searchKeywords"
+									data-ng-keyup="search()">
+								</form>
+							</div>
+							<div class="col-sm-3 col-xs-6 filter-result-info">
+								<span>
+									Mostrando {{filteredSerials.length}}/{{serials.length}} registros
+								</span>              
+							</div>
 						</div>
-						<button type="submit"
-						class="btn btn-success"
-						data-ng-disabled="!canSubmit()"
-						>Procesar promocion</button>
-						<button class="btn btn-default"
-						data-ng-disabled="!canRevert()"
-						data-ng-click="revert()"
-						>Limpiar Información</button>
-						<div class="callout callout-info">
-							<p>El Boton de procesar promocion estara disponible cuando se llenen todos los campos requeridos.</p>
-							<p>El Boton de borrar estara disponible cuando algun campo este lleno.</p>
+					</div>
+
+					<table class="table table-bordered table-striped table-responsive">
+						<thead>
+							<tr>
+								<th><div class="th">
+									Numero Cupon
+									<span class="glyphicon glyphicon-chevron-up"
+									data-ng-click=" order('no') "
+									data-ng-class="{active: row == 'no'}"></span>
+									<span class="glyphicon glyphicon-chevron-down"
+									data-ng-click=" order('-no') "
+									data-ng-class="{active: row == '-no'}"></span>
+								</div></th>
+								<th><div class="th">
+									Rifa
+									<span class="glyphicon glyphicon-chevron-up"
+									data-ng-click=" order('serialID') "
+									data-ng-class="{active: row == 'serialID'}"></span>
+									<span class="glyphicon glyphicon-chevron-down"
+									data-ng-click=" order('-serialID') "
+									data-ng-class="{active: row == '-serialID'}"></span>
+								</div></th>
+								<th><div class="th">
+									Fecha
+									<span class="glyphicon glyphicon-chevron-up"
+									data-ng-click=" order('compressorID') "
+									data-ng-class="{active: row == 'compressorID'}"></span>
+									<span class="glyphicon glyphicon-chevron-down"
+									data-ng-click=" order('-compressorID') "
+									data-ng-class="{active: row == '-compressorID'}"></span>
+								</div></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr data-ng-repeat="serial in currentPageSerials">
+								<td>{{serial.no}}</td>
+								<td>{{serial.serialID}}</td>
+								<td>{{serial.compressorID}}</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<footer class="table-footer">
+						<div class="row">
+							<div class="col-md-6 page-num-info">
+								<span>
+									Mostrar 
+									<select data-ng-model="numPerPage"
+									data-ng-options="num for num in numPerPageOpt"
+									data-ng-change="onNumPerPageChange()">
+								</select> 
+								registros por pagina
+							</span>
 						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</section>
+						<div class="col-md-6 text-right pagination-container">
+							<pagination class="pagination-sm"
+							page="currentPage"
+							total-items="filteredSerials.length"
+							max-size="4"
+							on-select-page="select(page)"
+							items-per-page="numPerPage"
+							rotate="false"
+							boundary-links="true"></pagination>
+						</div>
+					</div>
+
+				</footer>
+			</section>
+
+	</div>
+</section>
 
 </div>
