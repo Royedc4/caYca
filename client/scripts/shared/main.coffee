@@ -16,6 +16,7 @@ angular.module('app.controllers', [])
                 '/pages/signin1'
                 '/pages/signin2'
                 '/accounts/signIn'
+                '/accounts/signUp'
                 '/pages/signup'
                 '/pages/signup1'
                 '/pages/signup2'

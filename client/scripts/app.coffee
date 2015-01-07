@@ -71,6 +71,10 @@ angular.module('app', [
                 '/accounts/signIn'
                 templateUrl: 'views/accounts/signIn.html'                
                 )
+            .when(
+                '/accounts/signUp'
+                templateUrl: 'views/accounts/signUp.html'                
+                )
             #Companies
             .when(
                 '/companies/newCompany'
