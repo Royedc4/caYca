@@ -7,10 +7,18 @@
 				<div class="panel-body">
 					<form name="form_NewCompany" novalidate class="form-validation">
 						<div class="form-group">
-							<label for="">Nombre</label>
+							<label for="">Razon Social</label>
 							<input  type="text"
 							class="form-control"
-							autofocus required
+							autofocus 
+							data-ng-minlength=5
+							data-ng-model="company.businessOwner"
+							>
+
+							<label for="">Nombre Comercial</label>
+							<input  type="text"
+							class="form-control"
+							required
 							data-ng-minlength=5
 							data-ng-model="company.businessName"
 							>

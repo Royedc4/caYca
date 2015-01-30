@@ -1,7 +1,7 @@
 <?php 
 require_once '../../secure/db.php'; // The mysql database connection script
-require_once '../../lib/swift_required.php'; //SwiftMail Library
-require_once '../../secure/mailer.php'; // Account details
+require_once '../../mailing/mailSender.php'; //Roy Mailer
+
 header('Access-Control-Allow-Origin: *');  
 header("Access-Control-Allow-Headers: Content-Type, Origin, X-Requested-With, Accept");
 
@@ -17,41 +17,22 @@ if ( $data != NULL )
 	// Important
 	$geoID = $array['geoID'];
 	// Other Values
+	$businessOwner = $array['businessOwner'];
 	$address = $array['address'];
 	$phone = $array['phone'];
 	
 	$hoy = date("Y-m-d H:i:s");
 	
-	$query="INSERT INTO company VALUES (NULL, '$businessName','$nit', '$email', '$geoID', DEFAULT, DEFAULT, 1, DEFAULT, '$phone', '$address')";
+	$query="INSERT INTO company VALUES (NULL, '$businessName','$businessOwner', '$nit', '$email', '$geoID', DEFAULT, DEFAULT, 1, DEFAULT, '$phone', '$address')";
 
 	$result = $mysqli->query($query) or die($mysqli->error.__LINE__);
 	$result = $mysqli->affected_rows;
 	
 	if ($result==1)
 	{
-		$message->setTo(array($email => $businessName));
-		$message->setBody(
-			'<html>' .
-			' <head></head>' .
-			' <body>' .
-			' <img src="' .
-			$message->embed(Swift_Image::fromPath('https://dl.dropboxusercontent.com/u/7734412/Samsung-Logo1.png')) .
-			'" alt="SAMSUNG" />' .
-			'<h1>Hola amigos de ' . $businessName . '!,</h1>' .
-			'<h4><br>Su proveedor de compresores SAMSUNG ha ingresado su empresa a nuestro sistema de premios para vendedores y tecnicos.</h4>' .
-			'<h5><br>Recuerde enviarle los datos de sus vendedores al proveedor para las creaciones de sus cuentas. Unicamente las cuentas de tenicos se pueden crear directamente en la pagina web.' .
-			'<h4><br>http://www.caycasamsungcompresores.com</h4>' .
-			' </body>' .
-			'</html>',
-			'text/html'
-			);
-
-		// Send the message
-		$mailerResult = $mailer->send($message);
-
+		// // Este es el error 
+		// sendCompanyConfirmation($array);
 		$success = (array('CompanyCreated' => true, 'Company' => 'Name: '. $businessName, 'EmailSended' => false));
-		if ($mailerResult==3)
-			$success = (array('CompanyCreated' => true, 'Company' => 'Name: '. $businessName, 'EmailSended' => true));
 		echo json_encode($success);
 	}
 	else
@@ -59,7 +40,7 @@ if ( $data != NULL )
 }
 else
 {
-	echo sizeof($array);
+	// echo sizeof($array);
 	echo $error = json_encode(array('CompanyCreated' => false, 'Company' => 'Name: '. $businessName, 'EmailSended' => false));
 }
 ?>
