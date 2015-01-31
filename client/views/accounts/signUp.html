@@ -13,18 +13,7 @@
 			<div class="form-container">
 
 				<section>
-					<form name="form_NewAccount" class="form-horizontal form-validation" data-ng-submit="submitForm()">
-						<!-- city Select -->
-						<div class="form-group text-center">
-							<div class="select-group">
-								<span class="ui-select">
-									<select ng-model="user.citySelected" ng-options="city.name for city in cities" required>
-										<option value="">- Seleccione la ciudad-</option>
-									</select>
-								</span> 
-							</div>
-						</div>
-						<!-- end city Select -->
+					<form name="form_NewAccount" novalidate class="form-horizontal form-validation" data-ng-submit="submitForm()">
 
 						<div class="form-group">
 							<div class="input-group input-group-lg">
@@ -48,11 +37,14 @@
 									<span class="glyphicon glyphicon-envelope"></span>
 								</span>
 								<input type="email"
+								name="email"
 								class="form-control"
 								placeholder="Correo Electronico"
 								data-ng-model="user.email"
+								data-ng-minlength=15
 								required>
 							</div>
+							<p ng-show="form_NewAccount.email.$invalid && form_NewAccount.email.$dirty" class="text-danger">Verifique la validez del correo.</p>
 						</div>
 						<div class="form-group">
 							<div class="input-group input-group-lg">
@@ -60,6 +52,7 @@
 									<span class="glyphicon glyphicon-map-marker"></span>
 								</span>
 								<input type="text"
+								data-ng-minlength=15
 								class="form-control"
 								placeholder="Dirección"
 								data-ng-model="user.address"
@@ -72,11 +65,16 @@
 									<span class="glyphicon glyphicon-phone-alt"></span>
 								</span>
 								<input type="tel"
+								name="phone"
+								data-ng-minlength=10
+								data-ng-maxlength=12
+								data-ng-pattern="/^[0-9]+$/"
 								class="form-control"
 								placeholder="Telefono Hogar"
 								data-ng-model="user.phone"
 								required>
 							</div>
+							<p ng-show="form_NewAccount.phone.$invalid && form_NewAccount.phone.$dirty" class="text-danger">El numero de telefono debe tener entre 10 y 12 números unicamente. Recuerdo incluir el codigo de pais.</p>
 						</div>
 						<div class="form-group">
 							<div class="input-group input-group-lg">
@@ -84,12 +82,30 @@
 									<span class="glyphicon glyphicon-phone"></span>
 								</span>
 								<input type="tel"
+								name="celphone"
+								data-ng-minlength=10
+								data-ng-maxlength=12
+								data-ng-pattern="/^[0-9]+$/"
 								class="form-control"
 								placeholder="Telefono celular"
 								data-ng-model="user.celphone"
 								required>
 							</div>
+							<p ng-show="form_NewAccount.celphone.$invalid && form_NewAccount.celphone.$dirty" class="text-danger">El numero de celular debe tener entre 10 y 12 números unicamente. Recuerdo incluir el codigo de pais.</p>
 						</div>
+
+
+						<!-- city Select -->
+						<div class="form-group text-center">
+							<div class="select-group">
+								<span class="ui-select">
+									<select ng-model="user.citySelected" ng-options="city.name for city in cities" required>
+										<option value="">- Seleccione la ciudad-</option>
+									</select>
+								</span> 
+							</div>
+						</div>
+						<!-- end city Select -->
 
 
 						<div class="form-group">
@@ -102,7 +118,7 @@
 				</section>
 
 				<section>
-					<p class="text-center text-muted">Ya tienes una cuenta? <a href="#/pages/signin" >Inicia sesion ahora!</a></p>
+					<p class="text-center text-muted">Ya tienes una cuenta? <a href="#/accounts/signIn" >Inicia sesion ahora!</a></p>
 				</section>
 
 			</div>
