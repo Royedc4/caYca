@@ -8,11 +8,11 @@
 		</div>
 	</div>
 
-	<div class="signup-body">
+	<div class="signup-body" >
 		<div class="container">
-			<div class="form-container">
+			<div class="form-container" data-ng-controller="NewTechnician">
 
-				<section>
+				<section >
 					<form name="form_NewAccount" novalidate class="form-horizontal form-validation" data-ng-submit="submitForm()">
 
 						<div class="form-group">
@@ -111,7 +111,7 @@
 						<div class="form-group">
 							<p class="text-muted text-small">Haciendo click en registrarme aceptas los <a href="javascript:;">terminos, condiciones</a> y <a href="javascript:;">la politica de privacidad</a></p>
 							<div class="divider"></div>
-							<a href="#/" class="btn btn-primary btn-block btn-lg">Registrarme</a>
+							<a ng-click="createNewAccount()" class="btn btn-primary btn-block btn-lg">Registrarme como técnico</a>
 						</div>
 
 					</form>

@@ -120,3 +120,70 @@ angular.module('app.account.ctrls', [])
         return
         
 ])
+
+
+.controller('NewTechnician', [
+    '$scope', 'logger', '$http'
+    ($scope, logger, $http ) ->
+        console.log "@NewTechnician :)"
+# ng-model 4 user
+        $scope.user = 
+            userTypeSelected: 'TEC'
+            fullName: ''
+            email: ''
+            address: ''
+            phone: ''
+            celphone: ''
+            citySelected: ''
+
+
+        #Load cities
+        getCities = ->
+            $http.post("http://cayca:8888/server/ajax/Tables/getCity.php").success (data) ->
+                $scope.cities = data
+                return
+            return
+        getCities()
+
+        $scope.showInfoOnSubmit = false
+
+        original = angular.copy($scope.user)
+
+        $scope.revert = ->
+            $scope.user = angular.copy(original)
+            $scope.form_NewAccount.$setPristine()
+
+        $scope.canRevert = ->
+            return !angular.equals($scope.user, original) || !$scope.form_NewAccount.$pristine
+
+        $scope.canSubmit = ->
+            return $scope.form_NewAccount.$valid && !angular.equals($scope.user, original)
+
+        $scope.submitForm = ->
+             $scope.showInfoOnSubmit = true
+             $scope.revert()     
+
+        # Create New Account
+        $scope.createNewAccount = ->
+            # Defining my data Object
+            $scope.user.password = generatePassword(18, false);
+            
+            $scope.data = 
+                email: $scope.user.email
+                fullName: $scope.user.fullName
+                password: $scope.user.password
+                userTypeID: $scope.user.userTypeSelected
+                geoID: $scope.user.citySelected.geoID
+            
+            console.log ($scope.data)
+            $http.defaults.headers.post["Content-Type"] = "application/json"            
+            
+            $http({ url: "http://cayca:8888/server/ajax/Users/addUser.php", method: "POST", data: JSON.stringify(JSON.stringify($scope.data)) })
+            .success (postResponse) ->
+                console.log "success postResponse: " + (postResponse)
+                console.log "success stringify: " + JSON.stringify(postResponse)
+                logger.logSuccess('Se ha creado exitosamente la cuenta.')
+            return
+        return        
+        
+])
