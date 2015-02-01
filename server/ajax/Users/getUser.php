@@ -13,48 +13,51 @@ header("Access-Control-Allow-Headers: Content-Type, Origin, X-Requested-With, Ac
 if (  ($data =  (json_decode($HTTP_RAW_POST_DATA)) ) != NULL )
 {
 	$array=json_decode($data, true);
-	// echo ($array['password']);
 	
 	$email = $array['email'];
 	$password = $array['password'];
+	$rightNow = date("Y-m-d H:i:s");
 
-// Select Stored Password of user
-$outerQuery="SELECT password FROM user WHERE email='$email'";
-$outerResult=$mysqli->query($outerQuery) or die($mysqli->error.__LINE__);
+	// Select Stored Password of user
+	$outerQuery="SELECT password FROM user WHERE email='$email'";
+	$outerResult=$mysqli->query($outerQuery) or die($mysqli->error.__LINE__);
 
-// $hashed_password = password_hash($password, PASSWORD_BCRYPT);
-// Defining Some shit arround
-$arr = array();
-$response = array();
-$success = array('loggedIn' => true, 'success' => 'Fuck yeaH You are logged in.');
-$error = array('loggedIn' => false, 'error' => 'Error: email or password are incorrect.');
+	// Defining Some shit arround
+	$arr = array();
+	$response = array();
+	// $success = array('loggedIn' => true, 'success' => 'Fuck yeaH You are logged in.');
+	$error = array('loggedIn' => false, 'error' => 'Error: email or password are incorrect.');
 
 
-if($outerResult->num_rows == 1) {
-	while($row = $outerResult->fetch_assoc()) {
-		$hashedStoredPassword = $row["password"];
-		// echo "Stored: " . $hashedStoredPassword;	
-	}}
-	$is_match = password_verify($password, $hashedStoredPassword);
-	if ($is_match){
-		$innerQuery="SELECT email,passWord,fullName,address,celphone,phone,position,userTypeID,cityID,companyID,lastLogOn,userCreation,isActive FROM user where email='$email' and password COLLATE utf8_bin = '$hashedStoredPassword'";
-		// should wait couple of seconds 
-		$innerResult = $mysqli->query($innerQuery) or die($mysqli->error.__LINE__);
-		while($row = $innerResult->fetch_assoc()) {
-			$arr[] = $row;	
+	if($outerResult->num_rows == 1) {
+		while($row = $outerResult->fetch_assoc()) {
+			$hashedStoredPassword = $row["password"];
+		}}
+		$is_match = password_verify($password, $hashedStoredPassword);
+		if ($is_match){
+			$successQuery="UPDATE user SET lastLogOn='$rightNow' WHERE email='$email'";
+			$successResult=$mysqli->query($successQuery) or die($mysqli->error.__LINE__);
+			$innerQuery="SELECT ID,email,passWord,fullName,address,celphone,phone,userTypeID,city_geoID,companyID,lastLogOn,userCreation,isActive FROM user where email='$email' and password COLLATE utf8_bin = '$hashedStoredPassword'";
+			// should wait couple of seconds 4 security...
+			$innerResult = $mysqli->query($innerQuery) or die($mysqli->error.__LINE__);
+			while($row = $innerResult->fetch_assoc()) {
+				// $success=$row;
+				// $arr[] = $row;	
+				$success = array('loggedIn' => true, $row);
+
+			}
+			$response[]=$success;
+			// echo "Login: " . ($is_match ? 'correct' : 'wrong');
 		}
-		$response[]=$success;
-		// echo "Login: " . ($is_match ? 'correct' : 'wrong');
+		else{
+			$response[]=$error;
+		}
+		# JSON-encode the response
+		echo $json_response = json_encode($response);
 	}
-	else{
-		$response[]=$error;
+	else
+	{
+
 	}
-	# JSON-encode the response
-	echo $json_response = json_encode($response);
-}
-else
-{
-	
-}
 
 	?>

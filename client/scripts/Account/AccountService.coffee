@@ -3,8 +3,8 @@
 angular.module('app.account.services', [])
 
 .factory('LoginService', [ 
-    '$http', '$location'
-    ($http, $location) ->
+    '$http', '$location', 'logger'
+    ($http, $location, logger) ->
         login: (credentials) -> 
             console.log "LOGIN!"
 
@@ -18,14 +18,13 @@ angular.module('app.account.services', [])
             .success (postResponse) ->
                 # console.log "success NORMAL: " + (postResponse)
                 if (postResponse[0]['loggedIn'])
-                    console.log "loggedIn"
-                    # logger.logSuccess("Bienvenido a Samsung caYca") 
+                    console.log "SignIn Success: " + (postResponse)
+                    console.log JSON.stringify(postResponse)
+                    logger.logSuccess("Bienvenido a Samsung caYca") 
                     $location.path('/dashboard') 
-                    logg
                 else
-                    console.log "NOT loggedIn"
-                    $location.path('/') 
-                    # logger.logError('Usuario o Contraseña invalida.')
+                    console.log "SingIn Error" + JSON.stringify(postResponse)
+                    logger.logError('Usuario o Contraseña invalida.')
             return
 
 
