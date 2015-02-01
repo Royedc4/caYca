@@ -30,6 +30,7 @@ angular.module('app.account.ctrls', [])
         console.log "@NewAccountCtrl 4 Mayor->GerenteComercial :)"
         # ng-model 4 user
         $scope.user = 
+            ID: ''
             userTypeSelected: ''
             fullName: ''
             email: ''
@@ -99,6 +100,7 @@ angular.module('app.account.ctrls', [])
             
 
             $scope.data = 
+                ID: $scope.user.ID
                 email: $scope.user.email
                 fullName: $scope.user.fullName
                 password: $scope.user.password
@@ -128,6 +130,7 @@ angular.module('app.account.ctrls', [])
         console.log "@NewTechnician :)"
 # ng-model 4 user
         $scope.user = 
+            ID: ''
             userTypeSelected: 'TEC'
             fullName: ''
             email: ''
@@ -170,19 +173,46 @@ angular.module('app.account.ctrls', [])
             
             $scope.data = 
                 email: $scope.user.email
+                ID: $scope.user.ID
                 fullName: $scope.user.fullName
                 password: $scope.user.password
+                address: $scope.user.address
+                phone: $scope.user.phone
+                celphone: $scope.user.celphone
                 userTypeID: $scope.user.userTypeSelected
                 geoID: $scope.user.citySelected.geoID
             
-            console.log ($scope.data)
+            # console.log ($scope.data)
             $http.defaults.headers.post["Content-Type"] = "application/json"            
             
             $http({ url: "http://cayca:8888/server/ajax/Users/addUser.php", method: "POST", data: JSON.stringify(JSON.stringify($scope.data)) })
             .success (postResponse) ->
-                console.log "success postResponse: " + (postResponse)
-                console.log "success stringify: " + JSON.stringify(postResponse)
-                logger.logSuccess('Se ha creado exitosamente la cuenta.')
+                if (typeof postResponse) == "string"
+                    if (postResponse.indexOf("ID") > -1)
+                        console.log "Roy: " + JSON.stringify(postResponse)
+                        logger.logError "El usuario con cedula de idenficicación: " + $scope.data.ID + " ya está en la base de datos."
+                    if (postResponse.indexOf("email") > -1)
+                        console.log "Roy: " + JSON.stringify(postResponse)
+                        logger.logError "El usuario con ese EMAIL: " + $scope.data.email + " ya está en la base de datos."
+                else
+                    console.log "Roy: " + JSON.stringify(postResponse)
+                    logger.logSuccess "Se ha creado exitosamente el usuario: "+$scope.data.fullName
+                    # logger.logWarning "Espere unos momentos se esta enviando el correo..."
+                    $scope.revert()
+
+                    #Sending Email
+                    $http({ url: "http://cayca:8888/server/ajax/Users/addUserConfirm.php", method: "POST", data: JSON.stringify(JSON.stringify($scope.data)) })
+                    .success (postResponseB) ->
+                        console.log "Roy: " + JSON.stringify(postResponseB)
+                        logger.logSuccess "Se ha enviado el correo con la información de registro a: "+ $scope.data.email
+                    .error (postResponseB) ->
+                        console.log "error enviando el correo"
+                        logger.logError "Ha ocurrido un error enviando el correo. Por favor contacte al Administrador"
+
+            .error (postResponse) ->
+                console.log "error"                
+
+                # logger.logSuccess('Se ha creado exitosamente la cuenta.')
             return
         return        
         
