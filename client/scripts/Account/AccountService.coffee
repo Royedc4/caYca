@@ -2,44 +2,73 @@
 
 angular.module('app.account.services', [])
 
-.factory('LoginService', [ 
-    '$http', '$location', 'logger'
-    ($http, $location, logger) ->
-        login: (credentials) -> 
-            console.log "LOGIN!"
+.service 'Session', ->
 
-            data = 
-                email: credentials.email
-                password: credentials.password
-            
-            console.log (data)
+    #@ makes reference to this
+    @create = (userID, email, userTypeID) ->
+        @userID = userID
+        @email = email
+        @userTypeID = userTypeID
+    return
+
+    @destroy = ->
+        @userID = null
+        @email = null
+        @userTypeID = null
+    return
+
+    return this 
+
+.factory('LoginService', [
+    '$http',  'logger', 'Session'
+    ($http,  logger, Session) ->
+        login: (credentials) -> 
+                return $http
+                    .post('http://cayca:8888/server/ajax/Users/getUser.php', JSON.stringify(JSON.stringify(credentials)))
+                    .then((res) ->
+                        # console.log res
+                        # console.log res.data[0]['0']
+                        Session.create(res.data[0]['0'].ID, res.data[0]['0'].email, res.data[0]['0'].userTypeID)
+                        return res.data[0]['0'])
+
+        isAuthenticated: () ->
+            # !!Session.userID is equivalent to (Session.userID!=0) ? true : false)
+            return !!Session.userID
+
+        isAuthorized: (authorizedRoles) ->
+            if !angular.isArray(authorizedRoles)
+                authorizedRoles = [authorizedRoles]
+            return isAuthenticated() && authorizedRoles.indexOf(Session.userTypeID)!=-1
+
+])
+
+.factory('123LoginService', [ 
+    '$http', '$location', 'logger', '$timeout'
+    ($http, $location, logger, $timeout) ->
+        login: (credentials) -> 
+            console.log "LOGIN Service!"
+
+            userDATA={}
+            console.log credentials            
             $http.defaults.headers.post["Content-Type"] = "application/json"            
-            $http({ url: "http://cayca:8888/server/ajax/Users/getUser.php", method: "POST", data: JSON.stringify(JSON.stringify(data)) })
+            $http({ url: "http://cayca:8888/server/ajax/Users/getUser.php", method: "POST", data: JSON.stringify(JSON.stringify(credentials)) })
             .success (postResponse) ->
                 # console.log "success NORMAL: " + (postResponse)
                 if (postResponse[0]['loggedIn'])
-                    console.log "SignIn Success: " + (postResponse)
-                    console.log JSON.stringify(postResponse)
+                    console.log "SignIn Success: "
+                    userDATA=postResponse[0]['0']
                     logger.logSuccess("Bienvenido a Samsung caYca") 
-                    $location.path('/dashboard') 
+                    # $location.path('/dashboard') 
                 else
                     console.log "SingIn Error" + JSON.stringify(postResponse)
                     logger.logError('Usuario o Contraseña invalida.')
-            return
-
-
-
-            # console.log credentials.email + " " + credentials.password
-
-            # if credentials.email is "R@oy" and credentials.password is "123"
-            #     console.log "Logged"
-            #     $location.path('/dashboard')
-            # else
-            #     console.log "NOT Logged"
-            #     alert "Wrong baby Baby Baby ohoohoh!"
-            return
+                
+                # console.log "Dentro"
+                # console.log userDATA
+                return        
+            return userDATA
         logout: ->
             console.log "Logged Out"
-            $location.path('/pages/signin')
+            $location.path('/accounts/signIn')
             return
 ])
