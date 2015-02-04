@@ -20,16 +20,16 @@ angular.module('app.account.ctrls', [])
             .then ((user) ->
 
                 if (user!=undefined)
-                    console.log "SignIn Success: "
+                    console.log "SignIn Success."
                     console.log (user)
-                    logger.logSuccess("Bienvenido a Samsung caYca") 
+                    logger.logSuccess("Bienvenido a Samsung caYca Compresores!") 
                     $rootScope.$broadcast AUTH_EVENTS.loginSuccess
                     $scope.setCurrentUser user    
                     # $location.path('/dashboard') 
                 else
-                    console.log "SingIn Error: " + JSON.stringify(user)
+                    console.log "SingIn Error."
                     $rootScope.$broadcast AUTH_EVENTS.loginFailed
-                    logger.logError('Usuario o Contraseña invalida.')
+                    logger.logError('Usuario o contraseña invalida.')
                 return
             )
             # Sirve BUT habria que cambiar REST service

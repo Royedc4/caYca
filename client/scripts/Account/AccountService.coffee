@@ -22,23 +22,36 @@ angular.module('app.account.services', [])
 .factory('LoginService', [
     '$http',  'logger', 'Session'
     ($http,  logger, Session) ->
-        login: (credentials) -> 
-                return $http
-                    .post('http://cayca:8888/server/ajax/Users/getUser.php', JSON.stringify(JSON.stringify(credentials)))
-                    .then((res) ->
-                        # console.log res
-                        # console.log res.data[0]['0']
-                        Session.create(res.data[0]['0'].ID, res.data[0]['0'].email, res.data[0]['0'].userTypeID)
-                        return res.data[0]['0'])
-
+        # !!Session.userID is equivalent to (Session.userID!=0) ? true : false)
         isAuthenticated: () ->
-            # !!Session.userID is equivalent to (Session.userID!=0) ? true : false)
             return !!Session.userID
 
         isAuthorized: (authorizedRoles) ->
             if !angular.isArray(authorizedRoles)
                 authorizedRoles = [authorizedRoles]
-            return isAuthenticated() && authorizedRoles.indexOf(Session.userTypeID)!=-1
+            if authorizedRoles.indexOf('ALL')!=-1
+                return true
+            else
+                return authorizedRoles.indexOf(Session.userTypeID)!=-1
+            # return isAuthenticated() && authorizedRoles.indexOf(Session.userTypeID)!=-1
+
+        login: (credentials) -> 
+                return $http
+                    .post('http://cayca:8888/server/ajax/Users/getUser.php', JSON.stringify(JSON.stringify(credentials)))
+                    .then((res) ->
+                        if (res.data[0]['loggedIn'])
+                            # console.log "SignIn Success: "
+                            Session.create(res.data[0]['0'].ID, res.data[0]['0'].email, res.data[0]['0'].userTypeID)
+                            # logger.logSuccess("Bienvenido a Samsung caYca Compresores!") 
+                            # $location.path('/dashboard') 
+                        # else
+                        #     # console.log "SingIn Error" 
+                        #     # console.log "SingIn Error" + JSON.stringify(res)
+                        #     # logger.logError('Usuario o Contraseña invalida.')
+                        #     # console.log res
+                        #     # console.log res.data[0]['0']
+                        return res.data[0]['0'])
+
 
 ])
 
@@ -69,6 +82,8 @@ angular.module('app.account.services', [])
             return userDATA
         logout: ->
             console.log "Logged Out"
+            logger.logSuccess("Hasta luego!")
+            # Session.destroy
             $location.path('/accounts/signIn')
             return
 ])
