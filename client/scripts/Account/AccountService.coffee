@@ -35,6 +35,12 @@ angular.module('app.account.services', [])
                 return authorizedRoles.indexOf(Session.userTypeID)!=-1
             # return isAuthenticated() && authorizedRoles.indexOf(Session.userTypeID)!=-1
 
+        logout: () -> 
+            logger.logSuccess 'Ha cerrado sesion.'
+            Session.destroy
+            return 
+            
+
         login: (credentials) -> 
                 return $http
                     .post('http://cayca:8888/server/ajax/Users/getUser.php', JSON.stringify(JSON.stringify(credentials)))
@@ -51,7 +57,6 @@ angular.module('app.account.services', [])
                         #     # console.log res
                         #     # console.log res.data[0]['0']
                         return res.data[0]['0'])
-
 
 ])
 

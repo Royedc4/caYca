@@ -6,17 +6,12 @@
     data-collapse-nav
     data-highlight-active>
 
-    <!-- Roy: Quitar esto -->
-    <li ng-show="0">
     <li >
-        <a><i class="fa fa-exclamation-triangle"></i>Menu caYca Admin<i class="fa fa-level-down"></i></a>
+        <a href="#/dashboard"> <i class="fa fa-dashboard"></i><span data-i18n="Panel Inicial {{currentUser.userTypeID}}"></span></a>
     </li>
 
-    <li >
-        <a href="#/dashboard"> <i class="fa fa-dashboard"></i><span data-i18n="Panel Inicial"></span> </a>
-    </li>
     <!--2. Roy: Compresors [Rol: caYca] -->
-    <li>
+    <li ng-show="currentUser.userTypeID=='ADM'">
         <a href="#/compressors"><i class="fa fa-qrcode"></i><span data-i18n="Compresores"></span></a>
         <ul>
             <li><a href="#/compressors/compressorsLoad"><i class="fa fa-barcode"></i> <span data-i18n="Carga de Seriales"></span></a></li>
@@ -24,25 +19,20 @@
     </li>
 
 
-    <!-- Roy: Quitar esto -->
-    <li>
-        <a><i class="fa fa-exclamation-triangle"></i>Menu GerenteCom.<i class="fa fa-level-down"></i></a>
-    </li>
-
     <!--1. Roy: New Accounts [All Roles can create accounts for their lower roles] -->
-    <li>
+    <li ng-show="currentUser.userTypeID=='MGC'">
         <a href="#/accounts"><i class="fa fa-users"></i><span data-i18n="Cuentas"></span></a>
         <ul>
             <li><a href="#/accounts/accountsCreation"><i class="fa fa-user"></i> <span data-i18n="Crear Nueva Cuenta"></span></a></li>
         </ul>
     </li>
-    <li>
+    <li ng-show="currentUser.userTypeID=='MGC'">
         <a href="#/companies"><i class="fa fa-building"></i><span data-i18n="Empresas"></span></a>
         <ul>
             <li><a href="#/companies/newCompany"><i class="fa fa-suitcase"></i> <span data-i18n="Crear nueva empresa"></span></a></li>
         </ul>
     </li>
-    <li>
+    <li ng-show="currentUser.userTypeID=='MGC'">
         <a href="#/promotions"><i class="fa fa-list-ol"></i><span data-i18n="Promociones"></span></a>
         <ul>
         <li><a href="#/promotions/totalCoupons"> <i class="fa fa-list-ol"></i> <span data-i18n="Consultar Cupones"></span> </a></li>
@@ -55,13 +45,8 @@
         </ul>
     </li>
     
-
-    <!-- Roy: Quitar esto -->
-    <li>
-        <a><i class="fa fa-exclamation-triangle"></i>Menu Almacenista<i class="fa fa-level-down"></i></a>
-    </li>
     <!--Roy: Labels  [Rol: Etiquetador] -->
-    <li>
+    <li ng-show="currentUser.userTypeID=='MA'">
         <a href="#/records"><i class="fa fa-tags"></i><span data-i18n="Etiquetas"></span></a>
         <ul>
             <li><a href="#/records/recordInfo"><i class="fa fa-tags"></i> <span data-i18n="Modus Operandi"></span></a></li>
@@ -70,14 +55,9 @@
         </ul>
     </li>
 
-    <!-- Roy: Quitar esto -->
-    <li>
-        <a><i class="fa fa-exclamation-triangle"></i>Menu Tecnico/Vend.<i class="fa fa-level-down"></i></a>
-    </li>
-
 
     <!--Roy: Redemptions [Rol: Technician/Seller] -->
-    <li>
+    <li ng-show="currentUser.userTypeID=='TEC'">
         <a href="#/redemptions"><i class="fa fa-copy"></i><span data-i18n="Canjeos"></span></a>
         <ul>
             <li><a href="#/redemptions/checkPoints"><i class="fa fa-file-text"></i> <span data-i18n="Chequear puntos"></span></a></li>
@@ -86,14 +66,16 @@
         </ul>
     </li>
     <!--Roy: Raffles [Rol: Technician/Seller] -->
-    <li>
+    <li ng-show="currentUser.userTypeID=='TEC'">
         <a href="#/raffles"><i class="fa fa-trophy"></i><span data-i18n="Rifas"></span></a>
         <ul>
             <li><a href="#/raffles/checkCoupons"><i class="fa fa-plus"></i> <span data-i18n="Chequear Cupones"></span></a></li>
             <li><a href="#/raffles/results"><i class="fa fa-trophy"></i> <span data-i18n="Ver Resultados"></span></a></li>
         </ul>
     </li>
-    <li>
+    
+    <!-- <li ng-show="currentUser.userTypeID=='TEC' OR currentUser.userTypeID=='DV'"> -->
+    <li ng-show="currentUser.userTypeID=='TEC'">
         <a href="#/promotions/newCoupon"> <i class="fa fa-file-text"></i><span data-i18n="Registrar compresor"></span> </a>
     </li>
 

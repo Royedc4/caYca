@@ -36,7 +36,7 @@
                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
                     <img src="images/g1.jpg" alt="" class="img-circle img30_30">
                     <span class="hidden-xs">
-                        <span data-i18n="Roy Calderón"></span>
+                        <span data-i18n="{{currentUser.fullName}}"></span>
                     </span>
                 </a>
                 <ul class="dropdown-menu dropdown-dark with-arrow">
@@ -59,7 +59,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#/pages/signin">
+                        <a ng-click="logOut()">
                             <i class="fa fa-sign-out"></i>
                             <span data-i18n="Cerrar sesion"></span>
                         </a>
