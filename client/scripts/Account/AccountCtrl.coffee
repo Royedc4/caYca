@@ -3,8 +3,8 @@
 angular.module('app.account.ctrls', [])
 
 .controller('LoginCtrl', [
-    'AUTH_EVENTS','$scope', '$http', 'LoginService', 'logger', '$rootScope'
-    (AUTH_EVENTS, $scope, $http, LoginService, logger, $rootScope) ->
+    'AUTH_EVENTS','$scope', '$http', 'LoginService', 'logger', '$rootScope', '$location'
+    (AUTH_EVENTS, $scope, $http, LoginService, logger, $rootScope, $location) ->
         console.log "@LoginCtrl :)"
         $scope.credentials = 
             email:   ""
@@ -25,7 +25,7 @@ angular.module('app.account.ctrls', [])
                     logger.logSuccess("Bienvenido a Samsung caYca Compresores!") 
                     $rootScope.$broadcast AUTH_EVENTS.loginSuccess
                     $scope.setCurrentUser user    
-                    # $location.path('/dashboard') 
+                    $location.path('/dashboard') 
                 else
                     console.log "SingIn Error."
                     $rootScope.$broadcast AUTH_EVENTS.loginFailed

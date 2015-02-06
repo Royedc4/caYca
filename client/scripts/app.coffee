@@ -65,14 +65,12 @@ angular.module('app', [
     wholeSalerMGC:  'MGC'
 
 .run([
-    '$rootScope', 'AUTH_EVENTS', 'LoginService', 'logger'
-    ($rootScope, AUTH_EVENTS, LoginService, logger) ->
-
+    '$rootScope', 'AUTH_EVENTS', 'LoginService', 'logger', '$location'
+    ($rootScope, AUTH_EVENTS, LoginService, logger, $location) ->
         $rootScope.$on '$routeChangeStart', (event,next) ->
             authorizedRoles = next.data.authorizedRoles
             if !LoginService.isAuthorized(authorizedRoles)
                 event.preventDefault()
-
                 if LoginService.isAuthenticated()
                     # User is not a11owed
                     $rootScope.$broadcast AUTH_EVENTS.notAuthorized
@@ -81,6 +79,7 @@ angular.module('app', [
                     # User is not logged in
                     $rootScope.$broadcast AUTH_EVENTS.notAuthenticated
                     logger.logError('Debes estar autenticado para ingresar al sistema!')
+                    $location.path '/accounts/signIn'
     ])
 
 .config([
@@ -104,6 +103,7 @@ angular.module('app', [
                 templateUrl: 'views/dashboard.html'
                 data:
                     authorizedRoles: [
+                        USER_ROLES.admin,
                         USER_ROLES.technician,
                         USER_ROLES.caYcaALM, 
                         USER_ROLES.caYcaCGG,
