@@ -3,8 +3,8 @@
 angular.module('app.account.ctrls', [])
 
 .controller('LoginCtrl', [
-    '$scope', '$http', 'LoginService'
-    ($scope, $http, LoginService) ->
+    'AUTH_EVENTS','$scope', '$http', 'LoginService', 'logger', '$rootScope', '$location'
+    (AUTH_EVENTS, $scope, $http, LoginService, logger, $rootScope, $location) ->
         console.log "@LoginCtrl :)"
         $scope.credentials = 
             email:   ""
@@ -16,11 +16,55 @@ angular.module('app.account.ctrls', [])
             return $scope.form_Login.$valid && !angular.equals($scope.credentials, original)
 
         $scope.login = ->
-            # console.log "HIT LOGIN :)"
             LoginService.login($scope.credentials)
-            return
+            .then ((user) ->
 
-        return
+                if (user!=undefined)
+                    console.log "SignIn Success."
+                    console.log (user)
+                    logger.logSuccess("Bienvenido a Samsung caYca Compresores!") 
+                    $rootScope.$broadcast AUTH_EVENTS.loginSuccess
+                    $scope.setCurrentUser user    
+                    $location.path('/dashboard') 
+                else
+                    console.log "SingIn Error."
+                    $rootScope.$broadcast AUTH_EVENTS.loginFailed
+                    logger.logError('Usuario o contraseña invalida.')
+                return
+            )
+            # Sirve BUT habria que cambiar REST service
+            # ), ->
+            #     console.log "credentials Error"
+            #     return
+            
+        return #END LOGIN
+
+        return #END Ctrl
+
+
+        # $scope.login = (credentials) ->
+        #     AuthService.login(credentials).then ((user) ->
+        #         $rootScope.$broadcast AUTH_EVENTS.loginSuccess
+        #         $scope.setCurrentUser user
+        #     return
+        #     ), ->
+        #         $rootScope.$broadcast AUTH_EVENTS.loginFailed
+        #         return
+        #     return
+
+            
+            # .then ((user) ->
+            #     console.log "Exito"
+            #     # console.log "Hola: "+ user.fullName
+            #     # $rootScope.$broadcast AUTH_EVENTS.loginSuccess
+            #     # $scope.setCurrentUser user
+            #     return
+            # ), -> #ELSE
+            #     console.log "Fail Loging in"
+            #     # $rootScope.$broadcast AUTH_EVENTS.loginFailed
+            #     return #END ELSE
+
+
 ])  
 
 
