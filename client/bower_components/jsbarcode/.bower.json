@@ -29,11 +29,11 @@
     "test",
     "tests"
   ],
-  "_release": "ab29ee80e2",
+  "_release": "8e14b232d6",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "ab29ee80e2530639964fc8d2d2a001b57967cda7"
+    "commit": "8e14b232d6062b29dad23fe64e31b47fadaeb6af"
   },
   "_source": "git://github.com/lindell/JsBarcode.git",
   "_target": "*",

@@ -4,8 +4,8 @@ angular.module('app.controllers', [])
 
 # overall control
 .controller('AppCtrl', [
-    '$scope', '$location'
-    ($scope, $location) ->
+    '$scope', '$location', 'USER_ROLES', 'LoginService'
+    ($scope, $location, USER_ROLES, LoginService) ->
         $scope.isSpecificPage = ->
             path = $location.path()
             return _.contains( [
@@ -27,6 +27,19 @@ angular.module('app.controllers', [])
         $scope.main =
             brand: 'SAMSUNG'
             name: 'Roy Calderón' # those which uses i18n can not be replaced for now.
+
+        $scope.currentUser = null
+        $scope.userRoles = USER_ROLES
+        $scope.isAuthorized = LoginService.isAuthorized
+
+        $scope.setCurrentUser = (user) ->
+            $scope.currentUser=user
+            return
+
+        $scope.logOut = () ->
+            LoginService.logout()
+            $location.path "/accounts/signIn"
+            return
 
 ])
 

@@ -1,3 +1,7 @@
+Demo
+----
+[Barcode Generator](http://lindell.github.io/JsBarcode/)
+
 Introduction
 ----
 JsBarcode is a simple way to create different types of 1d barcodes.  
@@ -10,6 +14,7 @@ The plugin uses Html5Canvas to generate draw the barcodes
 *  CODE39
 *  ITF (Interleaved 2 of 5)
 *  ITF14
+*  Pharmacode
 
 Bower
 ----
@@ -17,6 +22,23 @@ As well as downloading the files and including them regularly,
 you can use [Bower](http://bower.io) to install and manage the library
 ````
 bower install jsbarcode --save
+````
+
+Setup
+----
+* Include the JsBarcode plugin in the document.
+````
+<script src="JsBarcode.js"></script>
+````
+* Include the CODE128.js if you want to generate a CODE 128 barcode.
+````
+<script src="CODE128.js"></script>
+````
+----
+OR you can include the [comined script](https://github.com/lindell/JsBarcode/releases) with everything you need.
+
+````
+<script src="JsBarcode.all.min.js"></script>
 ````
 
 Use
@@ -55,9 +77,13 @@ JsBarcode(object, string, options);
 Examples
 ----
 
-####First we need an image
+####First we need an image (or a canvas - it works both ways!)
 ````html
 <img id="barcode">
+````
+or
+````html
+<canvas id="barcode"></canvas>
 ````
 
 #### This code:
@@ -111,6 +137,7 @@ Use the [closure compiler](http://closure-compiler.appspot.com/home) with this i
 // @code_url https://raw.github.com/lindell/JsBarcode/master/EAN_UPC.js
 // @code_url https://raw.github.com/lindell/JsBarcode/master/ITF.js
 // @code_url https://raw.github.com/lindell/JsBarcode/master/ITF14.js
+// @code_url https://raw.github.com/lindell/JsBarcode/master/pharmacode.js
 // @code_url https://raw.github.com/lindell/JsBarcode/master/JsBarcode.js
 // ==/ClosureCompiler==
 ````
