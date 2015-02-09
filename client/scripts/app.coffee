@@ -152,7 +152,7 @@ angular.module('app', [
                 templateUrl: 'views/compressors/compressorsLoad.html'                
                 data:
                     authorizedRoles: [
-                        USER_ROLES.wholeSalerMA,
+                        USER_ROLES.caYcaCGG,
                         USER_ROLES.admin
                     ]
                 )
@@ -160,15 +160,31 @@ angular.module('app', [
             .when(
                 '/records/recordInfo'
                 templateUrl: 'views/records/recordInfo.html'                
+                data:
+                    authorizedRoles: [
+                        USER_ROLES.wholeSalerMA,
+                        USER_ROLES.admin
+                    ]                
                 )
             .when(
                 '/records/makeInvoice'
                 templateUrl: 'views/records/makeInvoice.html'                
+                data:
+                    authorizedRoles: [
+                        USER_ROLES.wholeSalerMA,
+                        USER_ROLES.admin
+                    ]                
                 )
             .when(
                 '/records/makeLabels'
-                templateUrl: 'views/records/makeLabels.html'                
+                templateUrl: 'views/records/makeLabels.html'
+                data:
+                    authorizedRoles: [
+                        USER_ROLES.wholeSalerMA,
+                        USER_ROLES.admin
+                    ]                
                 )
+
             # Redemptions
             .when(
                 '/redemptions/newRedemption'
