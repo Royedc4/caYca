@@ -156,6 +156,15 @@ angular.module('app', [
                         USER_ROLES.admin
                     ]
                 )
+            .when(
+                '/compressors/keysLoad'
+                templateUrl: 'views/compressors/keysLoad.html'                
+                data:
+                    authorizedRoles: [
+                        USER_ROLES.caYcaCGG,
+                        USER_ROLES.admin
+                    ]
+                )
             # Records
             .when(
                 '/records/recordInfo'

@@ -2,7 +2,7 @@
 require_once '../../secure/db.php'; // The mysql database connection script
 header('Access-Control-Allow-Origin: *');  
 
-$outerQuery="SELECT countryID, name FROM country";
+$outerQuery="SELECT geonameid, country, alternatename from country";
 $outerResult=$mysqli->query($outerQuery) or die($mysqli->error.__LINE__);
 $arr = array();
 if($outerResult->num_rows > 1) {

@@ -53,8 +53,6 @@ angular.module('app.controllers', [])
         $scope.$on('taskRemaining:changed', (event, count) ->
             $scope.taskRemainingCount = count
         )
-        # ROY:
-        $scope.rolIsAdmin=false
 
 ])
 
