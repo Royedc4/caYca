@@ -20,10 +20,10 @@ angular.module('app.records.validation', [])
 
                 for unlabeledSerial in scope.unlabeledSerials
                     do (unlabeledSerial) ->
-                        if value == unlabeledSerial['serialID']
+                        if value == unlabeledSerial['serial']
                             possibleValidSerial = 
                                     number: ele['0']['id']
-                                    serial: unlabeledSerial['serialID']
+                                    serial: unlabeledSerial['serial']
                                     compressorID: unlabeledSerial['compressorID']
                             if scope.validSerials.length == 0
                                 valid=addValidSerial(possibleValidSerial)
@@ -68,7 +68,7 @@ angular.module('app.records.validation', [])
                 # Inserting Info about compressor
                 for compressorModel in scope.compressorsInformation
                     do (compressorModel) ->
-                        console.log compressorModel + " - "
+                        console.log compressorModel['compressorID'] + " - "
                         if possibleValidSerial['compressorID'] == compressorModel['compressorID'] 
                             possibleValidSerial['capacity']=compressorModel['capacity']
                             possibleValidSerial['refrigerant']=compressorModel['refrigerant']

@@ -17,13 +17,14 @@ echo sizeof($array);
 echo sizeof($array["companySelected"]);
 echo sizeof($array["serialsSelected"]);
 
+$hoy = date("Y-m-d H:i:s");
 
 $success = array('loggedIn' => true, 'success' => 'Fuck yeaH... U did it.');
 
 //Lopping
 for ($i = 0; $i < sizeof($array["serialsSelected"]); $i++) {
 	// echo "<br> Inserting " . $i . " ";
-	$query="INSERT INTO serial VALUES ('" . $array["serialsSelected"][$i]["serialID"] . "', '" . $array["serialsSelected"][$i]["compressorID"] . "', DEFAULT, NULL, '" . $array["companySelected"]["companyID"] . "')";
+	$query="INSERT INTO serial VALUES ('" . $array["serialsSelected"][$i]["serialID"] . "', '" . $array["serialsSelected"][$i]["compressorID"] . "', '" . $array["companySelected"]["companyID"] . "',DEFAULT, NULL,DEFAULT, NULL, '$hoy')";
 	// echo $query;
 	$result = $mysqli->query($query) or die($mysqli->error.__LINE__);
 	$result = $mysqli->affected_rows;

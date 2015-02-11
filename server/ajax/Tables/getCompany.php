@@ -3,7 +3,7 @@ require_once '../../secure/db.php'; // The mysql database connection script
 header('Access-Control-Allow-Origin: *');  
 
 // Devuelve unicamente importadores con el fin de asociar los compresores a dichas empresas.
-$outerQuery="SELECT companyID, businessName FROM company WHERE isRetailer=1";
+$outerQuery="SELECT companyID, businessName FROM company WHERE isImporter=1";
 $outerResult=$mysqli->query($outerQuery) or die($mysqli->error.__LINE__);
 $arr = array();
 if($outerResult->num_rows > 1) {

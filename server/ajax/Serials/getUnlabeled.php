@@ -2,19 +2,20 @@
 require_once '../../secure/db.php'; // The mysql database connection script
 header('Access-Control-Allow-Origin: *');  
 
-$serialID = '%';
-$countryID = '%';
+$serial = '%';
+$companyID = '%';
 $compressorID = '%';
 
-if(isset($_GET['serialID'])) 
-	$serialID = $_GET['serialID'];
-if(isset($_GET['countryID']))
-	$countryID = $_GET['countryID'];
+if(isset($_GET['serial'])) 
+	$serial = $_GET['serial'];
+if(isset($_GET['companyID']))
+	$companyID = $_GET['companyID'];
 if(isset($_GET['compressorID'])) 
 	$compressorID = $_GET['compressorID'];
 
 // Select
-$outerQuery="SELECT serialID,countryID,compressorID FROM serial WHERE serialID like '$serialID' AND countryID like '$countryID' AND compressorID like '$compressorID' AND serialID NOT IN (SELECT DISTINCT(serialID) FROM labeled)";
+$outerQuery="SELECT serial, companyID, compressorID FROM serial WHERE serial like '$serial' AND companyID like '$companyID' AND compressorID like '$compressorID' AND isLabeled=0";
+// $outerQuery="SELECT serialID,countryID,compressorID FROM serial WHERE serialID like '$serialID' AND countryID like '$countryID' AND compressorID like '$compressorID' AND serialID NOT IN (SELECT DISTINCT(serialID) FROM labeled)";
 
 $outerResult=$mysqli->query($outerQuery) or die($mysqli->error.__LINE__);
 
