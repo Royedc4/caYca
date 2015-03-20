@@ -1,10 +1,6 @@
 <?php 
 require_once '../../secure/db.php'; // The mysql database connection script
 
-// header('Access-Control-Allow-Origin: *');  
-// header("Access-Control-Allow-Headers: Content-Type, Origin, X-Requested-With, Accept");
-
-
 $data =  (json_decode(file_get_contents("php://input")));
 $array=json_decode($data, true);
 
