@@ -2,10 +2,7 @@
 require_once '../../lib/swift_required.php'; //SwiftMail Library
 require_once '../../secure/mailer.php'; // Account details
 
-header('Access-Control-Allow-Origin: *');  
-header("Access-Control-Allow-Headers: Content-Type, Origin, X-Requested-With, Accept");
-
-$data =  (json_decode($HTTP_RAW_POST_DATA));
+$data =  (json_decode(file_get_contents("php://input")));
 $array=json_decode($data, true);
 
 if ( $data != NULL )

@@ -43,19 +43,20 @@ angular.module('app.account.services', [])
 
         login: (credentials) -> 
                 return $http
-                    .post('http://cayca:8888/server/ajax/Users/getUser.php', JSON.stringify(JSON.stringify(credentials)))
+                    .post('http://cayca:8888/server/ajax/Users/getUser.php', (JSON.stringify(credentials)))
                     .then((res) ->
                         if (res.data[0]['loggedIn'])
                             # console.log "SignIn Success: "
                             Session.create(res.data[0]['0'].ID, res.data[0]['0'].email, res.data[0]['0'].userTypeID)
                             # logger.logSuccess("Bienvenido a Samsung caYca Compresores!") 
                             # $location.path('/dashboard') 
+                        # debuggear con esto
                         # else
-                        #     # console.log "SingIn Error" 
-                        #     # console.log "SingIn Error" + JSON.stringify(res)
-                        #     # logger.logError('Usuario o Contraseña invalida.')
-                        #     # console.log res
-                        #     # console.log res.data[0]['0']
+                            # console.log "SingIn Error" 
+                            # console.log "SingIn Error" + JSON.stringify(res)
+                            # logger.logError('Usuario o Contraseña invalida.')
+                            # console.log res
+                            # console.log res.data[0]['0']
                         return res.data[0]['0'])
 
 ])

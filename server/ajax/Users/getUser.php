@@ -1,16 +1,9 @@
 <?php 
 require_once '../../secure/db.php'; // The mysql database connection script
-header('Access-Control-Allow-Origin: *');  
-header("Access-Control-Allow-Headers: Content-Type, Origin, X-Requested-With, Accept");
 
+$postdata = file_get_contents("php://input");
 
-// Cochino style
-// if(isset($_GET['email']) && isset($_GET['password'])){
-// 	$email = $_GET['email'];
-// 	$password = $_GET['password'];
-// }
-
-if (  ($data =  (json_decode($HTTP_RAW_POST_DATA)) ) != NULL )
+if ( ($data =  ($postdata))  != NULL )
 {
 	$array=json_decode($data, true);
 	
@@ -25,9 +18,9 @@ if (  ($data =  (json_decode($HTTP_RAW_POST_DATA)) ) != NULL )
 	// Defining Some shit arround
 	$arr = array();
 	$response = array();
-	// $success = array('loggedIn' => true, 'success' => 'Fuck yeaH You are logged in.');
-	$error = array('loggedIn' => false, 'error' => 'Error: email or password are incorrect.');
+	$error = array('email'=> $email, 'pass'=>$password ,'loggedIn' => false, 'error' => 'Error: email or password are incorrect.');
 
+	$hashedStoredPassword='';
 
 	if($outerResult->num_rows == 1) {
 		while($row = $outerResult->fetch_assoc()) {
@@ -44,7 +37,6 @@ if (  ($data =  (json_decode($HTTP_RAW_POST_DATA)) ) != NULL )
 				// $success=$row;
 				// $arr[] = $row;	
 				$success = array('loggedIn' => true, $row);
-
 			}
 			$response[]=$success;
 			// echo "Login: " . ($is_match ? 'correct' : 'wrong');
@@ -57,7 +49,7 @@ if (  ($data =  (json_decode($HTTP_RAW_POST_DATA)) ) != NULL )
 	}
 	else
 	{
-
+		echo array('error' => 'DATABASE ERROR!');
 	}
 
-	?>
+?>
