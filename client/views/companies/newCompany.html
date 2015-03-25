@@ -38,6 +38,30 @@
 							data-ng-minlength=15
 							data-ng-model="company.email">
 
+							<label for="">Email Administracion</label>
+							<input  type="email"
+							class="form-control"
+							required
+							name="emailAdministrative"
+							data-ng-minlength=15
+							data-ng-model="company.emailAdministrative">
+
+							<label for="">Email Contabilidad</label>
+							<input  type="email"
+							class="form-control"
+							required
+							name="emailAccounting"
+							data-ng-minlength=15
+							data-ng-model="company.emailAccounting">
+
+							<label for="">Email Ventas</label>
+							<input  type="email"
+							class="form-control"
+							required
+							name="emailSales"
+							data-ng-minlength=15
+							data-ng-model="company.emailSales">
+
 							<p ng-show="form_NewCompany.email.$invalid && form_NewCompany.email.$dirty" class="text-danger">Verifique la validez del correo.</p>	
 
 							<label for="">Dirección</label>

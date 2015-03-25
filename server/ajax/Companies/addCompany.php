@@ -2,10 +2,7 @@
 require_once '../../secure/db.php'; // The mysql database connection script
 require_once '../../mailing/mailSender.php'; //Roy Mailer
 
-header('Access-Control-Allow-Origin: *');  
-header("Access-Control-Allow-Headers: Content-Type, Origin, X-Requested-With, Accept");
-
-$data =  (json_decode($HTTP_RAW_POST_DATA));
+$data =  (json_decode(file_get_contents("php://input")));
 $array=json_decode($data, true);
 
 if ( $data != NULL )
@@ -14,6 +11,9 @@ if ( $data != NULL )
 	$businessName = $array['businessName'];
 	$nit = $array['nit'];
 	$email = $array['email'];
+	$emailAdministrative = $array['emailAdministrative'];
+	$emailAccounting = $array['emailAccounting'];
+	$emailSales = $array['emailSales'];
 	// Important
 	$geoID = $array['geoID'];
 	// Other Values
@@ -23,7 +23,7 @@ if ( $data != NULL )
 	
 	$hoy = date("Y-m-d H:i:s");
 	
-	$query="INSERT INTO company VALUES (NULL, '$businessName','$businessOwner', '$nit', '$email', '$geoID', DEFAULT, DEFAULT, 1, DEFAULT, '$phone', '$address')";
+	$query="INSERT INTO company VALUES (NULL, '$businessName','$businessOwner', '$nit', '$email','$emailAdministrative', '$emailSales', '$emailAccounting', '$geoID', DEFAULT, DEFAULT, 1, DEFAULT, '$phone', '$address')";
 
 	$result = $mysqli->query($query) or die($mysqli->error.__LINE__);
 	$result = $mysqli->affected_rows;

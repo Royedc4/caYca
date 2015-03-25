@@ -12,6 +12,9 @@ angular.module('app.company.ctrls', [])
             businessName: ''
             nit: ''
             email: ''
+            emailAdministrative: ''
+            emailAccounting: ''
+            emailSales: ''
             address: ''
             phone: ''
             citySelected: ''
@@ -50,6 +53,9 @@ angular.module('app.company.ctrls', [])
                 businessName: $scope.company.businessName
                 nit: $scope.company.nit
                 email: $scope.company.email
+                emailAdministrative: $scope.company.emailAdministrative
+                emailAccounting: $scope.company.emailAccounting
+                emailSales: $scope.company.emailSales
                 address: $scope.company.address
                 phone: $scope.company.phone
                 geoID: $scope.company.citySelected.geoID
