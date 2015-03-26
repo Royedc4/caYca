@@ -4,15 +4,23 @@
         <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Tokens de Seguridad</strong></div>
         <div class="panel-body text-center">
             <p>
-                <a href="javascript:;" ng-click="genKeys()" class="btn btn-warning btn-metro">
-                    <i class="fa fa-magic"></i>
-                    <span>Generar Pines!</span>
-                </a>
                 <span class="ui-select">
                     <select ng-model="countrySelected" ng-options="country.alternatename for country in countries">
                         <option value="">-- Seleccione pais --</option>
                     </select>
                 </span> 
+                <a href="javascript:;" ng-click="getDBKeys()" class="btn btn-danger btn-metro">
+                    <i class="fa fa-eraser"></i>
+                    <span>Traer De BDD!</span>
+                </a>
+                <a href="javascript:;" ng-click="genKeys()" class="btn btn-warning btn-metro">
+                    <i class="fa fa-magic"></i>
+                    <span>Generar Pines!</span>
+                </a>
+                <a href="javascript:;" ng-click="eraseKeys()" class="btn btn-danger btn-metro">
+                    <i class="fa fa-eraser"></i>
+                    <span>Borrar Generación!</span>
+                </a>
                 <a href="" ng-click="saveKeys()" class="btn btn-success btn-metro">
                     <i class="fa fa-database"></i>
                     <span>Guardar en BDD</span>

@@ -8,6 +8,7 @@ angular.module('app.compressors', [])
 
         $scope.countrySelected=''
 
+
         #Load Countries
         getCountries = ->
             $http.post("http://cayca:8888/server/ajax/Tables/getCountry.php").success (data) ->
@@ -17,9 +18,41 @@ angular.module('app.compressors', [])
         getCountries()
 
         $scope.Keys = {TEC:[] ,DV: []}
+        $KeysAtDB = {TEC:[] ,DV: []}
+
+        #Loading Keys
+        $scope.getDBKeys = ->
+            console.log "getDBKeys"
+            $data4post = 
+                country: $scope.countrySelected.country
+            $http({url:"http://cayca:8888/server/ajax/Tokens/getTByCountry.php", method: "POST", data: JSON.stringify($data4post) })
+            .success (dataTEC) ->
+                iterator=0
+                while (iterator<dataTEC.length)
+                   $KeysAtDB["TEC"][iterator] = dataTEC[iterator]["token"]
+                   iterator++
+                logger.logSuccess "Actualmente la BDD de +"+$scope.countrySelected.alternatename+" tiene: "+ dataTEC.length + " Tokens para Tecnicos."
+                return
+            $http({url:"http://cayca:8888/server/ajax/Tokens/getVByCountry.php", method: "POST", data: JSON.stringify($data4post) })
+            .success (dataDV) ->
+                iterator=0
+                while (iterator<dataDV.length)
+                   $KeysAtDB["DV"][iterator] = dataDV[iterator]["token"]
+                   iterator++
+                logger.logSuccess "Actualmente la BDD de +"+$scope.countrySelected.alternatename+" tiene: "+ dataDV.length + " Tokens para Vendedores."
+                return
+            
+            return
+
+        # Erasing keys
+        $scope.eraseKeys = ->
+            $scope.Keys = {TEC:[] ,DV: []}
+            logger.logSuccess "Se han borrado los Tokens generados para Tecnicos y Vendedores."
+            return
 
         # Gerenetaring keys
         $scope.genKeys = ->
+            
             conTEC=0
             conDV=0
 
@@ -42,7 +75,7 @@ angular.module('app.compressors', [])
                 pass = pass.substr(0,4) + "-" + pass.substr(4,4)+ "-" + pass.substr(8,4)
                 
                 # can'T be repeated
-                if $scope.Keys["TEC"].indexOf(pass) == -1 or $scope.Keys["DV"].indexOf(pass) == -1
+                if $scope.Keys["TEC"].indexOf(pass) == -1 or $scope.Keys["DV"].indexOf(pass) == -1 or $KeysAtDB["TEC"].indexOf(pass) == -1 or $KeysAtDB["TEC"].indexOf(pass) == -1
                     # If the number is even. It's a Technicians code
                     if parseInt(pass.replace(/[^0-9]/g,'')) % 2 == 0
                         if conTEC<5000
@@ -78,13 +111,14 @@ angular.module('app.compressors', [])
         
             $http.defaults.headers.post["Content-Type"] = "application/json"            
             console.log ($scope.data)
-            $http({ url: "http://cayca:8888/server/ajax/Compressors/addTokens.php", method: "POST", data: JSON.stringify(JSON.stringify($scope.data)) })
+            $http({ url: "http://cayca:8888/server/ajax/Tokens/addTokens.php", method: "POST", data: JSON.stringify(JSON.stringify($scope.data)) })
             .success (postResponse) ->
-                console.log "Roy: " + JSON.stringify(postResponse)
+                # console.log "Roy: " + JSON.stringify(postResponse)
                 logger.logSuccess "Se han guardado exitosamente: "+ parseInt($scope.Keys["TEC"].length+$scope.Keys["DV"].length)+" Tokens."
+                $scope.Keys = {TEC:[] ,DV: []}
             .error (postResponse) ->
                 console.log "error"
-            return
+            
         return    
         
 ])
