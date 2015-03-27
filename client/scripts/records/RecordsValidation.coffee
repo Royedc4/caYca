@@ -2,8 +2,27 @@
 
 angular.module('app.records.validation', [])
 
-# Roy
+# Roy: When Enter... AH AH AH!
+.directive('ngEnter', () ->
+    return (scope, element, attrs) ->
+        element.bind("keydown keypress", (event) ->
+            # Enter
+            if(event.which == 13)
+                scope.$apply( ()->
+                    scope.$eval(attrs.ngEnter)
+                )
+                # No Enter(ing)
+                event.preventDefault()
+                # IF !last -> Focus Next 
+                if element.context.nextSibling.parentElement.nextElementSibling
+                    element.context.nextSibling.parentElement.nextElementSibling.firstElementChild.focus()
+                # xD
+                scope.dataInserted.push({input:element.context.value,value:element.context.name})
+        )
+)
 
+
+# Roy
 # used for confirm password
 # Note: if you modify the "confirm" input box, and then update the target input box to match it, it'll still show invalid style though the values are the same now
 # Note2: also remember to use " ng-trim='false' " to disable the trim
@@ -13,70 +32,46 @@ angular.module('app.records.validation', [])
         require: 'ngModel'
         link: (scope, ele, attrs, ngModelCtrl) ->
             validateEqual = (value) ->
-                # console.log "Escribiendo=" + value
+                console.log "Escribiendo=" + value
                 i=0
                 valid = false
                 posicion = null
 
                 for unlabeledSerial in scope.unlabeledSerials
                     do (unlabeledSerial) ->
-                        if value == unlabeledSerial['serial']
+                        if value == unlabeledSerial['SERIAL']
                             possibleValidSerial = 
                                     number: ele['0']['id']
-                                    serial: unlabeledSerial['serial']
-                                    compressorID: unlabeledSerial['compressorID']
+                                    SERIAL: unlabeledSerial['SERIAL']
                             if scope.validSerials.length == 0
                                 valid=addValidSerial(possibleValidSerial)
                             else
                                 repetido = false
                                 for readedSerial in scope.validSerials
                                     do (readedSerial) ->
-                                        if value == readedSerial['serial'] 
+                                        if value == readedSerial['SERIAL'] 
                                             console.log "Serial: " + value + " Repetido en posicion: " + readedSerial['number']
                                             repetido=true
 
                                 if !repetido
                                     valid=addValidSerial(possibleValidSerial)
 
-
-                # if ( value == scope.unlabeledSerials[i]['serialID'] )
-                #     valid = true
-                    # console.log "Exito -> " + scope.unlabeledSerials[i]['serialID']
-                    # console.log "el primero :) ->" + ele['0']['form']['0'].value
-                    # console.log "el segundo :) ->" + $scope.ele['1'].value
-
-
-
-                # while i<scope.unlabeledSerials.length
-                #     if ( value == scope.unlabeledSerials[i]['serialID'] )
-                #         valid = true
-                #         console.log "Exito -> " + scope.unlabeledSerials[i]['serialID']
-                #         console.log "el primero :) ->" + ele['0']['form']['0'].value
-                #         # console.log "el segundo :) ->" + $scope.ele['1'].value
-                #     i++
-
-                # valid = ( value is scope.$eval(attrs.validateSerials) )
-                # console.log "confirm=" + scope.$eval(attrs.validateSerials)
+                console.log "isValid?="+valid
                 ngModelCtrl.$setValidity('equal', valid)
-                # console.log "valid=" + valid
+                ngModelCtrl.$setValidity(ele['0']['id'], valid)
+                ngModelCtrl.$setValidity('validateEqual', valid)
+                ngModelCtrl.$setValidity('validate-equals', valid)
+                ngModelCtrl.$setValidity('data-validate-equals', valid)
+                ngModelCtrl.$setValidity('data-validate-serials', valid)
                 return valid? value : undefined
 
             ngModelCtrl.$parsers.push(validateEqual)
             ngModelCtrl.$formatters.push(validateEqual)
 
             addValidSerial = (possibleValidSerial) ->
-                # Inserting Info about compressor
-                for compressorModel in scope.compressorsInformation
-                    do (compressorModel) ->
-                        console.log compressorModel['compressorID'] + " - "
-                        if possibleValidSerial['compressorID'] == compressorModel['compressorID'] 
-                            possibleValidSerial['capacity']=compressorModel['capacity']
-                            possibleValidSerial['refrigerant']=compressorModel['refrigerant']
-                            possibleValidSerial['voltage']=compressorModel['voltage']
-
                 scope.validSerials.push possibleValidSerial
-                console.log "Serial: " + possibleValidSerial['serial'] + ", En: " +ele['0']['id'] + ", Valido ;)"
-                ele['0']['disabled']=true
+                console.log "Serial: " + possibleValidSerial['SERIAL'] + ", En: " +ele['0']['id'] + ", Valido ;)"
+                # ele['0']['disabled']=true
                 return true                
 
             scope.$watch(attrs.validateSerials, (newValue, oldValue) ->
