@@ -3,168 +3,76 @@
 angular.module('app.records.ctrls', [])
 
 # Roy
-# Controllers for MakeInvoice
+# Controllers for 
 
 .controller('makeLabelsCtrl', [
     '$scope', 'logger', '$http'
     ($scope, logger, $http) ->
+        # Definition of objets
 
-        # Roy : Form Part
+        # Control Data
+        $scope.consecVen=[]
+        $scope.consecTec=[]
+        $scope.consecSer=[]
+        # Data 2 Insert
+        $scope.data2label=
+            serial: []
+            tokenTec: []
+            tokenVen: []
 
-        # $scope.user = 
-        #     name: ''
-        #     email: ''
-        #     password: ''
-        #     confirmPassword: ''
-        #     age: ''
-
-        # $scope.showInfoOnSubmit = false
-
-        # original = angular.copy($scope.user)
-
-        $scope.revert = ->
-            # $scope.user = angular.copy(original)
-            # $scope.form_signup.$setPristine()
-            # $scope.form_signup.confirmPassword.$setPristine()
-            # console.log $scope.validSerials
-            $scope.validSerials = []
-            # console.log $scope.validSerials
-            # $scope.unlabeledSerials = []
-            $scope.inputs
-            $scope.loadInputs()
-            $scope.serialsForm.$setPristine()
-
-
-
-
-        $scope.canRevert = ->
-            return !$scope.serialsForm.$pristine
-
-        $scope.canSubmit = ->
-            return $scope.serialsForm.$valid 
-
-        # $scope.submitForm = ->
-        #      $scope.showInfoOnSubmit = true
-        #      $scope.revert()    
-
-        # Roy: Serials Part
         #Array of Inputs
         $scope.inputs = []
 
         #Selected Quantity
         $scope.quantity = 1
         
-        # Serials without label
+        # Serials and Label db
         $scope.unlabeledSerials = null
-        # Information about compressors
-        $scope.compressorsInformation = null
-        # Serials valid to insert in db
-        $scope.validSerials = []
+        $scope.unlabeledTokenTecs = null
+        $scope.unlabeledTokenVens = null
 
-        # $("barcode").JsBarcode("RoyCalderon");
+        # Populating Sequence Arrays
+        i = 0
+        while i < 100
+            if i == 0
+                $scope.consecVen[i] = 3
+                $scope.consecTec[i] = 2
+                $scope.consecSer[i] = 1
+            else
+                $scope.consecVen[i] = $scope.consecVen[i - 1] + 3
+                $scope.consecTec[i] = $scope.consecTec[i - 1] + 3
+                $scope.consecSer[i] = $scope.consecSer[i - 1] + 3
+            i++
 
-
-        $scope.loadInputs = ->
-            # 4not Adding more
-            $scope.inputs = []
-
-            # num = $scope.inputs.length          
-            i=0
-            console.log $scope.quantity
-            while i<($scope.quantity)
-                # console.log i+"/"+$scope.quantity
-                j=i+1
-                $scope.inputs.push({ placeholder: "Serial Compresor #" + j })
-                i++
-            logger.log("Se ha preparado el formulario. Proceda a leer los seriales con el lector de codigo de barras.") 
-
-        #Load unlabeled Serials
-        getUnlabeledSerials = ->
-            $http.post("http://cayca:8888/server/ajax/Serials/getUnlabeled.php?countryID=CO").success (data) ->
-                $scope.unlabeledSerials = data
-                return
-            return
-        getUnlabeledSerials()
-        
-        #Load Compressors Information
-        getCompressorsInformation = ->
-            $http.post("http://cayca:8888/server/ajax/Compressors/getCompressor.php").success (data) ->
-                $scope.compressorsInformation = data
-                return
-            return
-        getCompressorsInformation()
-
-        $scope.printSecurityLabel = ->
-            # printContents = "<h3> SAMSUNG "+ $scope.validSerials[0]['capacity'] + " " + $scope.validSerials[0]['refrigerant'] + "</h3>"
-            # printContents = '<div class="col-xs-6">
-            #         <h6>SAMSUNG MK183D-L2UB<br>
-            #             <img id="barcode1"/><br>
-            #             R-134a 115-127V 1/3
-            #         </h6>
-            #         <script>
-            #             $("#barcode1").JsBarcode("4158C3BF800855", {width:1,height:30});
-            #         </script>
-            #     </div>'
-            printContents = document.getElementById('ROOOOY').innerHTML;
-            originalContents = document.body.innerHTML;        
-            popupWin = window.open();
-            popupWin.document.open()
-            popupWin.document.write('<html><head></head><body onload="window.print()">' + printContents + '</html>');
-            popupWin.document.close();
-
-
-])
-
-
-
-
-
-
-# Roy
-# Controllers for MakeInvoice
-
-.controller('newLabelsCtrl', [
-    '$scope', 'logger', '$http'
-    ($scope, logger, $http) ->
-        $scope.dataInserted=[]
-
+        # Debuging Purposes only
         $scope.roYTesting = ->
-            console.log $scope.dataInserted
-            console.log $scope.unlabeledSerials
-            console.log $scope.validSerials
+            # console.log ">>unlabeledTokenVens>>"
+            # console.log $scope.unlabeledTokenVens    
+            # console.log ">>unlabeledTokenTecs>>"
+            # console.log $scope.unlabeledTokenTecs    
+            console.log ">>data2label>>"
+            console.log $scope.data2label
+            console.log ">>data2insert>>"
+            console.log $data2insert
         
+        # Form Manipulation
         $scope.revert = ->
-            $scope.validSerials = []
-            $scope.inputs
+            $scope.data2label=
+                serial: []
+                tokenTec: []
+                tokenVen: []
             $scope.loadInputs()
             $scope.serialsForm.$setPristine()
-
         $scope.canRevert = ->
             return !$scope.serialsForm.$pristine
-
         $scope.canSubmit = ->
             return $scope.serialsForm.$valid 
 
-        #Array of Inputs
-        $scope.inputs = []
-
-        #Selected Quantity
-        $scope.quantity = 1
-        
-        # Serials without label
-        $scope.unlabeledSerials = null
-        $scope.unusedtokens = null
-        $scope.labeledData = null
-        # Serials valid to insert in db
-        $scope.validSerials = []
-
+        # Creation of Input Dinamically
         $scope.loadInputs = ->
             # 4not Adding more
             $scope.inputs = []
-
-            # num = $scope.inputs.length          
             i=0
-            console.log $scope.quantity
             while i<($scope.quantity)
                 # console.log i+"/"+$scope.quantity
                 j=i+1
@@ -174,30 +82,80 @@ angular.module('app.records.ctrls', [])
                 i++
             logger.log("Se ha preparado el formulario. Proceda a leer los seriales con el lector de codigo de barras.") 
 
-        #Load unlabeled Serials
+        # Roy: Loading DATA FORM DB
+        # Loading unlabeled Serials
         getUnlabeledSerials = ->
-            $http.post("http://cayca:8888/server/ajax/Serials/getUnlabeled.php?companyID=20").success (data) ->
-                $scope.unlabeledSerials = data
-                return
+            $filters=
+                companyID: '20'
+            $http({ url: "http://cayca:8888/server/ajax/Serials/listUnlabeledFiltered.php", method: "POST", data: JSON.stringify($filters) })
+            .success (postResponse) ->
+                $scope.unlabeledSerials=postResponse
             return
         getUnlabeledSerials()
 
-        #Load unused Tokens
-        getUnusedTokens = ->
-            $http.post("http://cayca:8888/server/ajax/Serials/getUnlabeled.php?companyID=20").success (data) ->
-                $scope.unusedtokens = data
-                return
+        # Loading unlabeled Tokens Tec
+        getunlabeledTokenTec = ->
+            $filters=
+                country: 'CO'
+                type: 'T'
+            $http({ url: "http://cayca:8888/server/ajax/Tokens/listUnlabeledFiltered.php", method: "POST", data: JSON.stringify($filters) })
+            .success (postResponse) ->
+                $scope.unlabeledTokenTecs=postResponse
             return
-        getUnusedTokens()
+        getunlabeledTokenTec()
 
-        #Load Labeled DATA
-        getLabeledData = ->
-            $http.post("http://cayca:8888/server/ajax/Serials/getUnlabeled.php?companyID=20").success (data) ->
-                $scope.labeledData = data
-                return
+        # Loading unlabeled Tokens Ven
+        getunlabeledTokenVens = ->
+            $filters=
+                country: 'CO'
+                type: 'V'
+            $http({ url: "http://cayca:8888/server/ajax/Tokens/listUnlabeledFiltered.php", method: "POST", data: JSON.stringify($filters) })
+            .success (postResponse) ->
+                $scope.unlabeledTokenVens=postResponse
             return
-        getLabeledData()
-       
+        getunlabeledTokenVens()
+
+        # Preparing DATA 2 Insert
+        $data2insert=
+            token:[]
+            serial:[]
+        # Saving Labels 4 Prints at bartender
+        preparingData = ->
+            $data2insert=
+            token:[]
+            serial:[]
+            for iteration in [0...$scope.data2label['serial'].length] by 1
+                $data2insert['serial'].push($scope.data2label['serial'][iteration])
+                $data2insert['token'].push($scope.data2label['tokenTec'][iteration])
+                $data2insert['serial'].push($scope.data2label['serial'][iteration])
+                $data2insert['token'].push($scope.data2label['tokenVen'][iteration])
+
+        # Saving Labels 4 Prints at bartender
+        $scope.requestLabels = ->                 
+            preparingData()
+            $http({ url: "http://cayca:8888/server/ajax/labeledSerials/add.php", method: "POST", data: JSON.stringify($data2insert) })
+            .success (postResponse) ->
+                if (typeof postResponse) == "string"
+                    if (parseInt(postResponse)>=1)
+                        logger.logSuccess "Se han registrado exitosamente las " +$scope.data2label['serial'].length + " Etiqueta(s)."
+                    if (postResponse.indexOf("PRIMARY")!=-1)
+                        logger.logWarning "Ya solicitaste la(s) " +$scope.data2label['serial'].length + " Etiquetas. Si ya se imprimieron debes confirmar para finalizar."
+                console.log postResponse
+        
+        $scope.confirmLabels = ->
+            preparingData()
+            $http({ url: "http://cayca:8888/server/ajax/labeledSerials/updateDate.php", method: "POST", data: JSON.stringify($data2insert) })
+            .success (postResponse) ->
+                if (typeof postResponse) == "string"
+                    if (postResponse=="1")
+                        logger.logSuccess "Ha concluido el etiquetado de " +$scope.data2label['serial'].length + " compresor(es)."
+                        $scope.revert()
+                    if (postResponse.indexOf("request")!=-1)
+                        logger.logError "Debes solicitar las etiquetas antes de confirmar sus impresiones."
+                    if (postResponse.indexOf("Labeled")!=-1)
+                        logger.logWarning "Ya cumlminaste la impresion de la(s) " +$scope.data2label['serial'].length + " Etiqueta(s)."
+                        $scope.revert()
+                console.log postResponse
 
 ])
 

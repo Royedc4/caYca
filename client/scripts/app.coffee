@@ -193,6 +193,15 @@ angular.module('app', [
                         USER_ROLES.admin
                     ]                
                 )
+            .when(
+                '/records/newLabels'
+                templateUrl: 'views/records/newLabels.html'
+                data:
+                    authorizedRoles: [
+                        USER_ROLES.wholeSalerMA,
+                        USER_ROLES.admin
+                    ]                
+                )
 
             # Redemptions
             .when(
