@@ -25,7 +25,8 @@ angular.module('app.compressors', [])
             console.log "getDBKeys"
             $data4post = 
                 country: $scope.countrySelected.country
-            $http({url:"http://cayca:8888/server/ajax/Tokens/getTByCountry.php", method: "POST", data: JSON.stringify($data4post) })
+                type: 'T'
+            $http({url:"http://cayca:8888/server/ajax/Tokens/listAll.php", method: "POST", data: JSON.stringify($data4post) })
             .success (dataTEC) ->
                 iterator=0
                 while (iterator<dataTEC.length)
@@ -33,7 +34,10 @@ angular.module('app.compressors', [])
                    iterator++
                 logger.logSuccess "Actualmente la BDD de +"+$scope.countrySelected.alternatename+" tiene: "+ dataTEC.length + " Tokens para Tecnicos."
                 return
-            $http({url:"http://cayca:8888/server/ajax/Tokens/getVByCountry.php", method: "POST", data: JSON.stringify($data4post) })
+            $data4post = 
+                country: $scope.countrySelected.country
+                type: 'V'
+            $http({url:"http://cayca:8888/server/ajax/Tokens/listAll.php", method: "POST", data: JSON.stringify($data4post) })
             .success (dataDV) ->
                 iterator=0
                 while (iterator<dataDV.length)
