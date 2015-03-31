@@ -42,6 +42,8 @@ angular.module('app', [
     'app.records.directives'
     'app.records.services'
     'app.records.validation'
+    'app.labels.ctrls'
+    'app.labels.validation'
     ])
 
 .constant 'AUTH_EVENTS',
@@ -59,6 +61,7 @@ angular.module('app', [
     caYcaALM:       'CA'
     caYcaCGG:       'CGG'
     retailDV:       'DV'
+    retailDVC:      'DVC'
     wholeSalerMA:   'MA'
     wholeSalerMAC:  'MAC'
     wholeSalerMG:   'MG'
@@ -202,7 +205,16 @@ angular.module('app', [
                         USER_ROLES.admin
                     ]                
                 )
-
+            # Labels
+            .when(
+                '/labels/production'
+                templateUrl: 'views/labels/production.html'                
+                data:
+                    authorizedRoles: [
+                        USER_ROLES.wholeSalerMA,
+                        USER_ROLES.admin
+                    ]                
+                )
             # Redemptions
             .when(
                 '/redemptions/newRedemption'

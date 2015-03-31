@@ -23,7 +23,7 @@
 
 
     <!--1. Roy: New Accounts [All Roles can create accounts for their lower roles] -->
-    <li ng-show="currentUser.userTypeID=='MGC'">
+    <li ng-show="( currentUser.userTypeID=='MGC' ) || ( currentUser.userTypeID=='ADM' )">
         <a href="#/accounts"><i class="fa fa-users"></i><span data-i18n="Cuentas"></span></a>
         <ul>
             <li><a href="#/accounts/accountsCreation"><i class="fa fa-user"></i> <span data-i18n="Crear Nueva Cuenta"></span></a></li>
@@ -38,7 +38,7 @@
     <li ng-show="currentUser.userTypeID=='MGC'">
         <a href="#/promotions"><i class="fa fa-list-ol"></i><span data-i18n="Promociones"></span></a>
         <ul>
-        <li><a href="#/promotions/totalCoupons"> <i class="fa fa-list-ol"></i> <span data-i18n="Consultar Cupones"></span> </a></li>
+            <li><a href="#/promotions/totalCoupons"> <i class="fa fa-list-ol"></i> <span data-i18n="Consultar Cupones"></span> </a></li>
         </ul>
         <ul>
             <li><a href="#/promotions/totalPoints"> <i class="fa fa-dashboard"></i> <span data-i18n="Consultar puntos"></span> </a></li>
@@ -49,13 +49,21 @@
     </li>
     
     <!--Roy: Labels  [Rol: Etiquetador] -->
-    <li ng-show="currentUser.userTypeID=='MA'">
-        <a href="#/records"><i class="fa fa-tags"></i><span data-i18n="Etiquetas"></span></a>
+    <li ng-show="currentUser.userTypeID=='MA' || currentUser.userTypeID=='ADM'">
+        <a href="#/records"><i class="fa fa-cart-plus"></i><span data-i18n="Etiquetas"></span></a>
         <ul>
             <li><a href="#/records/recordInfo"><i class="fa fa-tags"></i> <span data-i18n="Modus Operandi"></span></a></li>
-            <li><a href="#/records/makeLabels"><i class="fa fa-tag"></i> <span data-i18n="Etiquetas op.1"></span></a></li>
-            <li><a href="#/records/newLabels"><i class="fa fa-tag"></i> <span data-i18n="Etiquetas op.2!"></span></a></li>
+            <!-- <li><a href="#/records/makeLabels"><i class="fa fa-tag"></i> <span data-i18n="Etiquetas op.1"></span></a></li>
+            <li><a href="#/records/newLabels"><i class="fa fa-tag"></i> <span data-i18n="Etiquetas op.2!"></span></a></li> -->
             <li><a href="#/records/makeInvoice"><i class="fa fa-file"></i> <span data-i18n="Nueva Factura"></span></a></li>
+        </ul>
+    </li>
+
+    <!--Roy: Labels  [Rol: Etiquetador] -->
+    <li ng-show="currentUser.userTypeID=='MA' || currentUser.userTypeID=='ADM'">
+        <a href="#/labels"><i class="fa fa-tags"></i><span data-i18n="Etiquetas"></span></a>
+        <ul>
+            <li><a href="#/labels/production"><i class="fa fa-tag"></i> <span data-i18n="Producción"></span></a></li>
         </ul>
     </li>
 
