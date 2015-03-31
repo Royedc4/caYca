@@ -7,10 +7,10 @@
             <div class="panel panel-profile">
                 <div class="panel-heading text-center bg-info">
                     <img alt="" src="images/g1.jpg" class="img-circle img80_80">
-                    <h3>{{main.name}}</h3>
-                    <p>Project Manager</p>                    
+                    <h3>{{currentUser.fullName}}</h3>
+                    <p>-</p>                    
                 </div>
-                <div class="list-justified-container">
+                <!-- <div class="list-justified-container">
                     <ul class="list-justified text-center">
                         <li>
                             <p class="size-h3">679</p>
@@ -25,10 +25,10 @@
                             <p class="text-muted">Following</p>
                         </li>
                     </ul>
-                </div>
+                </div> -->
             </div>
 
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col-sm-6">
                     <section class="panel panel-box">
                         <div class="panel-top bg-facebook">
@@ -71,11 +71,9 @@
                         </div>
                     </section>                        
                 </div>
-            </div>
-
-
-          
+            </div> -->  
         </div>
+
         <div class="col-md-6">
 
             <div class="row">
@@ -136,27 +134,27 @@
                                 <li>
                                     <span class="icon glyphicon glyphicon-user"></span>
                                     <label>User name</label>
-                                    {{main.name}}
+                                    {{currentUser.fullName}}
                                 </li>
                                 <li>
                                     <span class="icon glyphicon glyphicon-envelope"></span>
                                     <label>Email</label>
-                                    name@example.com
+                                    {{currentUser.email}}
                                 </li>
                                 <li>
                                     <span class="icon glyphicon glyphicon-home"></span>
                                     <label>Address</label>
-                                    Street 123, Avenue 45, Country
+                                    {{currentUser.address}}
                                 </li>
                                 <li>
                                     <span class="icon glyphicon glyphicon-earphone"></span>
                                     <label>Contact</label>
-                                    (+012) 345 6789
+                                    {{currentUser.celphone}}
                                 </li>
                                 <li>
                                     <span class="icon glyphicon glyphicon-flag"></span>
                                     <label>Nationality</label>
-                                    Australia
+                                    {{currentUser.country}}
                                 </li>
                             </ul>
                             
@@ -167,7 +165,7 @@
         </div>
     </div>
 
-    <div class="panel panel-default">
+    <!-- <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">Line Chart</h3>
         </div>
@@ -178,6 +176,6 @@
                  style="width: 100%; height: 300px;"
                  ></div>
         </div>
-    </div>    
+    </div>    --> 
 
 </div>

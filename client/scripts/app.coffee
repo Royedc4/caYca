@@ -244,6 +244,28 @@ angular.module('app', [
                 )
             # Commons
             .when(
+                '/pages/profile'
+                templateUrl: 'views/pages/profile.html'
+                data:
+                    authorizedRoles: [
+                        USER_ROLES.admin,
+                        USER_ROLES.technician,
+                        USER_ROLES.caYcaALM, 
+                        USER_ROLES.caYcaCGG,
+                        USER_ROLES.retailDV,
+                        USER_ROLES.wholeSalerMA,
+                        USER_ROLES.wholeSalerMAC,
+                        USER_ROLES.wholeSalerMG,
+                        USER_ROLES.wholeSalerMGC
+                        ]
+                )
+            .when(
+                '/404'
+                templateUrl: 'views/pages/404.html'
+                data:
+                    authorizedRoles: [USER_ROLES.public]
+                )
+            .when(
                 '/pages/signin'
                 templateUrl: 'views/pages/signin.html'                
                 )
@@ -262,16 +284,6 @@ angular.module('app', [
             .when(
                 '/pages/lock-screen'
                 templateUrl: 'views/pages/lock-screen.html'
-                )
-            .when(
-                '/pages/profile'
-                templateUrl: 'views/pages/profile.html'
-                )
-            .when(
-                '/404'
-                templateUrl: 'views/pages/404.html'
-                data:
-                    authorizedRoles: [USER_ROLES.public]
                 )
             .when(
                 '/pages/500'
