@@ -38,10 +38,6 @@ angular.module('app', [
     'app.admin.ctrls'
     'app.admin.directives'
     'app.admin.services'
-    'app.records.ctrls'
-    'app.records.directives'
-    'app.records.services'
-    'app.records.validation'
     'app.labels.ctrls'
     'app.labels.validation'
     ])
