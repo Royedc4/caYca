@@ -6,8 +6,9 @@ angular.module('app.chart.ctrls', [])
     '$scope'
     ($scope) ->
 
+        # Roy
         $scope.easypiechart = 
-            percent: 65
+            percent: 1
             options:
                 animate:
                     duration: 1000
@@ -18,7 +19,7 @@ angular.module('app.chart.ctrls', [])
                 lineWidth: 5
 
         $scope.easypiechart2 = 
-            percent: 35
+            percent: 83
             options:
                 animate:
                     duration: 1000
@@ -146,11 +147,15 @@ angular.module('app.chart.ctrls', [])
             { year: '2013', a: 28, b: 22, c: 20 }
         ]
 
+        # Roy:
         $scope.donutData = [
-            {label: "Download Sales", value: 12}
-            {label: "In-Store Sales", value: 30}
-            {label: "Mail-Order Sales", value: 20}
-            {label: "Online Sales", value: 19}
+            {label: 'MD152C-L1UB', value: 480 }
+            {label: 'MK183D-L2UB', value: 479 }
+            {label: 'MSA143C-S1A', value: 504 }
+            {label: 'MSA162C-L1B', value: 503 }
+            {label: 'MSA170C-L1B', value: 503 }
+            {label: 'SD162C-L1UB', value: 480 }
+            {label: 'SK1A1C-L2WB', value: 901 }
         ]
 ])
 .controller('flotChartCtrl', [

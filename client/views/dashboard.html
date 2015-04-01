@@ -12,7 +12,54 @@
     </div>  
 -->
 
-<div class="row">
+
+<div data-ng-controller="morrisChartCtrl">
+    <div class="panel panel-default" ng-show="currentUser.userTypeID=='MA' || currentUser.userTypeID=='ADM'">
+        <div class="panel-heading"><span class="glyphicon glyphicon-th"></span>Stock de Compresores</div>
+        <div class="panel-body">
+            <div morris-chart
+            data-data="donutData"
+            data-type="donut"
+            data-xkey="year"
+            data-colors='["#60CD9B","#66B5D7","#EEC95A","#E87352"]'
+            ></div>
+        </div>
+    </div>
+</div>
+
+<div data-ng-controller="chartCtrl">
+    <div ng-show="currentUser.userTypeID=='MA' || currentUser.userTypeID=='ADM'" class="row">
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Progreso de Etiquetado!</h3>
+                </div>
+                <div class="panel-body text-center">
+                    <div easypiechart options="easypiechart.options" percent="easypiechart.percent" class="easypiechart">
+                        <span class="pie-percent" ng-bind="easypiechart.percent"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Progreso de Ventas!</h3>
+                </div>
+                <div class="panel-body text-center">
+                    <div easypiechart options="easypiechart2.options" percent="easypiechart2.percent" class="easypiechart">
+                        <span class="pie-percent" ng-bind="easypiechart2.percent"></span>
+                    </div>
+                </div>
+            </div>            
+        </div>
+    </div>
+</div>
+
+
+
+<div ng-show="currentUser.userTypeID=='ADM'" class="row">
 
     <section class="panel panel-default">
         <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> <span data-i18n="Mapa Mundial"></span></strong></div>
@@ -25,7 +72,7 @@
 
 
 <!-- stats -->
-<div class="row">
+<div ng-show="currentUser.userTypeID=='ADM'" class="row">
     <div class="col-lg-3 col-xsm-6">
         <div class="panel mini-box">
             <span class="box-icon bg-success">
