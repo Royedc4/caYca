@@ -62,13 +62,13 @@
 
 
     <!--Roy: Redemptions [Rol: Technician/Seller Redemptioner/Seller] -->
-    <li ng-show="currentUser.userTypeID=='TEC' || currentUser.userTypeID=='ADM'">
+    <li ng-show="currentUser.userTypeID=='TEC' || currentUser.userTypeID=='DV' || currentUser.userTypeID=='DVC' || currentUser.userTypeID=='ADM'">
         <a href="#/redemptions"><i class="fa fa-shopping-cart"></i><span data-i18n="Canjes"></span></a>
         <ul>
             <li><a href="#/redemptions/points"><i class="fa fa-dashboard"></i> <span data-i18n="Consultar Puntos"></span></a></li>
             <li><a href="#/redemptions/list"><i class="fa fa-file-text"></i> <span data-i18n="Consultar Canjes"></span></a></li>
-            <li><a href="#/redemptions/technician"><i class="fa fa-shopping-cart"></i> <span data-i18n="Canje Tecnico"></span></a></li>
-            <li><a href="#/redemptions/seller"><i class="fa fa-shopping-cart"></i> <span data-i18n="Canje Vendedor"></span></a></li>
+            <li ng-hide="currentUser.userTypeID=='DV' || currentUser.userTypeID=='TEC'"><a href="#/redemptions/technician"><i class="fa fa-shopping-cart"></i> <span data-i18n="Canje Tecnico"></span></a></li>
+            <li ng-hide="currentUser.userTypeID=='TEC'"><a href="#/redemptions/seller"><i class="fa fa-shopping-cart"></i> <span data-i18n="Canje Vendedor"></span></a></li>
         </ul>
     </li>
 
