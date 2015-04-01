@@ -111,6 +111,7 @@ angular.module('app', [
                         USER_ROLES.caYcaALM, 
                         USER_ROLES.caYcaCGG,
                         USER_ROLES.retailDV,
+                        USER_ROLES.retailDVC,
                         USER_ROLES.wholeSalerMA,
                         USER_ROLES.wholeSalerMAC,
                         USER_ROLES.wholeSalerMG,
@@ -119,8 +120,8 @@ angular.module('app', [
                 )
             #Accounts
             .when(
-                '/accounts/accountsCreation'
-                templateUrl: 'views/accounts/accountsCreation.html'                
+                '/accounts/new'
+                templateUrl: 'views/accounts/new.html'                
                 data:
                     authorizedRoles: [
                         USER_ROLES.wholeSalerMGC,
@@ -141,8 +142,8 @@ angular.module('app', [
                 )
             #Companies
             .when(
-                '/companies/newCompany'
-                templateUrl: 'views/companies/newCompany.html'                
+                '/companies/new'
+                templateUrl: 'views/companies/new.html'                
                 data:
                     authorizedRoles: [
                         USER_ROLES.wholeSalerMGC,
@@ -151,8 +152,8 @@ angular.module('app', [
                 )
             #Compressors
             .when(
-                '/compressors/compressorsLoad'
-                templateUrl: 'views/compressors/compressorsLoad.html'                
+                '/compressors/newImportation'
+                templateUrl: 'views/compressors/newImportation.html'                
                 data:
                     authorizedRoles: [
                         USER_ROLES.caYcaCGG,
@@ -160,45 +161,18 @@ angular.module('app', [
                     ]
                 )
             .when(
-                '/compressors/keysLoad'
-                templateUrl: 'views/compressors/keysLoad.html'                
+                '/compressors/tokens'
+                templateUrl: 'views/compressors/tokens.html'                
                 data:
                     authorizedRoles: [
                         USER_ROLES.caYcaCGG,
                         USER_ROLES.admin
                     ]
                 )
-            # Records
+            # Sales
             .when(
-                '/records/recordInfo'
-                templateUrl: 'views/records/recordInfo.html'                
-                data:
-                    authorizedRoles: [
-                        USER_ROLES.wholeSalerMA,
-                        USER_ROLES.admin
-                    ]                
-                )
-            .when(
-                '/records/makeInvoice'
-                templateUrl: 'views/records/makeInvoice.html'                
-                data:
-                    authorizedRoles: [
-                        USER_ROLES.wholeSalerMA,
-                        USER_ROLES.admin
-                    ]                
-                )
-            .when(
-                '/records/makeLabels'
-                templateUrl: 'views/records/makeLabels.html'
-                data:
-                    authorizedRoles: [
-                        USER_ROLES.wholeSalerMA,
-                        USER_ROLES.admin
-                    ]                
-                )
-            .when(
-                '/records/newLabels'
-                templateUrl: 'views/records/newLabels.html'
+                '/sales/newInvoice'
+                templateUrl: 'views/sales/newInvoice.html'                
                 data:
                     authorizedRoles: [
                         USER_ROLES.wholeSalerMA,
@@ -217,42 +191,89 @@ angular.module('app', [
                 )
             # Redemptions
             .when(
-                '/redemptions/newRedemption'
-                templateUrl: 'views/redemptions/newRedemption.html'                
+                '/redemptions/technician'
+                templateUrl: 'views/redemptions/technician.html'
+                data:
+                    authorizedRoles: [
+                        USER_ROLES.admin,
+                        USER_ROLES.retailDVC
+                        ]
                 )
             .when(
-                '/redemptions/checkRedemptions'
-                templateUrl: 'views/redemptions/checkRedemptions.html'                
+                '/redemptions/seller'
+                templateUrl: 'views/redemptions/seller.html'
+                data:
+                    authorizedRoles: [
+                        USER_ROLES.admin,
+                        USER_ROLES.retailDVC,
+                        USER_ROLES.retailDV
+                        ]
                 )
             .when(
-                '/redemptions/checkPoints'
-                templateUrl: 'views/redemptions/checkPoints.html'
+                '/redemptions/list'
+                templateUrl: 'views/redemptions/list.html'
+                data:
+                    authorizedRoles: [
+                        USER_ROLES.admin,
+                        USER_ROLES.technician,
+                        USER_ROLES.retailDV,
+                        USER_ROLES.retailDVC
+                        ]
+                )
+            .when(
+                '/redemptions/points'
+                templateUrl: 'views/redemptions/points.html'
+                data:
+                    authorizedRoles: [
+                        USER_ROLES.admin,
+                        USER_ROLES.technician,
+                        USER_ROLES.retailDV,
+                        USER_ROLES.retailDVC
+                        ]
                 )  
             # Raffles                         
             .when(
-                '/raffles/checkCoupons'
-                templateUrl: 'views/raffles/checkCoupons.html'                
+                '/raffles/listCoupons'
+                templateUrl: 'views/raffles/listCoupons.html'
+                data:
+                    authorizedRoles: [
+                        USER_ROLES.admin,
+                        USER_ROLES.technician,
+                        USER_ROLES.retailDV,
+                        USER_ROLES.retailDVC
+                        ]
                 )
             .when(
                 '/raffles/results'
-                templateUrl: 'views/raffles/results.html'                
+                templateUrl: 'views/raffles/results.html'
+                data:
+                    authorizedRoles: [
+                        USER_ROLES.admin,
+                        USER_ROLES.technician,
+                        USER_ROLES.retailDV,
+                        USER_ROLES.retailDVC
+                        ]
                 )
-            # Promotions
+            # Get Raffle Coupon
             .when(
-                '/promotions/newCoupon'
-                templateUrl: 'views/promotions/newCoupon.html'                
+                '/raffles/newCoupon'
+                templateUrl: 'views/raffles/newCoupon.html'
+                data:
+                    authorizedRoles: [
+                        USER_ROLES.admin,
+                        USER_ROLES.technician,
+                        USER_ROLES.retailDV,
+                        USER_ROLES.retailDVC
+                        ]
                 )
+            # Reports
             .when(
-                '/promotions/totalCoupons'
-                templateUrl: 'views/promotions/totalCoupons.html'                
-                )
-            .when(
-                '/promotions/totalPoints'
-                templateUrl: 'views/promotions/totalPoints.html'                
-                )
-            .when(
-                '/promotions/totalRedemptions'
-                templateUrl: 'views/promotions/totalRedemptions.html'                
+                '/reports/statistics'
+                templateUrl: 'views/reports/statistics.html'
+                data:
+                    authorizedRoles: [
+                        USER_ROLES.admin
+                        ]
                 )
             # Commons
             .when(
@@ -265,6 +286,7 @@ angular.module('app', [
                         USER_ROLES.caYcaALM, 
                         USER_ROLES.caYcaCGG,
                         USER_ROLES.retailDV,
+                        USER_ROLES.retailDVC,
                         USER_ROLES.wholeSalerMA,
                         USER_ROLES.wholeSalerMAC,
                         USER_ROLES.wholeSalerMG,

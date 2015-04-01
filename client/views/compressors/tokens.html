@@ -2,30 +2,39 @@
 
     <div class="panel panel-default">
         <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Tokens de Seguridad</strong></div>
-        <div class="panel-body text-center">
-            <p>
+        <div class="panel-body text-center" >
+
+            <div class="col-md-12">
                 <span class="ui-select">
                     <select ng-model="countrySelected" ng-options="country.alternatename for country in countries">
                         <option value="">-- Seleccione pais --</option>
                     </select>
                 </span> 
-                <a href="javascript:;" ng-click="getDBKeys()" class="btn btn-danger btn-metro">
-                    <i class="fa fa-eraser"></i>
-                    <span>Traer De BDD!</span>
-                </a>
-                <a href="javascript:;" ng-click="genKeys()" class="btn btn-warning btn-metro">
-                    <i class="fa fa-magic"></i>
-                    <span>Generar Pines!</span>
-                </a>
+            </div>
+            <div class="text-center col-md-12">
                 <a href="javascript:;" ng-click="eraseKeys()" class="btn btn-danger btn-metro">
                     <i class="fa fa-eraser"></i>
-                    <span>Borrar Generación!</span>
+                    <span>Borrar</span>
                 </a>
+            </div>
+            <div class="col-md-12">
+                <a href="javascript:;" ng-click="getDBKeys()" class="btn btn-danger btn-metro">
+                    <i class="fa fa-eraser"></i>
+                    <span>Traer</span>
+                </a>
+            </div>
+            <div class="col-md-12">
+                <a href="javascript:;" ng-click="genKeys()" class="btn btn-warning btn-metro">
+                    <i class="fa fa-magic"></i>
+                    <span>Generar</span>
+                </a>
+            </div>
+            <div class="col-md-12">
                 <a href="" ng-click="saveKeys()" class="btn btn-success btn-metro">
                     <i class="fa fa-database"></i>
-                    <span>Guardar en BDD</span>
+                    <span>Guardar</span>
                 </a>
-            </p>
+            </div>  
         </div>
     </div>
 

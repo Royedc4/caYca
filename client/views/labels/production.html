@@ -13,13 +13,6 @@
 							<input type="number" class="form-control" ng-minlenght=0 ng-maxlenght=30 ng-model="quantity">
 						</div>
 					</div>
-				<!-- <div class="col-md-3">
-					<p>
-						Seleccione la cantidad de compresores:
-						<span class="space"></span>
-						<span class="ui-select"><select ng-model="quantity" ng-options="opt for opt in inputOptions.quantity"></select></span>
-					</p>
-				</div> -->
 				<div class="col-md-9">
 					<button ng-click="loadInputs()" class="btn btn-primary btn-block"><span class="fa fa-file-o"></span> Preparar</button>
 				</div>
@@ -59,7 +52,7 @@
 			data-ng-click="revert()"
 			><span class="fa fa-eraser"></span> Limpiar Formulario</button>
 
-			<button class='btn btn-danger' ng-click="roYTesting()"><span class="fa fa-user-secret"></span> Roy TesT</button>
+			<button ng-show="currentUser.userTypeID=='ADM'" class='btn btn-danger' ng-click="roYTesting()"><span class="fa fa-user-secret"></span> Roy TesT</button>
 
 			<button class='btn btn-info' data-ng-disabled="!canSubmit()" ng-click="requestLabels()"><span class="fa fa-print"></span> Solicitar Etiquetas</button>
 			<button type="submit"
@@ -69,8 +62,8 @@
 			><span class="fa fa-database"></span> Confirmar Impresiones</button>
 			
 			<div class="callout callout-info">
-				<p>El Boton de guardar estara disponible cuando se ingresen y validen todos los seriales de compresores.</p>
-				<p>El Boton de borrar estara disponible cuando algun serial se haya ingresado.</p>
+				<p>Los botones de solicitar etiquetas y confirmar impresiones estaran disponibles cuando se ingresen y validen todos los seriales y tokens.</p>
+				<p>El Boton de borrar estara disponible cuando algun dato se haya ingresado.</p>
 			</div>
 		</div>
 	</section>

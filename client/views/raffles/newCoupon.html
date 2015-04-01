@@ -1,0 +1,72 @@
+<div class="page">
+
+	<div class="panel panel-default" data-ng-controller="formConstraintsCtrl">
+		<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Registrar Cupón</strong></div>
+		<div class="panel-body">
+			<form name="form_constraints" class="form-validation" novalidate data-ng-submit="submitForm()">
+				<div class="form-group">
+					<label for="">Ingrese el serial Del Compresor</label>
+					<input  type="text"
+					class="form-control"
+					required
+					data-ng-minlength=15
+					data-ng-model="form.compressorID"
+					>
+					<label for="">Ingrese el codigo de seguridad: </label>
+					<input  type="text"
+					class="form-control"
+					required
+					data-ng-minlength=15
+					data-ng-model="form.PIN"
+					>
+							<!-- <label for="">Ingrese el numero de factura de compra: </label>
+							<input  type="text"
+							class="form-control"
+							required
+							data-ng-minlength=15
+							data-ng-model="form.numfact"
+							> -->
+							
+							<!-- Fecha -->
+							<!-- <div data-ng-controller="DatepickerDemoCtrl">
+								<label for="">Ingrese la fecha de la factura de compra: </label>
+								<div class="col-sm-11 input-group ui-datepicker">
+									<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+									<input type="text" 
+									class="form-control"
+									datepicker-popup="{{format}}"
+									ng-model="dt"
+									is-open="opened"
+									min="minDate"
+									max="'2015-06-22'"
+									datepicker-options="dateOptions" 
+									date-disabled="disabled(date, mode)"
+									ng-required="true" 
+									close-text="Close">
+								</div>
+							</div> -->
+							<br>
+							<input  type="checkbox"
+							id="required_checkbox"
+							required
+							data-ng-model="form.required_checkbox"> 
+							<label required for="required_checkbox">Tengo conocimiento y estoy de acuerdo con las politicas de promociones</label>
+						</div>
+						<button type="submit"
+						class="btn btn-success"
+						data-ng-disabled="!canSubmit()"
+						>Procesar promocion</button>
+						<button class="btn btn-default"
+						data-ng-disabled="!canRevert()"
+						data-ng-click="revert()"
+						>Limpiar Información</button>
+						<div class="callout callout-info">
+							<p>El Boton de procesar promocion estara disponible cuando se llenen todos los campos requeridos.</p>
+							<p>El Boton de borrar estara disponible cuando algun campo este lleno.</p>
+						</div>
+					</form>
+				</div>
+			</div>
+
+		</div>
+		

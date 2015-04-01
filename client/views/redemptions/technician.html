@@ -1,0 +1,50 @@
+<div class="page">
+
+	<!-- Roy: Procesar Nueva Garantia -->
+	<section class="panel panel-default">
+		<div class="col-md-12" data-ng-controller="formConstraintsCtrl">
+			<div class="panel panel-default">
+				<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Procesar Nueva Garantía</strong></div>
+				<div class="panel-body">
+					<form name="form_constraints" class="form-validation" novalidate data-ng-submit="submitForm()">
+						<div class="form-group">
+							<label for="">Serial Del Compresor</label>
+							<input  type="text"
+							class="form-control"
+							required
+							data-ng-minlength=15
+							data-ng-model="form.required"
+							>
+							<br>
+							<label for="">Informe tecnico del daño del compresor</label>
+							<textarea class="form-control"
+							rows="10"
+							required
+							data-ng-minlength=30
+							data-ng-model="form.required_textarea"></textarea>
+							<br>
+							<input  type="checkbox"
+							id="required_checkbox"
+							required
+							data-ng-model="form.required_checkbox"> 
+							<label required for="required_checkbox">Tengo conocimiento y estoy de acuerdo con las politicas de garantías</label>
+						</div>
+						<button type="submit"
+						class="btn btn-success"
+						data-ng-disabled="!canSubmit()"
+						>Procesar Garantía</button>
+						<button class="btn btn-default"
+						data-ng-disabled="!canRevert()"
+						data-ng-click="revert()"
+						>Limpiar Información</button>
+						<div class="callout callout-info">
+							<p>El Boton de crear estara disponible cuando se llenen todos los campos requeridos.</p>
+							<p>El Boton de borrar estara disponible cuando algun campo este lleno.</p>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+
+</div>
