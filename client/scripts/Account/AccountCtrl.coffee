@@ -69,8 +69,8 @@ angular.module('app.account.ctrls', [])
 
 
 .controller('NewAccountCtrl', [
-    '$scope', 'logger', '$http'
-    ($scope, logger, $http ) ->
+    'REST_API','$scope', 'logger', '$http'
+    (REST_API,$scope, logger, $http ) ->
         console.log "@NewAccountCtrl 4 Mayor->GerenteComercial :)"
         # ng-model 4 user
         $scope.user = 
@@ -92,7 +92,7 @@ angular.module('app.account.ctrls', [])
 
         #Load companies
         getRetailerCompanies = ->
-            $http.post("http://cayca:8888/server/ajax/Tables/getRetailerCompanies.php").success (data) ->
+            $http.post(REST_API.hostname+"/server/ajax/Tables/getRetailerCompanies.php").success (data) ->
                 $scope.retailers = data
                 return
             return
@@ -100,7 +100,7 @@ angular.module('app.account.ctrls', [])
 
          #Load cities
         getCities = ->
-            $http.post("http://cayca:8888/server/ajax/Tables/getCity.php").success (data) ->
+            $http.post(REST_API.hostname+"/server/ajax/Tables/getCity.php").success (data) ->
                 $scope.cities = data
                 return
             return
@@ -127,7 +127,7 @@ angular.module('app.account.ctrls', [])
         
         #Load userTypes
         getUserType = ->
-            $http.post("http://cayca:8888/server/ajax/Users/m_getUserType.php").success (data) ->
+            $http.post(REST_API.hostname+"/server/ajax/Users/m_getUserType.php").success (data) ->
                 $scope.userTypes = data
                 return
             return
@@ -157,7 +157,7 @@ angular.module('app.account.ctrls', [])
             # $scope.data["serialsSelected"] = $serialsWithoutNo
             $http.defaults.headers.post["Content-Type"] = "application/json"            
             # console.log ($scope.data)
-            $http({ url: "http://cayca:8888/server/ajax/Users/addUser.php", method: "POST", data: JSON.stringify(JSON.stringify($scope.data)) })
+            $http({ url: REST_API.hostname+"/server/ajax/Users/addUser.php", method: "POST", data: JSON.stringify(JSON.stringify($scope.data)) })
             .success (postResponse) ->
                 console.log "success postResponse: " + (postResponse)
                 console.log "success stringify: " + JSON.stringify(postResponse)
@@ -169,8 +169,8 @@ angular.module('app.account.ctrls', [])
 
 
 .controller('NewTechnician', [
-    '$scope', 'logger', '$http'
-    ($scope, logger, $http ) ->
+    'REST_API','$scope', 'logger', '$http'
+    (REST_API,$scope, logger, $http ) ->
         console.log "@NewTechnician :)"
 # ng-model 4 user
         $scope.user = 
@@ -186,7 +186,7 @@ angular.module('app.account.ctrls', [])
 
         #Load cities
         getCities = ->
-            $http.post("http://cayca:8888/server/ajax/Tables/getCity.php").success (data) ->
+            $http.post(REST_API.hostname+"/server/ajax/Tables/getCity.php").success (data) ->
                 $scope.cities = data
                 return
             return
@@ -229,7 +229,7 @@ angular.module('app.account.ctrls', [])
             # console.log ($scope.data)
             $http.defaults.headers.post["Content-Type"] = "application/json"            
             
-            $http({ url: "http://cayca:8888/server/ajax/Users/addUser.php", method: "POST", data: JSON.stringify(JSON.stringify($scope.data)) })
+            $http({ url: REST_API.hostname+"/server/ajax/Users/addUser.php", method: "POST", data: JSON.stringify(JSON.stringify($scope.data)) })
             .success (postResponse) ->
                 if (typeof postResponse) == "string"
                     if (postResponse.indexOf("ID") > -1)
@@ -245,7 +245,7 @@ angular.module('app.account.ctrls', [])
                     $scope.revert()
 
                     #Sending Email
-                    $http({ url: "http://cayca:8888/server/ajax/Users/addUserConfirm.php", method: "POST", data: JSON.stringify(JSON.stringify($scope.data)) })
+                    $http({ url: REST_API.hostname+"/server/ajax/Users/addUserConfirm.php", method: "POST", data: JSON.stringify(JSON.stringify($scope.data)) })
                     .success (postResponseB) ->
                         console.log "Roy: " + JSON.stringify(postResponseB)
                         logger.logSuccess "Se ha enviado el correo con la información de registro a: "+ $scope.data.email

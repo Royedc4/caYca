@@ -3,15 +3,15 @@
 angular.module('app.compressors', [])
 
 .controller('keysCtrl', [
-    '$scope', 'logger', '$http'
-    ($scope, logger, $http) ->
+    'REST_API','$scope', 'logger', '$http'
+    (REST_API,$scope, logger, $http) ->
 
         $scope.countrySelected=''
 
 
         #Load Countries
         getCountries = ->
-            $http.post("http://cayca:8888/server/ajax/Tables/getCountry.php").success (data) ->
+            $http.post(REST_API.hostname+"/server/ajax/Tables/getCountry.php").success (data) ->
                 $scope.countries = data
                 return
             return
@@ -26,7 +26,7 @@ angular.module('app.compressors', [])
             $data4post = 
                 country: $scope.countrySelected.country
                 type: 'T'
-            $http({url:"http://cayca:8888/server/ajax/Tokens/listAll.php", method: "POST", data: JSON.stringify($data4post) })
+            $http({url:REST_API.hostname+"/server/ajax/Tokens/listAll.php", method: "POST", data: JSON.stringify($data4post) })
             .success (dataTEC) ->
                 iterator=0
                 while (iterator<dataTEC.length)
@@ -37,7 +37,7 @@ angular.module('app.compressors', [])
             $data4post = 
                 country: $scope.countrySelected.country
                 type: 'V'
-            $http({url:"http://cayca:8888/server/ajax/Tokens/listAll.php", method: "POST", data: JSON.stringify($data4post) })
+            $http({url:REST_API.hostname+"/server/ajax/Tokens/listAll.php", method: "POST", data: JSON.stringify($data4post) })
             .success (dataDV) ->
                 iterator=0
                 while (iterator<dataDV.length)
@@ -115,7 +115,7 @@ angular.module('app.compressors', [])
         
             $http.defaults.headers.post["Content-Type"] = "application/json"            
             console.log ($scope.data)
-            $http({ url: "http://cayca:8888/server/ajax/Tokens/addTokens.php", method: "POST", data: JSON.stringify(JSON.stringify($scope.data)) })
+            $http({ url: REST_API.hostname+"/server/ajax/Tokens/addTokens.php", method: "POST", data: JSON.stringify(JSON.stringify($scope.data)) })
             .success (postResponse) ->
                 # console.log "Roy: " + JSON.stringify(postResponse)
                 logger.logSuccess "Se han guardado exitosamente: "+ parseInt($scope.Keys["TEC"].length+$scope.Keys["DV"].length)+" Tokens."
@@ -128,8 +128,8 @@ angular.module('app.compressors', [])
 ])
 
 .controller('compressorsCtrl', [
-    '$scope', '$filter', '$http'
-    ($scope, $filter, $http) ->
+    'REST_API','$scope', '$filter', '$http'
+    (REST_API,$scope, $filter, $http) ->
         # filter
         $scope.companies = []
         $scope.countries = []
@@ -262,7 +262,7 @@ angular.module('app.compressors', [])
         
         #Load Countries
         getCountries = ->
-            $http.post("http://cayca:8888/server/ajax/Tables/getCountry.php").success (data) ->
+            $http.post(REST_API.hostname+"/server/ajax/Tables/getCountry.php").success (data) ->
                 $scope.countries = data
                 return
             return
@@ -270,7 +270,7 @@ angular.module('app.compressors', [])
 
         #Load Companies
         getCompanies = ->
-            $http.post("http://cayca:8888/server/ajax/Tables/getCompany.php").success (data) ->
+            $http.post(REST_API.hostname+"/server/ajax/Tables/getCompany.php").success (data) ->
                 $scope.companies = data
                 return
             return
@@ -291,7 +291,7 @@ angular.module('app.compressors', [])
             $scope.data["serialsSelected"] = $serialsWithoutNo
             $http.defaults.headers.post["Content-Type"] = "application/json"            
             console.log ($scope.data)
-            $http({ url: "http://cayca:8888/server/ajax/Serials/addSerial.php", method: "POST", data: JSON.stringify(JSON.stringify($scope.data)) })
+            $http({ url: REST_API.hostname+"/server/ajax/Serials/addSerial.php", method: "POST", data: JSON.stringify(JSON.stringify($scope.data)) })
             .success (postResponse) ->
                 console.log "success: " + postResponse
             return

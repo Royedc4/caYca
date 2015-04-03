@@ -20,8 +20,8 @@ angular.module('app.account.services', [])
     return this 
 
 .factory('LoginService', [
-    '$http',  'logger', 'Session'
-    ($http,  logger, Session) ->
+    'REST_API','$http',  'logger', 'Session'
+    (REST_API,$http,  logger, Session) ->
         # !!Session.userID is equivalent to (Session.userID!=0) ? true : false)
         isAuthenticated: () ->
             return !!Session.userID
@@ -43,7 +43,7 @@ angular.module('app.account.services', [])
 
         login: (credentials) -> 
                 return $http
-                    .post('http://cayca:8888/server/ajax/Users/getUser.php', (JSON.stringify(credentials)))
+                    .post(REST_API.hostname+"/server/ajax/Users/getUser.php", (JSON.stringify(credentials)))
                     .then((res) ->
                         if (res.data[0]['loggedIn'])
                             # console.log "SignIn Success: "
@@ -62,15 +62,15 @@ angular.module('app.account.services', [])
 ])
 
 .factory('123LoginService', [ 
-    '$http', '$location', 'logger', '$timeout'
-    ($http, $location, logger, $timeout) ->
+    'REST_API','$http', '$location', 'logger', '$timeout'
+    (REST_API,$http, $location, logger, $timeout) ->
         login: (credentials) -> 
             console.log "LOGIN Service!"
 
             userDATA={}
             console.log credentials            
             $http.defaults.headers.post["Content-Type"] = "application/json"            
-            $http({ url: "http://cayca:8888/server/ajax/Users/getUser.php", method: "POST", data: JSON.stringify(JSON.stringify(credentials)) })
+            $http({ url: REST_API.hostname+"/server/ajax/Users/getUser.php", method: "POST", data: JSON.stringify(JSON.stringify(credentials)) })
             .success (postResponse) ->
                 # console.log "success NORMAL: " + (postResponse)
                 if (postResponse[0]['loggedIn'])

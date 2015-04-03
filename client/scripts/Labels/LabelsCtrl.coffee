@@ -6,8 +6,8 @@ angular.module('app.labels.ctrls', [])
 # Controllers for 
 
 .controller('productionCtrl', [
-    '$scope', 'logger', '$http'
-    ($scope, logger, $http) ->
+    'REST_API','$scope', 'logger', '$http'
+    (REST_API,$scope, logger, $http) ->
         # Definition of objets
 
         # Control Data
@@ -87,7 +87,7 @@ angular.module('app.labels.ctrls', [])
         getUnlabeledSerials = ->
             $filters=
                 companyID: '20'
-            $http({ url: "http://cayca:8888/server/ajax/Serials/listUnlabeledFiltered.php", method: "POST", data: JSON.stringify($filters) })
+            $http({ url: REST_API.hostname+"/server/ajax/Serials/listUnlabeledFiltered.php", method: "POST", data: JSON.stringify($filters) })
             .success (postResponse) ->
                 $scope.unlabeledSerials=postResponse
             return
@@ -98,7 +98,7 @@ angular.module('app.labels.ctrls', [])
             $filters=
                 country: 'CO'
                 type: 'T'
-            $http({ url: "http://cayca:8888/server/ajax/Tokens/listUnlabeledFiltered.php", method: "POST", data: JSON.stringify($filters) })
+            $http({ url: REST_API.hostname+"/server/ajax/Tokens/listUnlabeledFiltered.php", method: "POST", data: JSON.stringify($filters) })
             .success (postResponse) ->
                 $scope.unlabeledTokenTecs=postResponse
             return
@@ -109,7 +109,7 @@ angular.module('app.labels.ctrls', [])
             $filters=
                 country: 'CO'
                 type: 'V'
-            $http({ url: "http://cayca:8888/server/ajax/Tokens/listUnlabeledFiltered.php", method: "POST", data: JSON.stringify($filters) })
+            $http({ url: REST_API.hostname+"/server/ajax/Tokens/listUnlabeledFiltered.php", method: "POST", data: JSON.stringify($filters) })
             .success (postResponse) ->
                 $scope.unlabeledTokenVens=postResponse
             return
@@ -133,7 +133,7 @@ angular.module('app.labels.ctrls', [])
         # Saving Labels 4 Prints at bartender
         $scope.requestLabels = ->                 
             preparingData()
-            $http({ url: "http://cayca:8888/server/ajax/labeledSerials/add.php", method: "POST", data: JSON.stringify($data2insert) })
+            $http({ url: REST_API.hostname+"/server/ajax/labeledSerials/add.php", method: "POST", data: JSON.stringify($data2insert) })
             .success (postResponse) ->
                 if (typeof postResponse) == "string"
                     if (parseInt(postResponse)>=1)
@@ -144,7 +144,7 @@ angular.module('app.labels.ctrls', [])
         
         $scope.confirmLabels = ->
             preparingData()
-            $http({ url: "http://cayca:8888/server/ajax/labeledSerials/updateDate.php", method: "POST", data: JSON.stringify($data2insert) })
+            $http({ url: REST_API.hostname+"/server/ajax/labeledSerials/updateDate.php", method: "POST", data: JSON.stringify($data2insert) })
             .success (postResponse) ->
                 if (typeof postResponse) == "string"
                     if (postResponse=="1")

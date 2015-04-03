@@ -42,6 +42,9 @@ angular.module('app', [
     'app.labels.validation'
     ])
 
+.constant 'REST_API',
+    hostname:       'http://192.168.1.4:8888'
+    
 .constant 'AUTH_EVENTS',
     loginSuccess:       'auth-login-success'
     loginFailed:        'auth-login-failed'
