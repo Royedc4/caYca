@@ -32,8 +32,9 @@ angular.module('app.controllers', [])
         $scope.userRoles = USER_ROLES
         $scope.isAuthorized = LoginService.isAuthorized
 
-        $scope.setCurrentUser = (user) ->
+        $scope.setCurrentUser = (user, userType, company, city, country) ->
             $scope.currentUser=user
+            $scope.currentUser['country']='miPais'
             return
 
         $scope.logOut = () ->

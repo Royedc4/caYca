@@ -43,7 +43,7 @@ angular.module('app', [
     ])
 
 .constant 'REST_API',
-    hostname:       'http://192.168.1.4:8888'
+    hostname:       'http://localhost:8888'
     
 .constant 'AUTH_EVENTS',
     loginSuccess:       'auth-login-success'

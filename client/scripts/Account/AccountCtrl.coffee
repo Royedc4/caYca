@@ -3,17 +3,42 @@
 angular.module('app.account.ctrls', [])
 
 .controller('LoginCtrl', [
-    'AUTH_EVENTS','$scope', '$http', 'LoginService', 'logger', '$rootScope', '$location'
-    (AUTH_EVENTS, $scope, $http, LoginService, logger, $rootScope, $location) ->
+    'REST_API','AUTH_EVENTS','$scope', '$http', 'LoginService', 'logger', '$rootScope', '$location'
+    (REST_API,AUTH_EVENTS, $scope, $http, LoginService, logger, $rootScope, $location) ->
         console.log "@LoginCtrl :)"
         $scope.credentials = 
             email:   ""
             password:   ""
 
+        $scope.country4user=null
+        $scope.company4user=null
+
+
         original = angular.copy($scope.credentials)
 
         $scope.canSubmit = ->
             return $scope.form_Login.$valid && !angular.equals($scope.credentials, original)
+
+        # # get Country4User
+        # getCountry4user = ->
+        #     $http.post(REST_API.hostname+"/server/ajax/Country/getByID.php").success (data) ->
+        #         $scope.country4user = data
+
+
+        # # get company4User
+        # getCountries = ->
+        #     $http.post(REST_API.hostname+"/server/ajax/Company/getByID.php").success (data) ->
+        #         $scope.company4user = data
+
+        # # get City4User
+        # getCountries = ->
+        #     $http.post(REST_API.hostname+"/server/ajax/Tables/getCountry.php").success (data) ->
+        #         $scope.countries = data
+
+        # # get userType4User
+        # getCountries = ->
+        #     $http.post(REST_API.hostname+"/server/ajax/Tables/getCountry.php").success (data) ->
+        #         $scope.countries = data
 
         $scope.login = ->
             LoginService.login($scope.credentials)
@@ -22,9 +47,11 @@ angular.module('app.account.ctrls', [])
                 if (user!=undefined)
                     console.log "SignIn Success."
                     console.log (user)
+                    # $http.post(REST_API.hostname+"/server/ajax/Country/getByID.php").success (data) ->
+                    #     $scope.country4user = data
                     logger.logSuccess("Bienvenido a Samsung caYca Compresores!") 
                     $rootScope.$broadcast AUTH_EVENTS.loginSuccess
-                    $scope.setCurrentUser user    
+                    $scope.setCurrentUser user,null,null,null,null
                     $location.path('/dashboard') 
                 else
                     console.log "SingIn Error."
