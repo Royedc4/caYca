@@ -43,7 +43,7 @@ angular.module('app', [
     ])
 
 .constant 'REST_API',
-    hostname:       'http://localhost:8888'
+    hostname:       'http://cayca:8888'
     
 .constant 'AUTH_EVENTS',
     loginSuccess:       'auth-login-success'

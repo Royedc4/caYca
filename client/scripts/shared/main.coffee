@@ -29,12 +29,13 @@ angular.module('app.controllers', [])
             name: 'Roy Calderón' # those which uses i18n can not be replaced for now.
 
         $scope.currentUser = null
+
         $scope.userRoles = USER_ROLES
         $scope.isAuthorized = LoginService.isAuthorized
 
-        $scope.setCurrentUser = (user, userType, company, city, country) ->
+        $scope.setCurrentUser = (user) ->
             $scope.currentUser=user
-            $scope.currentUser['country']='miPais'
+            console.log $scope.currentUser
             return
 
         $scope.logOut = () ->

@@ -10,48 +10,57 @@ angular.module('app.account.ctrls', [])
             email:   ""
             password:   ""
 
-        $scope.country4user=null
-        $scope.company4user=null
-
-
         original = angular.copy($scope.credentials)
 
         $scope.canSubmit = ->
             return $scope.form_Login.$valid && !angular.equals($scope.credentials, original)
 
-        # # get Country4User
-        # getCountry4user = ->
-        #     $http.post(REST_API.hostname+"/server/ajax/Country/getByID.php").success (data) ->
-        #         $scope.country4user = data
+        # get Country4User
+        getCountry4user = (user) ->
+            $filters=
+                country: user['country']
+            $http({ url: REST_API.hostname+"/server/ajax/Country/getByID.php", method: "POST", data: JSON.stringify($filters) })
+                .success (postResponse) ->
+                    $scope.currentUser['country']=postResponse['0']
 
+        # get company4User
+        getCompany4user = (user) ->
+            $filters=
+                companyID: user['companyID']
+            $http({ url: REST_API.hostname+"/server/ajax/Companies/getByID.php", method: "POST", data: JSON.stringify($filters) })
+                .success (postResponse) ->
+                    $scope.currentUser['company']=postResponse['0']
 
-        # # get company4User
-        # getCountries = ->
-        #     $http.post(REST_API.hostname+"/server/ajax/Company/getByID.php").success (data) ->
-        #         $scope.company4user = data
+        # get city4User
+        getCity4user = (user) ->
+            $filters=
+                geoID: user['city_geoID']
+            $http({ url: REST_API.hostname+"/server/ajax/City/getByID.php", method: "POST", data: JSON.stringify($filters) })
+                .success (postResponse) ->
+                    $scope.currentUser['city']=postResponse['0']
 
-        # # get City4User
-        # getCountries = ->
-        #     $http.post(REST_API.hostname+"/server/ajax/Tables/getCountry.php").success (data) ->
-        #         $scope.countries = data
-
-        # # get userType4User
-        # getCountries = ->
-        #     $http.post(REST_API.hostname+"/server/ajax/Tables/getCountry.php").success (data) ->
-        #         $scope.countries = data
+        # get userType4User
+        getUserType4user = (user) ->
+            $filters=
+                userTypeID: user['userTypeID']
+            $http({ url: REST_API.hostname+"/server/ajax/userType/getByID.php", method: "POST", data: JSON.stringify($filters) })
+                .success (postResponse) ->
+                    $scope.currentUser['userType']=postResponse['0']
 
         $scope.login = ->
             LoginService.login($scope.credentials)
             .then ((user) ->
 
                 if (user!=undefined)
-                    console.log "SignIn Success."
-                    console.log (user)
-                    # $http.post(REST_API.hostname+"/server/ajax/Country/getByID.php").success (data) ->
-                    #     $scope.country4user = data
                     logger.logSuccess("Bienvenido a Samsung caYca Compresores!") 
                     $rootScope.$broadcast AUTH_EVENTS.loginSuccess
-                    $scope.setCurrentUser user,null,null,null,null
+                    # console.log "SignIn Success!"
+                    # getting Aditional Info... 
+                    getCountry4user(user)
+                    getCompany4user(user)
+                    getUserType4user(user)
+                    getCity4user(user)
+                    $scope.setCurrentUser user
                     $location.path('/dashboard') 
                 else
                     console.log "SingIn Error."
