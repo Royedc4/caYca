@@ -1,50 +1,73 @@
-<div class="page">
+<section class="page-form-ele page" data-ng-controller="productionCtrl">
 
-	<!-- Roy: Procesar Nueva Garantia -->
-	<section class="panel panel-default">
-		<div class="col-md-12" data-ng-controller="formConstraintsCtrl">
-			<div class="panel panel-default">
-				<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Procesar Nueva Garantía</strong></div>
-				<div class="panel-body">
-					<form name="form_constraints" class="form-validation" novalidate data-ng-submit="submitForm()">
-						<div class="form-group">
-							<label for="">Serial Del Compresor</label>
-							<input  type="text"
-							class="form-control"
-							required
-							data-ng-minlength=15
-							data-ng-model="form.required"
-							>
-							<br>
-							<label for="">Informe tecnico del daño del compresor</label>
-							<textarea class="form-control"
-							rows="10"
-							required
-							data-ng-minlength=30
-							data-ng-model="form.required_textarea"></textarea>
-							<br>
-							<input  type="checkbox"
-							id="required_checkbox"
-							required
-							data-ng-model="form.required_checkbox"> 
-							<label required for="required_checkbox">Tengo conocimiento y estoy de acuerdo con las politicas de garantías</label>
+	<form id="serialsForm" name="serialsForm" class="form-validation" novalidate>
+
+
+		<section class="panel panel-default">
+			<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Configuración</strong></div>
+
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-3">
+						<div class="input-group">
+							<input type="number" class="form-control" ng-minlenght=0 ng-maxlenght=30 ng-model="quantity">
 						</div>
-						<button type="submit"
-						class="btn btn-success"
-						data-ng-disabled="!canSubmit()"
-						>Procesar Garantía</button>
-						<button class="btn btn-default"
-						data-ng-disabled="!canRevert()"
-						data-ng-click="revert()"
-						>Limpiar Información</button>
-						<div class="callout callout-info">
-							<p>El Boton de crear estara disponible cuando se llenen todos los campos requeridos.</p>
-							<p>El Boton de borrar estara disponible cuando algun campo este lleno.</p>
-						</div>
-					</form>
+					</div>
+				<div class="col-md-9">
+					<button ng-click="loadInputs()" class="btn btn-primary btn-block"><span class="fa fa-file-o"></span> Preparar</button>
 				</div>
+			</div>
+
+
+		</div>	
+	</section>
+
+
+	<section class="panel panel-default">
+		<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Ingreso de cupones </strong></div>
+		<div class="panel-body" >
+			<div class="col-sm-4 form-group" ng-repeat="inp in inputs">
+				<input type="text"
+				class="form-control input-warning"
+				required
+				data-ng-trim='false'
+				ng-model="inp"
+				ng-enter-labels
+				data-validate-labels
+				placeholder={{inp.placeholder}} 
+				name="input{{$index+1}}" id="input{{$index+1}}" > 
+			</div>
+
+		</div>
+	</section>
+
+
+
+
+	<section class="panel panel-default">
+		<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Registro de cupones </strong></div>
+		<div class="panel-body" >
+			<button class="btn btn-default"
+			data-ng-disabled="!canRevert()"
+			data-ng-click="revert()"
+			><span class="fa fa-eraser"></span> Limpiar Formulario</button>
+
+			<button ng-show="currentUser.userTypeID=='ADM'" class='btn btn-danger' ng-click="roYTesting()"><span class="fa fa-user-secret"></span> Roy TesT</button>
+
+			<button class='btn btn-info' data-ng-disabled="!canSubmit()" ng-click="requestLabels()"><span class="fa fa-print"></span> Solicitar Etiquetas</button>
+			<button type="submit"
+			class="btn btn-success"
+			ng-click="confirmLabels()"
+			data-ng-disabled="!canSubmit()"
+			><span class="fa fa-database"></span> Confirmar Impresiones</button>
+			
+			<div class="callout callout-info">
+				<p>Los botones de solicitar etiquetas y confirmar impresiones estaran disponibles cuando se ingresen y validen todos los seriales y tokens.</p>
+				<p>El Boton de borrar estara disponible cuando algun dato se haya ingresado.</p>
 			</div>
 		</div>
 	</section>
 
-</div>
+</form>
+
+</section>
