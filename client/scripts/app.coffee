@@ -40,6 +40,7 @@ angular.module('app', [
     'app.admin.services'
     'app.labels.ctrls'
     'app.labels.validation'
+    'app.raffles.ctrls'
     ])
 
 .constant 'REST_API',
