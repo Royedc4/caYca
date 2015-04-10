@@ -44,6 +44,9 @@ angular.module('app', [
     'app.redemptions.ctrls'
     'app.redemptions.directives'
     'app.redemptions.services'
+    'app.sales.ctrls'
+    'app.sales.directives'
+    'app.sales.services'
     ])
 
 .constant 'REST_API',
