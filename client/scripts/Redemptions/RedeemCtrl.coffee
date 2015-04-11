@@ -36,10 +36,6 @@ angular.module('app.redemptions.ctrls', [])
         console.log 'sellerCtrl'
         # Definition of objets
 
-        # Control Data
-        $scope.consecVen=[]
-        $scope.consecTec=[]
-        $scope.consecSer=[]
         # Data 2 Insert
         $scope.data2label=
             serial: []
@@ -52,24 +48,6 @@ angular.module('app.redemptions.ctrls', [])
         #Selected Quantity
         $scope.quantity = 1
         
-        # Serials and Label db
-        $scope.unlabeledSerials = null
-        $scope.unlabeledTokenTecs = null
-        $scope.unlabeledTokenVens = null
-
-        # Populating Sequence Arrays
-        i = 0
-        while i < 100
-            if i == 0
-                $scope.consecVen[i] = 3
-                $scope.consecTec[i] = 2
-                $scope.consecSer[i] = 1
-            else
-                $scope.consecVen[i] = $scope.consecVen[i - 1] + 3
-                $scope.consecTec[i] = $scope.consecTec[i - 1] + 3
-                $scope.consecSer[i] = $scope.consecSer[i - 1] + 3
-            i++
-
         # Debuging Purposes only
         $scope.roYTesting = ->
             # console.log ">>unlabeledTokenVens>>"
@@ -100,46 +78,10 @@ angular.module('app.redemptions.ctrls', [])
             $scope.inputs = []
             i=0
             while i<($scope.quantity)
-                # console.log i+"/"+$scope.quantity
                 j=i+1
-                $scope.inputs.push({ placeholder: "Serial Compresor # " + j})
-                $scope.inputs.push({ placeholder: "S# "+j+" TOKEN Tecnico" })
-                $scope.inputs.push({ placeholder: "S# "+j+" TOKEN Vendedor" })
+                $scope.inputs.push({ placeholder: "Token # " + j})
                 i++
-            logger.log("Se ha preparado el formulario. Proceda a leer los seriales con el lector de codigo de barras.") 
-
-        # Roy: Loading DATA FORM DB
-        # Loading unlabeled Serials
-        getUnlabeledSerials = ->
-            $filters=
-                companyID: '20'
-            $http({ url: REST_API.hostname+"/server/ajax/Serials/listUnlabeledFiltered.php", method: "POST", data: JSON.stringify($filters) })
-            .success (postResponse) ->
-                $scope.unlabeledSerials=postResponse
-            return
-        getUnlabeledSerials()
-
-        # Loading unlabeled Tokens Tec
-        getunlabeledTokenTec = ->
-            $filters=
-                country: 'CO'
-                type: 'T'
-            $http({ url: REST_API.hostname+"/server/ajax/Tokens/listUnlabeledFiltered.php", method: "POST", data: JSON.stringify($filters) })
-            .success (postResponse) ->
-                $scope.unlabeledTokenTecs=postResponse
-            return
-        getunlabeledTokenTec()
-
-        # Loading unlabeled Tokens Ven
-        getunlabeledTokenVens = ->
-            $filters=
-                country: 'CO'
-                type: 'V'
-            $http({ url: REST_API.hostname+"/server/ajax/Tokens/listUnlabeledFiltered.php", method: "POST", data: JSON.stringify($filters) })
-            .success (postResponse) ->
-                $scope.unlabeledTokenVens=postResponse
-            return
-        getunlabeledTokenVens()
+            logger.log("Se ha preparado el formulario. Proceda a ingresar los tokens.") 
 
         # Preparing DATA 2 Insert
         $data2insert=

@@ -24,7 +24,7 @@
 
 
 	<section class="panel panel-default">
-		<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Ingreso de cupones </strong></div>
+		<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Ingreso de Tokens </strong></div>
 		<div class="panel-body" >
 			<div class="col-sm-4 form-group" ng-repeat="inp in inputs">
 				<input type="text"
@@ -32,8 +32,8 @@
 				required
 				data-ng-trim='false'
 				ng-model="inp"
-				ng-enter-labels
-				data-validate-labels
+				data-ng-minlength="13"
+				data-some-tokens
 				placeholder={{inp.placeholder}} 
 				name="input{{$index+1}}" id="input{{$index+1}}" > 
 			</div>
@@ -45,7 +45,7 @@
 
 
 	<section class="panel panel-default">
-		<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Registro de cupones` </strong></div>
+		<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Registro de Tokens </strong></div>
 		<div class="panel-body" >
 			<button class="btn btn-default"
 			data-ng-disabled="!canRevert()"
@@ -54,15 +54,14 @@
 
 			<button ng-show="currentUser.userTypeID=='ADM'" class='btn btn-danger' ng-click="roYTesting()"><span class="fa fa-user-secret"></span> Roy TesT</button>
 
-			<button class='btn btn-info' data-ng-disabled="!canSubmit()" ng-click="requestLabels()"><span class="fa fa-print"></span> Solicitar Etiquetas</button>
 			<button type="submit"
 			class="btn btn-success"
 			ng-click="confirmLabels()"
 			data-ng-disabled="!canSubmit()"
-			><span class="fa fa-database"></span> Confirmar Impresiones</button>
+			><span class="fa fa-database"></span> Registrar Tokens</button>
 			
 			<div class="callout callout-info">
-				<p>Los botones de solicitar etiquetas y confirmar impresiones estaran disponibles cuando se ingresen y validen todos los seriales y tokens.</p>
+				<p>Los botones de Limpiar y Registrar estaran disponibles cuando se ingresen todos los tokens.</p>
 				<p>El Boton de borrar estara disponible cuando algun dato se haya ingresado.</p>
 			</div>
 		</div>
