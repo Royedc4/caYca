@@ -13,6 +13,7 @@ angular.module('app', [
     'ui.tree'
     'ngMap'
     'ngTagsInput'
+    'ui.mask'
 
     # Custom modules
     'app.ui.ctrls'
