@@ -153,6 +153,8 @@ angular.module('app.raffles.ctrls', [])
                     $('#searchKeywords').focus()
                     angular.element('#orderIDRaffleUP').trigger('click')
                 , 100
+                if $scope.filteredRaffleCoupons.length==0
+                    logger.logError "No se encontraron cupones registrados en su cuenta."
         raffleCoupons4user()
 
 ])
