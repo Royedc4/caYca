@@ -110,6 +110,7 @@ angular.module('app.account.ctrls', [])
         console.log "@NewAccountCtrl 4 Mayor->GerenteComercial :)"
         # ng-model 4 user
         $scope.user = 
+            userID: ''
             ID: ''
             userTypeSelected: ''
             fullName: ''
@@ -180,6 +181,7 @@ angular.module('app.account.ctrls', [])
             
 
             $scope.data = 
+                userID : $scope.user.userID
                 ID: $scope.user.ID
                 email: $scope.user.email
                 fullName: $scope.user.fullName
