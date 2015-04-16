@@ -12,7 +12,7 @@ angular.module('app.raffles.ctrls', [])
 
         # Alert Message
         $scope.alerts = [
-            { type: 'info', msg: 'No es necesario escribir los guiones, al terminar de escribir cada token, presiona ENTER para pasar al siguiente rapidamente.' }
+            { type: 'info', msg: 'TIPS: Escriba unicamente las letras o numeros, no es necesario escribir los guiones. ni seleccionar el siguiente campo de texto, el formulario va haciendo todo automáticamente.' }
         ]
         $scope.closeAlert = (index)->
             $scope.alerts.splice(index, 1)
@@ -24,8 +24,10 @@ angular.module('app.raffles.ctrls', [])
         
         # Debuging Purposes only
         $scope.roYTesting = ->
+            preparingData()
             console.log ">>$scope.data2insert>>"
             console.log $scope.data2insert
+
         
         # Form Manipulation
         $scope.revert = ->
@@ -52,7 +54,10 @@ angular.module('app.raffles.ctrls', [])
                 j=i+1
                 $scope.inputs.push({ placeholder: "Token # " + j})
                 i++
-            logger.log("Se ha preparado el formulario. Proceda a ingresar los tokens.") 
+            setTimeout ->
+                    logger.log("Se ha preparado el formulario. Proceda a ingresar los tokens.") 
+                , 2000
+            
         
         # Saving Labels 4 Prints at bartender
         preparingData = ->
@@ -62,22 +67,28 @@ angular.module('app.raffles.ctrls', [])
                 country: $scope.currentUser.country.country
                 userTypeID: $scope.currentUser.userType.userTypeID
                 createdBy: $scope.currentUser.userID
-        preparingData()
+
+            for i in [1...$scope.quantity+1] by 1
+                # console.log "input#"+i+ " = " + angular.uppercase document.getElementById('input'+i).value
+                $scope.data2insert['token'].push(angular.uppercase document.getElementById('input'+i).value)
 
         # registerToken4raffle
         $scope.registerToken4raffle = ->
+            preparingData()
             $http({ url: REST_API.hostname+"/server/ajax/raffleCoupon/add.php", method: "POST", data: JSON.stringify($scope.data2insert) })
             .success (postResponse) ->
-                if (typeof postResponse) == "string"
-                    # if (postResponse=="1")
-                    #     logger.logSuccess "Ha concluido el etiquetado de " +$scope.data2label['serial'].length + " compresor(es)."
-                    #     $scope.revert()
-                    if (postResponse.indexOf("raffleID")!=-1)
-                        logger.logError "No se encuentran tokens dispnibles para su país."
-                    if (postResponse.indexOf("fk_raffleCoupons_labeledSerials1")!=-1)
-                        logger.logError "Ingresaste cupones invalidos. Intenta de nuevo!"
                 console.log postResponse
-
+                if (typeof postResponse) == "object"
+                    for i in [1...postResponse['errorsArray'].length] by 1
+                        if (postResponse['errorsArray'][i].indexOf("raffleID")!=-1)
+                            logger.logError "No se encuentran tokens disponibles para su país."
+                        if (postResponse['errorsArray'][i].indexOf("fk_raffleCoupons_labeledSerials1")!=-1)
+                            logger.logError "Ingresaste cupones invalidos. Intenta de nuevo!"
+                        if (postResponse['errorsArray'][i].indexOf("token_UNIQUE")!=-1)
+                            logger.logError "Ingresaste un token ya registrado!"
+                        if postResponse['zGlobalResult']
+                            logger.logSuccess "Has registrado Exitosamente " + ((postResponse['arrayQueries'].length)-1).toString() + " Tokens en tu cuenta!"
+                            $scope.revert()
 ])
 
 .controller('listCouponsCtrl', [
@@ -125,7 +136,6 @@ angular.module('app.raffles.ctrls', [])
                 return
             $scope.row = rowName
             $scope.filteredRaffleCoupons = $filter('orderBy')($scope.raffleCoupons, rowName)
-            # console.log $scope.filteredRaffleCoupons
             $scope.onOrderChange()
 
         # pagination
@@ -152,9 +162,12 @@ angular.module('app.raffles.ctrls', [])
                 setTimeout ->
                     $('#searchKeywords').focus()
                     angular.element('#orderIDRaffleUP').trigger('click')
+                    if $scope.filteredRaffleCoupons.length==0
+                        logger.logError "No se encontraron cupones registrados en su cuenta."
+                    else
+                        logger.logSuccess "Tiene "+$scope.filteredRaffleCoupons.length+" cupones de Rifa."
                 , 100
-                if $scope.filteredRaffleCoupons.length==0
-                    logger.logError "No se encontraron cupones registrados en su cuenta."
+                
         raffleCoupons4user()
 
 ])

@@ -26,9 +26,9 @@ angular.module('app.raffles.validation', [])
 						# this['disabled']=true
 
 					# Esperar porque sino no guarda el ultimo digito... xD
-					setTimeout ( ->
-						scope.data2insert['token'].push(angular.uppercase element.context.value)
-					), 1000
+					# setTimeout ( ->
+					# 	scope.data2insert['token'].push(angular.uppercase element.context.value)
+					# ), 1000
 					
 			)
 	}
