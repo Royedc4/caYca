@@ -36,6 +36,7 @@ angular.module('app.raffles.ctrls', [])
                 userTypeID: ''
                 createdBy: ''
             $scope.loadInputs()
+            preparingData()
             $scope.serialsForm.$setPristine()
         $scope.canRevert = ->
             return !$scope.serialsForm.$pristine
@@ -67,15 +68,14 @@ angular.module('app.raffles.ctrls', [])
         $scope.registerToken4raffle = ->
             $http({ url: REST_API.hostname+"/server/ajax/raffleCoupon/add.php", method: "POST", data: JSON.stringify($scope.data2insert) })
             .success (postResponse) ->
-                # if (typeof postResponse) == "string"
-                #     if (postResponse=="1")
-                #         logger.logSuccess "Ha concluido el etiquetado de " +$scope.data2label['serial'].length + " compresor(es)."
-                #         $scope.revert()
-                #     if (postResponse.indexOf("request")!=-1)
-                #         logger.logError "Debes solicitar las etiquetas antes de confirmar sus impresiones."
-                #     if (postResponse.indexOf("Labeled")!=-1)
-                #         logger.logWarning "Ya cumlminaste la impresion de la(s) " +$scope.data2label['serial'].length + " Etiqueta(s)."
-                #         $scope.revert()
+                if (typeof postResponse) == "string"
+                    # if (postResponse=="1")
+                    #     logger.logSuccess "Ha concluido el etiquetado de " +$scope.data2label['serial'].length + " compresor(es)."
+                    #     $scope.revert()
+                    if (postResponse.indexOf("raffleID")!=-1)
+                        logger.logError "No se encuentran tokens dispnibles para su país."
+                    if (postResponse.indexOf("fk_raffleCoupons_labeledSerials1")!=-1)
+                        logger.logError "Ingresaste cupones invalidos. Intenta de nuevo!"
                 console.log postResponse
 
 ])

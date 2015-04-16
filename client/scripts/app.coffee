@@ -42,6 +42,7 @@ angular.module('app', [
     'app.labels.ctrls'
     'app.labels.validation'
     'app.raffles.ctrls'
+    'app.raffles.validation'
     'app.redemptions.ctrls'
     'app.redemptions.directives'
     'app.redemptions.services'
