@@ -157,7 +157,7 @@ angular.module('app.raffles.ctrls', [])
             $http({ url: REST_API.hostname+"/server/ajax/raffleCoupon/listFiltered.php", method: "POST", data: JSON.stringify($filters) })
             .success (postResponse) ->
                 $scope.raffleCoupons=postResponse
-                console.log postResponse
+                # console.log postResponse
                 # Only way to make react on filter to show items on table
                 setTimeout ->
                     $('#searchKeywords').focus()

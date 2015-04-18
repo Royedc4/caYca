@@ -7,19 +7,14 @@
 		<section class="panel panel-default">
 			<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Cantidad de tokens a registrar</strong></div>
 
-			<div class="panel-body">
-				<div class="row">
-					<div class="col-md-3">
-						<div class="input-group">
-							<input type="number" id="quantity" class="form-control" ng-minlenght=0 ng-maxlenght=30 ng-model="quantity">
-						</div>
-					</div>
-					<div class="col-md-9">
-						<button ng-click="loadInputs()" class="btn btn-primary btn-block"><span class="fa fa-file-o"></span> Preparar Formulario</button>
-					</div>
+			<div class="panel-body text-center">
+				<div class="col-sm-2 form-group">
+					<input type="number" id="quantity" class="form-control" data-min=0 ng-minlenght=0 ng-maxlenght=30 ng-model="quantity" placeholder="Cantidad de Tokens">
 				</div>
 
-
+				<div class="col-sm-10 form-group">
+					<button ng-click="loadInputs()" class="btn btn-primary btn-block"><span class="fa fa-file-o"></span> Preparar Formulario</button>
+				</div>
 			</div>	
 		</section>
 

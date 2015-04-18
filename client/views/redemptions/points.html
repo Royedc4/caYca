@@ -1,69 +1,110 @@
 <div class="page" data-ng-controller="pointsCtrl">
+	<section class="panel panel-default table-dynamic">
+		<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span><span data-i18n=" Listado de cupones registrados para la rifa"></span></strong></div>
 
-	<!-- Promociónes -->
-	<div class="panel panel-default">
-		<div class="panel-heading"><span class="glyphicon glyphicon-th"></span> Resultados de Promociónes</div>
-		<div class="panel-body">
-			<div class="row">
-				<div class="col-md-4">
-					<div class="panel panel-default ui-ribbon-container ui-ribbon-primary">
-						<div class="ui-ribbon-wrapper">
-							<div class="ui-ribbon">
-							ENERO 
-							</div>
-						</div>
-						<div class="panel-heading"><span class="glyphicon glyphicon-th"></span> Promoción 1</div>
-						<div class="panel-body">
-							<p>Ganador: Uribe</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="panel panel-default ui-ribbon-container ui-ribbon-primary">
-						<div class="ui-ribbon-wrapper">
-							<div class="ui-ribbon">
-								ABRIL 
-							</div>
-						</div>
-						<div class="panel-heading"><span class="glyphicon glyphicon-th"></span> Promoción 2</div>
-						<div class="panel-body">
-							<p>Ganador: Omaira</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="panel panel-default ui-ribbon-container ui-ribbon-primary">
-						<div class="ui-ribbon-wrapper">
-							<div class="ui-ribbon">
-								AGOSTO 
-							</div>
-						</div>
-						<div class="panel-heading"><span class="glyphicon glyphicon-th"></span> Promoción 3</div>
-						<div class="panel-body">
-							<p>Ganador: Diana</p>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-md-4">
-					<div class="panel panel-default ui-ribbon-container ui-ribbon-primary">
-						<div class="ui-ribbon-wrapper">
-							<div class="ui-ribbon">
-									DICIEMBRE 
-							</div>
-						</div>
-						<div class="panel-heading"><span class="glyphicon glyphicon-th"></span> Promoción 4</div>
-						<div class="panel-body">
-							<p>Ganador: James Rodriguez</p>
-						</div>
-					</div>
-				</div>
-			</div>
-
+		<div ng-show="filteredRaffleCoupons.length==0" class="callout callout-danger">
+			<h4>No se encontraron cupones</h4>
+			<p>EEEEEEEEEEEEEEEEEEEEEEEEEEE debe registrarlos previamente usando la opción <a href="#/raffles/newCoupon">Nuevo cupon</a></p>
 		</div>
-	</div>
-	<!-- end Promociónes -->
 
+		<div ng-show="filteredRaffleCoupons.length!=0">
+
+			<div class="table-filters">
+				<div class="row">
+					<div class="col-sm-4 col-xs-6">
+						<form>
+							<input type="text"
+							placeholder="buscar"
+							id="searchKeywords"
+							class="form-control"
+							data-ng-model="searchKeywords"
+							data-ng-keyup="search()" />
+						</form>
+					</div>
+					<div class="col-sm-3 col-xs-6 filter-result-info">
+						<span>
+							Mostrando {{filteredRaffleCoupons.length}}/{{raffleCoupons.length}} registros
+						</span>              
+					</div>
+				</div>
+			</div>
+
+			<table ng-table="raffleTable" class="table table-bordered table-striped table-responsive">
+				<thead>
+					<tr>
+						<th><div class="th">
+							Numero Cupon
+							<span id="orderIDRaffleUP" class="glyphicon glyphicon-chevron-up"
+							data-ng-click=" order('idraffleCoupon') "
+							data-ng-class="{active: row == 'idraffleCoupon'}"></span>
+							<span class="glyphicon glyphicon-chevron-down"
+							data-ng-click=" order('-idraffleCoupon') "
+							data-ng-class="{active: row == '-idraffleCoupon'}"></span>
+						</div></th>
+						<th><div class="th">
+							Token
+							<span class="glyphicon glyphicon-chevron-up"
+							data-ng-click=" order('token') "
+							data-ng-class="{active: row == 'token'}"></span>
+							<span class="glyphicon glyphicon-chevron-down"
+							data-ng-click=" order('-token') "
+							data-ng-class="{active: row == '-token'}"></span>
+						</div></th>
+						<th><div class="th">
+							Fecha De Registro
+							<span class="glyphicon glyphicon-chevron-up"
+							data-ng-click=" order('creationDate') "
+							data-ng-class="{active: row == 'creationDate'}"></span>
+							<span class="glyphicon glyphicon-chevron-down"
+							data-ng-click=" order('-creationDate') "
+							data-ng-class="{active: row == '-creationDate'}"></span>
+						</div></th>
+						<th><div class="th">
+							Descripción de Rifa
+							<span class="glyphicon glyphicon-chevron-up"
+							data-ng-click=" order('description') "
+							data-ng-class="{active: row == 'description'}"></span>
+							<span class="glyphicon glyphicon-chevron-down"
+							data-ng-click=" order('-description') "
+							data-ng-class="{active: row == '-description'}"></span>
+						</div></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr data-ng-repeat="raffleCoupon in currentPageRaffleCoupons">
+						<td>{{raffleCoupon.idraffleCoupon}}</td>
+						<td>{{raffleCoupon.token}}</td>
+						<td>{{raffleCoupon.creationDate}}</td>
+						<td>{{raffleCoupon.description}}</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<footer class="table-footer">
+				<div class="row">
+					<div class="col-md-6 page-num-info">
+						<span>
+							Mostrar 
+							<select id="selectNumPerPage" data-ng-model="numPerPage"
+							data-ng-options="num for num in numPerPageOpt"
+							data-ng-change="onNumPerPageChange()">
+						</select> 
+						registros por pagina
+					</span>
+				</div>
+				<div class="col-md-6 text-right pagination-container">
+					<pagination class="pagination-sm"
+					page="currentPage"
+					total-items="filteredRaffleCoupons.length"
+					max-size="4"
+					on-select-page="select(page)"
+					items-per-page="numPerPage"
+					rotate="false"
+					boundary-links="true"></pagination>
+				</div>
+			</div>
+
+		</footer>
+	</div>
+</section>
 </div>

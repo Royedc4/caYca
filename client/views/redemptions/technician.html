@@ -1,50 +1,68 @@
-<div class="page">
+<section class="page-form-ele page" data-ng-controller="technicianCtrl">
 
-	<!-- Roy: Procesar Nueva Garantia -->
-	<section class="panel panel-default">
-		<div class="col-md-12" data-ng-controller="formConstraintsCtrl">
-			<div class="panel panel-default">
-				<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Procesar Nueva Garantía</strong></div>
-				<div class="panel-body">
-					<form name="form_constraints" class="form-validation" novalidate data-ng-submit="submitForm()">
-						<div class="form-group">
-							<label for="">Serial Del Compresor</label>
-							<input  type="text"
-							class="form-control"
-							required
-							data-ng-minlength=15
-							data-ng-model="form.required"
-							>
-							<br>
-							<label for="">Informe tecnico del daño del compresor</label>
-							<textarea class="form-control"
-							rows="10"
-							required
-							data-ng-minlength=30
-							data-ng-model="form.required_textarea"></textarea>
-							<br>
-							<input  type="checkbox"
-							id="required_checkbox"
-							required
-							data-ng-model="form.required_checkbox"> 
-							<label required for="required_checkbox">Tengo conocimiento y estoy de acuerdo con las politicas de garantías</label>
-						</div>
-						<button type="submit"
-						class="btn btn-success"
-						data-ng-disabled="!canSubmit()"
-						>Procesar Garantía</button>
-						<button class="btn btn-default"
-						data-ng-disabled="!canRevert()"
-						data-ng-click="revert()"
-						>Limpiar Información</button>
-						<div class="callout callout-info">
-							<p>El Boton de crear estara disponible cuando se llenen todos los campos requeridos.</p>
-							<p>El Boton de borrar estara disponible cuando algun campo este lleno.</p>
-						</div>
-					</form>
+	<form id="tokensRedeemForm" name="tokensRedeemForm" class="form-validation" novalidate>	
+
+		<alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
+
+		<section class="panel panel-default">
+			<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Cantidad de tokens a registrar</strong></div>
+
+			<div class="panel-body text-center">
+				<div class="col-sm-3 form-group">
+					<input type="text" id="idTechnician" class="form-control" data-min=0 ng-minlenght=8 ng-maxlenght=11 ng-model="idTechnician" placeholder="Cedula Tecnico">
+				</div>
+				<div class="col-sm-2 form-group">
+					<input type="number" id="quantity" class="form-control" ng-minlenght=0 ng-maxlenght=30 ng-model="quantity" placeholder="Cantidad de Tokens">
+				</div>
+
+				<div class="col-sm-7 form-group">
+					<button ng-click="loadInputs()" class="btn btn-primary btn-block"><span class="fa fa-file-o"></span> Preparar Formulario</button>
+				</div>
+			</div>	
+		</section>
+
+		<section class="panel panel-default">
+			<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Formulario de Tokens </strong></div>
+			<div class="panel-body" >
+				<div class="col-md-3 form-group" ng-repeat="inp in inputs">
+					<input 
+					type="text"
+					required
+					ng-maxlength=14
+					ng-minlength=14
+					ng-model="tokensito"
+					ng-raffle-tokens-tabs="input{{$index+2}}"
+					class="form-control input-warning initialism"
+					name="input{{$index+1}}" id="input{{$index+1}}">
+				</div>
+
+			</div>
+		</section>
+
+		<section class="panel panel-default">
+			<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Inscripcion de Tokens </strong></div>
+			<div class="panel-body" >
+				<button class="btn btn-default"
+				data-ng-disabled="!canRevert()"
+				data-ng-click="revert()"
+				><span class="fa fa-eraser"></span> Limpiar Formulario</button>
+
+				<button ng-show="currentUser.userTypeID=='ADM'" class='btn btn-danger' ng-click="roYTesting()"><span class="fa fa-user-secret"></span> Roy TesT</button>
+
+				<button type="submit"
+				id="registerToken4rafffleButton"
+				class="btn btn-success"
+				ng-click="registerToken4raffle()"
+				data-ng-disabled="!canSubmit()"
+				><span class="fa fa-database"></span> Inscribir Tokens</button>
+				
+				<div class="callout callout-info">
+					<p>Los botones de Limpiar e Inscribir estaran disponibles cuando se ingresen todos los tokens.</p>
+					<p>El Boton de borrar estara disponible cuando algun dato se haya ingresado.</p>
 				</div>
 			</div>
-		</div>
-	</section>
+		</section>
 
-</div>
+	</form>
+
+</section>

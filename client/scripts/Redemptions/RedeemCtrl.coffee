@@ -3,16 +3,11 @@
 angular.module('app.redemptions.ctrls', [])
 
 # Roy
-# Controllers for 
+# Controllers for redemptions
 
 .controller('listCtrl', [
     'REST_API','$scope', 'logger', '$http'
     (REST_API,$scope, logger, $http) ->
-        # Definition of objets
-
-        # Control Data
-        
-        # xD
         console.log 'listCtrl'
 
 ])
@@ -21,11 +16,6 @@ angular.module('app.redemptions.ctrls', [])
 .controller('pointsCtrl', [
     'REST_API','$scope', 'logger', '$http'
     (REST_API,$scope, logger, $http) ->
-        # Definition of objets
-
-        # Control Data
-        
-        # xD
         console.log 'pointsCtrl'
 
 ])
@@ -34,43 +24,40 @@ angular.module('app.redemptions.ctrls', [])
     'REST_API','$scope', 'logger', '$http'
     (REST_API,$scope, logger, $http) ->
         console.log 'sellerCtrl'
-        # Definition of objets
-
-        # Data 2 Insert
-        $scope.data2label=
-            serial: []
-            tokenTec: []
-            tokenVen: []
+         # Alert Message
+        $scope.alerts = [
+            { type: 'info', msg: 'TIPS: Escriba unicamente las letras o numeros, no es necesario escribir los guiones. ni seleccionar el siguiente campo de texto, el formulario va haciendo todo automáticamente.' }
+        ]
+        $scope.closeAlert = (index)->
+            $scope.alerts.splice(index, 1)
 
         #Array of Inputs
         $scope.inputs = []
-
         #Selected Quantity
         $scope.quantity = 1
         
         # Debuging Purposes only
         $scope.roYTesting = ->
-            # console.log ">>unlabeledTokenVens>>"
-            # console.log $scope.unlabeledTokenVens    
-            # console.log ">>unlabeledTokenTecs>>"
-            # console.log $scope.unlabeledTokenTecs    
-            console.log ">>data2label>>"
-            console.log $scope.data2label
-            console.log ">>data2insert>>"
-            console.log $data2insert
+            preparingData()
+            console.log ">>$scope.data2insert>>"
+            console.log $scope.data2insert
+
         
         # Form Manipulation
         $scope.revert = ->
-            $scope.data2label=
-                serial: []
-                tokenTec: []
-                tokenVen: []
+            $scope.data2insert=
+                token: []
+                userID: ''
+                country: ''
+                userTypeID: ''
+                createdBy: ''
             $scope.loadInputs()
-            $scope.serialsForm.$setPristine()
+            preparingData()
+            $scope.tokensRedeemForm.$setPristine()
         $scope.canRevert = ->
-            return !$scope.serialsForm.$pristine
+            return !$scope.tokensRedeemForm.$pristine
         $scope.canSubmit = ->
-            return $scope.serialsForm.$valid 
+            return $scope.tokensRedeemForm.$valid 
 
         # Creation of Input Dinamically
         $scope.loadInputs = ->
@@ -81,50 +68,41 @@ angular.module('app.redemptions.ctrls', [])
                 j=i+1
                 $scope.inputs.push({ placeholder: "Token # " + j})
                 i++
-            logger.log("Se ha preparado el formulario. Proceda a ingresar los tokens.") 
-
-        # Preparing DATA 2 Insert
-        $data2insert=
-            token:[]
-            serial:[]
+            setTimeout ->
+                    logger.log("Se ha preparado el formulario. Proceda a ingresar los tokens.") 
+                , 2000
+            
+        
         # Saving Labels 4 Prints at bartender
         preparingData = ->
-            $data2insert=
-            token:[]
-            serial:[]
-            for iteration in [0...$scope.data2label['serial'].length] by 1
-                $data2insert['serial'].push($scope.data2label['serial'][iteration])
-                $data2insert['token'].push($scope.data2label['tokenTec'][iteration])
-                $data2insert['serial'].push($scope.data2label['serial'][iteration])
-                $data2insert['token'].push($scope.data2label['tokenVen'][iteration])
+            $scope.data2insert=
+                token: []
+                userID: $scope.currentUser.userID
+                country: $scope.currentUser.country.country
+                userTypeID: $scope.currentUser.userType.userTypeID
+                createdBy: $scope.currentUser.userID
 
-        # Saving Labels 4 Prints at bartender
-        $scope.requestLabels = ->                 
-            preparingData()
-            $http({ url: REST_API.hostname+"/server/ajax/labeledSerials/add.php", method: "POST", data: JSON.stringify($data2insert) })
-            .success (postResponse) ->
-                if (typeof postResponse) == "string"
-                    if (parseInt(postResponse)>=1)
-                        logger.logSuccess "Se han registrado exitosamente las " +$scope.data2label['serial'].length + " Etiqueta(s)."
-                    if (postResponse.indexOf("PRIMARY")!=-1)
-                        logger.logWarning "Ya solicitaste la(s) " +$scope.data2label['serial'].length + " Etiquetas. Si ya se imprimieron debes confirmar para finalizar."
-                console.log postResponse
-        
-        $scope.confirmLabels = ->
-            preparingData()
-            $http({ url: REST_API.hostname+"/server/ajax/labeledSerials/updateDate.php", method: "POST", data: JSON.stringify($data2insert) })
-            .success (postResponse) ->
-                if (typeof postResponse) == "string"
-                    if (postResponse=="1")
-                        logger.logSuccess "Ha concluido el etiquetado de " +$scope.data2label['serial'].length + " compresor(es)."
-                        $scope.revert()
-                    if (postResponse.indexOf("request")!=-1)
-                        logger.logError "Debes solicitar las etiquetas antes de confirmar sus impresiones."
-                    if (postResponse.indexOf("Labeled")!=-1)
-                        logger.logWarning "Ya cumlminaste la impresion de la(s) " +$scope.data2label['serial'].length + " Etiqueta(s)."
-                        $scope.revert()
-                console.log postResponse
+            for i in [1...$scope.quantity+1] by 1
+                # console.log "input#"+i+ " = " + angular.uppercase document.getElementById('input'+i).value
+                $scope.data2insert['token'].push(angular.uppercase document.getElementById('input'+i).value)
 
+        # registerToken4raffle
+        $scope.registerToken4raffle = ->
+            preparingData()
+            # $http({ url: REST_API.hostname+"/server/ajax/raffleCoupon/add.php", method: "POST", data: JSON.stringify($scope.data2insert) })
+            # .success (postResponse) ->
+            #     console.log postResponse
+            #     if (typeof postResponse) == "object"
+            #         for i in [1...postResponse['errorsArray'].length] by 1
+            #             if (postResponse['errorsArray'][i].indexOf("raffleID")!=-1)
+            #                 logger.logError "No se encuentran tokens disponibles para su país."
+            #             if (postResponse['errorsArray'][i].indexOf("fk_raffleCoupons_labeledSerials1")!=-1)
+            #                 logger.logError "Ingresaste cupones invalidos. Intenta de nuevo!"
+            #             if (postResponse['errorsArray'][i].indexOf("token_UNIQUE")!=-1)
+            #                 logger.logError "Ingresaste un token ya registrado!"
+            #             if postResponse['zGlobalResult']
+            #                 logger.logSuccess "Has registrado Exitosamente " + ((postResponse['arrayQueries'].length)-1).toString() + " Tokens en tu cuenta!"
+            #                 $scope.revert()
 
 ])
 
@@ -132,153 +110,5 @@ angular.module('app.redemptions.ctrls', [])
      'REST_API','$scope', 'logger', '$http'
     (REST_API,$scope, logger, $http) ->
         console.log 'technicianCtrl'
-        # Definition of objets
-
-        # Control Data
-        $scope.consecVen=[]
-        $scope.consecTec=[]
-        $scope.consecSer=[]
-        # Data 2 Insert
-        $scope.data2label=
-            serial: []
-            tokenTec: []
-            tokenVen: []
-
-        #Array of Inputs
-        $scope.inputs = []
-
-        #Selected Quantity
-        $scope.quantity = 1
-        
-        # Serials and Label db
-        $scope.unlabeledSerials = null
-        $scope.unlabeledTokenTecs = null
-        $scope.unlabeledTokenVens = null
-
-        # Populating Sequence Arrays
-        i = 0
-        while i < 100
-            if i == 0
-                $scope.consecVen[i] = 3
-                $scope.consecTec[i] = 2
-                $scope.consecSer[i] = 1
-            else
-                $scope.consecVen[i] = $scope.consecVen[i - 1] + 3
-                $scope.consecTec[i] = $scope.consecTec[i - 1] + 3
-                $scope.consecSer[i] = $scope.consecSer[i - 1] + 3
-            i++
-
-        # Debuging Purposes only
-        $scope.roYTesting = ->
-            # console.log ">>unlabeledTokenVens>>"
-            # console.log $scope.unlabeledTokenVens    
-            # console.log ">>unlabeledTokenTecs>>"
-            # console.log $scope.unlabeledTokenTecs    
-            console.log ">>data2label>>"
-            console.log $scope.data2label
-            console.log ">>data2insert>>"
-            console.log $data2insert
-        
-        # Form Manipulation
-        $scope.revert = ->
-            $scope.data2label=
-                serial: []
-                tokenTec: []
-                tokenVen: []
-            $scope.loadInputs()
-            $scope.serialsForm.$setPristine()
-        $scope.canRevert = ->
-            return !$scope.serialsForm.$pristine
-        $scope.canSubmit = ->
-            return $scope.serialsForm.$valid 
-
-        # Creation of Input Dinamically
-        $scope.loadInputs = ->
-            # 4not Adding more
-            $scope.inputs = []
-            i=0
-            while i<($scope.quantity)
-                # console.log i+"/"+$scope.quantity
-                j=i+1
-                $scope.inputs.push({ placeholder: "Serial Compresor # " + j})
-                $scope.inputs.push({ placeholder: "S# "+j+" TOKEN Tecnico" })
-                $scope.inputs.push({ placeholder: "S# "+j+" TOKEN Vendedor" })
-                i++
-            logger.log("Se ha preparado el formulario. Proceda a leer los seriales con el lector de codigo de barras.") 
-
-        # Roy: Loading DATA FORM DB
-        # Loading unlabeled Serials
-        getUnlabeledSerials = ->
-            $filters=
-                companyID: '20'
-            $http({ url: REST_API.hostname+"/server/ajax/Serials/listUnlabeledFiltered.php", method: "POST", data: JSON.stringify($filters) })
-            .success (postResponse) ->
-                $scope.unlabeledSerials=postResponse
-            return
-        getUnlabeledSerials()
-
-        # Loading unlabeled Tokens Tec
-        getunlabeledTokenTec = ->
-            $filters=
-                country: 'CO'
-                type: 'T'
-            $http({ url: REST_API.hostname+"/server/ajax/Tokens/listUnlabeledFiltered.php", method: "POST", data: JSON.stringify($filters) })
-            .success (postResponse) ->
-                $scope.unlabeledTokenTecs=postResponse
-            return
-        getunlabeledTokenTec()
-
-        # Loading unlabeled Tokens Ven
-        getunlabeledTokenVens = ->
-            $filters=
-                country: 'CO'
-                type: 'V'
-            $http({ url: REST_API.hostname+"/server/ajax/Tokens/listUnlabeledFiltered.php", method: "POST", data: JSON.stringify($filters) })
-            .success (postResponse) ->
-                $scope.unlabeledTokenVens=postResponse
-            return
-        getunlabeledTokenVens()
-
-        # Preparing DATA 2 Insert
-        $data2insert=
-            token:[]
-            serial:[]
-        # Saving Labels 4 Prints at bartender
-        preparingData = ->
-            $data2insert=
-            token:[]
-            serial:[]
-            for iteration in [0...$scope.data2label['serial'].length] by 1
-                $data2insert['serial'].push($scope.data2label['serial'][iteration])
-                $data2insert['token'].push($scope.data2label['tokenTec'][iteration])
-                $data2insert['serial'].push($scope.data2label['serial'][iteration])
-                $data2insert['token'].push($scope.data2label['tokenVen'][iteration])
-
-        # Saving Labels 4 Prints at bartender
-        $scope.requestLabels = ->                 
-            preparingData()
-            $http({ url: REST_API.hostname+"/server/ajax/labeledSerials/add.php", method: "POST", data: JSON.stringify($data2insert) })
-            .success (postResponse) ->
-                if (typeof postResponse) == "string"
-                    if (parseInt(postResponse)>=1)
-                        logger.logSuccess "Se han registrado exitosamente las " +$scope.data2label['serial'].length + " Etiqueta(s)."
-                    if (postResponse.indexOf("PRIMARY")!=-1)
-                        logger.logWarning "Ya solicitaste la(s) " +$scope.data2label['serial'].length + " Etiquetas. Si ya se imprimieron debes confirmar para finalizar."
-                console.log postResponse
-        
-        $scope.confirmLabels = ->
-            preparingData()
-            $http({ url: REST_API.hostname+"/server/ajax/labeledSerials/updateDate.php", method: "POST", data: JSON.stringify($data2insert) })
-            .success (postResponse) ->
-                if (typeof postResponse) == "string"
-                    if (postResponse=="1")
-                        logger.logSuccess "Ha concluido el etiquetado de " +$scope.data2label['serial'].length + " compresor(es)."
-                        $scope.revert()
-                    if (postResponse.indexOf("request")!=-1)
-                        logger.logError "Debes solicitar las etiquetas antes de confirmar sus impresiones."
-                    if (postResponse.indexOf("Labeled")!=-1)
-                        logger.logWarning "Ya cumlminaste la impresion de la(s) " +$scope.data2label['serial'].length + " Etiqueta(s)."
-                        $scope.revert()
-                console.log postResponse
 
 ])
