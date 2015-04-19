@@ -35,11 +35,11 @@
 						<th><div class="th">
 							Numero Cupon
 							<span id="orderIDRaffleUP" class="glyphicon glyphicon-chevron-up"
-							data-ng-click=" order('idraffleCoupon') "
-							data-ng-class="{active: row == 'idraffleCoupon'}"></span>
+							data-ng-click=" order('raffleCouponID') "
+							data-ng-class="{active: row == 'raffleCouponID'}"></span>
 							<span class="glyphicon glyphicon-chevron-down"
-							data-ng-click=" order('-idraffleCoupon') "
-							data-ng-class="{active: row == '-idraffleCoupon'}"></span>
+							data-ng-click=" order('-raffleCouponID') "
+							data-ng-class="{active: row == '-raffleCouponID'}"></span>
 						</div></th>
 						<th><div class="th">
 							Token
@@ -72,7 +72,7 @@
 				</thead>
 				<tbody>
 					<tr data-ng-repeat="raffleCoupon in currentPageRaffleCoupons">
-						<td>{{raffleCoupon.idraffleCoupon}}</td>
+						<td>{{raffleCoupon.raffleCouponID}}</td>
 						<td>{{raffleCoupon.token}}</td>
 						<td>{{raffleCoupon.creationDate}}</td>
 						<td>{{raffleCoupon.description}}</td>

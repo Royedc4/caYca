@@ -75,7 +75,7 @@ angular.module('app.raffles.ctrls', [])
         # registerToken4raffle
         $scope.registerToken4raffle = ->
             preparingData()
-            $http({ url: REST_API.hostname+"/server/ajax/raffleCoupon/add.php", method: "POST", data: JSON.stringify($scope.data2insert) })
+            $http({ url: REST_API.hostname+"/server/ajax/raffleCoupon/new.php", method: "POST", data: JSON.stringify($scope.data2insert) })
             .success (postResponse) ->
                 console.log postResponse
                 if (typeof postResponse) == "object"
@@ -154,7 +154,7 @@ angular.module('app.raffles.ctrls', [])
         raffleCoupons4user = ->
             $filters=
                 userID: $scope.currentUser.userID
-            $http({ url: REST_API.hostname+"/server/ajax/raffleCoupon/listFiltered.php", method: "POST", data: JSON.stringify($filters) })
+            $http({ url: REST_API.hostname+"/server/ajax/raffleCoupon/listByuserID.php", method: "POST", data: JSON.stringify($filters) })
             .success (postResponse) ->
                 $scope.raffleCoupons=postResponse
                 # console.log postResponse
