@@ -2,6 +2,16 @@
 
 	<form id="serialsForm" name="serialsForm" class="form-validation" novalidate>	
 
+		<section class="panel panel-box">
+			<div class="panel-left panel-item bg-warning">
+				<i class="fa fa-dollar text-huge"></i>
+			</div>
+			<div class="panel-right panel-item bg-reverse">
+				<p class="size-h1">231</p>
+				<p class="text-muted">Cupones en rifas</p>
+			</div>
+		</section>
+
 		<alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
 
 		<section class="panel panel-default">
