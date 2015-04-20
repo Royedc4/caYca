@@ -7,8 +7,9 @@
 				<i class="fa fa-dollar text-huge"></i>
 			</div>
 			<div class="panel-right panel-item bg-reverse">
-				<p class="size-h1">231</p>
-				<p class="text-muted">Cupones en rifas</p>
+				<p class="size-h1">{{raffleCoupons.length}} </p>
+				<p ng-show="raffleCoupons.length==1" class="text-muted">Cupon en rifa</p>
+				<p ng-show="raffleCoupons.length!=1" class="text-muted">Cupones en rifas</p>
 			</div>
 		</section>
 
@@ -31,7 +32,7 @@
 		<section class="panel panel-default">
 			<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Formulario de Tokens </strong></div>
 			<div class="panel-body" >
-				<div class="col-md-3 form-group" ng-repeat="inp in inputs">
+				<div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 form-group" ng-repeat="inp in inputs">
 					<input 
 					type="text"
 					required
@@ -50,24 +51,34 @@
 		<section class="panel panel-default">
 			<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Inscripcion de Tokens </strong></div>
 			<div class="panel-body" >
-				<button class="btn btn-default"
-				data-ng-disabled="!canRevert()"
-				data-ng-click="revert()"
-				><span class="fa fa-eraser"></span> Limpiar Formulario</button>
-
-				<button ng-show="currentUser.userTypeID=='ADM'" class='btn btn-danger' ng-click="roYTesting()"><span class="fa fa-user-secret"></span> Roy TesT</button>
-
-				<button type="submit"
-				id="registerToken4rafffleButton"
-				class="btn btn-success"
-				ng-click="registerToken4raffle()"
-				data-ng-disabled="!canSubmit()"
-				><span class="fa fa-database"></span> Inscribir Tokens</button>
 				
-				<div class="callout callout-info">
-					<p>Los botones de Limpiar e Inscribir estaran disponibles cuando se ingresen todos los tokens.</p>
-					<p>El Boton de borrar estara disponible cuando algun dato se haya ingresado.</p>
+				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 form-group">
+					<button class="btn btn-default btn-block"
+					data-ng-disabled="!canRevert()"
+					data-ng-click="revert()"
+					><span class="fa fa-eraser"></span> Borrar Tokens</button>
 				</div>
+
+				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 form-group">					
+					<button type="submit"
+					id="registerToken4rafffleButton"
+					class="btn btn-success btn-block"
+					ng-click="registerToken4raffle()"
+					data-ng-disabled="!canSubmit()"
+					><span class="fa fa-database"></span> Inscribir Tokens</button>
+				</div>
+
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
+					<button ng-show="currentUser.userTypeID=='ADM'" class='btn btn-danger btn-block' ng-click="roYTesting()"><span class="fa fa-user-secret"></span> Roy TesT</button>
+				</div>
+
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
+					<div class="callout callout-info">
+						<p>El boton de Inscribir Tokens estará disponible cuando se ingresen correctamente todos los tokens.</p>
+						<p>El Boton de limpiar formulario estara disponible cuando algun dato se haya ingresado.</p>
+					</div>
+				</div>
+
 			</div>
 		</section>
 

@@ -10,6 +10,8 @@ angular.module('app.raffles.ctrls', [])
     (REST_API,$scope, logger, $http) ->
         console.log 'newCouponCtrl'
 
+        $scope.raffleCoupons = []
+
         # Alert Message
         $scope.alerts = [
             { type: 'info', msg: 'TIPS: Escriba unicamente las letras o numeros, no es necesario escribir los guiones. ni seleccionar el siguiente campo de texto, el formulario va haciendo todo automáticamente.' }
@@ -56,7 +58,7 @@ angular.module('app.raffles.ctrls', [])
                 i++
             setTimeout ->
                     logger.log("Se ha preparado el formulario. Proceda a ingresar los tokens.") 
-                , 2000
+                , 500
             
         
         # Saving Labels 4 Prints at bartender
@@ -89,6 +91,16 @@ angular.module('app.raffles.ctrls', [])
                         if postResponse['zGlobalResult']
                             logger.logSuccess "Has registrado Exitosamente " + ((postResponse['arrayQueries'].length)-1).toString() + " Tokens en tu cuenta!"
                             $scope.revert()
+                            raffleCoupons4user()
+
+        # Getting raffleCoupons4user
+        raffleCoupons4user = ->
+            $filters=
+                userID: $scope.currentUser.userID
+            $http({ url: REST_API.hostname+"/server/ajax/raffleCoupon/listByuserID.php", method: "POST", data: JSON.stringify($filters) })
+            .success (postResponse) ->
+                $scope.raffleCoupons=postResponse
+        raffleCoupons4user()
 ])
 
 .controller('listCouponsCtrl', [
