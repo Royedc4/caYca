@@ -24,12 +24,8 @@ angular.module('app.redemptions.ctrls', [])
     'REST_API','$scope', 'logger', '$http'
     (REST_API,$scope, logger, $http) ->
         console.log 'sellerCtrl'
-         # Alert Message
-        $scope.alerts = [
-            { type: 'info', msg: 'TIPS: Escriba unicamente las letras o numeros, no es necesario escribir los guiones. ni seleccionar el siguiente campo de texto, el formulario va haciendo todo automáticamente.' }
-        ]
-        $scope.closeAlert = (index)->
-            $scope.alerts.splice(index, 1)
+
+        $scope.redeemCoupons = []
 
         #Array of Inputs
         $scope.inputs = []
@@ -86,23 +82,44 @@ angular.module('app.redemptions.ctrls', [])
                 # console.log "input#"+i+ " = " + angular.uppercase document.getElementById('input'+i).value
                 $scope.data2insert['token'].push(angular.uppercase document.getElementById('input'+i).value)
 
-        # registerToken4raffle
-        $scope.registerToken4raffle = ->
+        # registerToken4redeem
+        $scope.registerToken4redeem = ->
             preparingData()
-            # $http({ url: REST_API.hostname+"/server/ajax/raffleCoupon/add.php", method: "POST", data: JSON.stringify($scope.data2insert) })
-            # .success (postResponse) ->
-            #     console.log postResponse
-            #     if (typeof postResponse) == "object"
-            #         for i in [1...postResponse['errorsArray'].length] by 1
-            #             if (postResponse['errorsArray'][i].indexOf("raffleID")!=-1)
-            #                 logger.logError "No se encuentran tokens disponibles para su país."
-            #             if (postResponse['errorsArray'][i].indexOf("fk_raffleCoupons_labeledSerials1")!=-1)
-            #                 logger.logError "Ingresaste cupones invalidos. Intenta de nuevo!"
-            #             if (postResponse['errorsArray'][i].indexOf("token_UNIQUE")!=-1)
-            #                 logger.logError "Ingresaste un token ya registrado!"
-            #             if postResponse['zGlobalResult']
-            #                 logger.logSuccess "Has registrado Exitosamente " + ((postResponse['arrayQueries'].length)-1).toString() + " Tokens en tu cuenta!"
-            #                 $scope.revert()
+            $http({ url: REST_API.hostname+"/server/ajax/redeemCoupon/new.php", method: "POST", data: JSON.stringify($scope.data2insert) })
+            .success (postResponse) ->
+                console.log postResponse
+                if (typeof postResponse) == "object"
+                    for i in [1...postResponse['errorsArray'].length] by 1
+                        if (postResponse['errorsArray'][i].indexOf("redeemID")!=-1)
+                            logger.logError "No se encuentran tokens disponibles para su país."
+                        if (postResponse['errorsArray'][i].indexOf("fk_redeemCoupons_labeledSerials1")!=-1)
+                            logger.logError "Ingresaste cupones invalidos. Intenta de nuevo!"
+                        if (postResponse['errorsArray'][i].indexOf("token_UNIQUE")!=-1)
+                            logger.logError "Ingresaste un token ya registrado!"
+                        if postResponse['zGlobalResult']
+                            logger.logSuccess "Has registrado Exitosamente " + ((postResponse['arrayQueries'].length)-1).toString() + " Tokens en tu cuenta!"
+                            $scope.revert()
+
+
+        # Getting redeemCoupons4user
+        redeemCoupons4user = ->
+            $filters=
+                userID: $scope.currentUser.userID
+            $http({ url: REST_API.hostname+"/server/ajax/redeemCoupon/listByuserID.php", method: "POST", data: JSON.stringify($filters) })
+            .success (postResponse) ->
+                console.log postResponse
+                $scope.redeemCoupons=postResponse
+        redeemCoupons4user()
+
+        # Getting reachableItems4user
+        reachableItems4user = ->
+            $filters=
+                userID: $scope.currentUser.userID
+            $http({ url: REST_API   .hostname+"/server/ajax/item/listReachable.php", method: "POST", data: JSON.stringify($filters) })
+            .success (postResponse) ->
+                console.log postResponse
+                # $scope.redeemCoupons=postResponse
+        reachableItems4user()
 
 ])
 
