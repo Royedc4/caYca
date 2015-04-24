@@ -26,11 +26,12 @@ angular.module('app.redemptions.ctrls', [])
         console.log 'sellerCtrl'
 
         $scope.redeemCoupons = []
+        $scope.reachableItems = []
 
         #Array of Inputs
         $scope.inputs = []
         #Selected Quantity
-        $scope.quantity = 1
+        $scope.quantity = 0
         
         # Debuging Purposes only
         $scope.roYTesting = ->
@@ -100,6 +101,33 @@ angular.module('app.redemptions.ctrls', [])
                             logger.logSuccess "Has registrado Exitosamente " + ((postResponse['arrayQueries'].length)-1).toString() + " Tokens en tu cuenta!"
                             $scope.revert()
 
+        # Saving Labels 4 Prints at bartender
+        preparingData = ->
+            $scope.data2insert=
+                token: []
+                userID: $scope.currentUser.userID
+                country: $scope.currentUser.country.country
+                userTypeID: $scope.currentUser.userType.userTypeID
+                createdBy: $scope.currentUser.userID
+
+        # registerRedemption
+        $scope.registerRedemption = ->
+            preparingData4redemption()
+            # $http({ url: REST_API.hostname+"/server/ajax/redeemCoupon/new.php", method: "POST", data: JSON.stringify($scope.data2insert) })
+            # .success (postResponse) ->
+            #     console.log postResponse
+            #     if (typeof postResponse) == "object"
+            #         for i in [1...postResponse['errorsArray'].length] by 1
+            #             if (postResponse['errorsArray'][i].indexOf("redeemID")!=-1)
+            #                 logger.logError "No se encuentran tokens disponibles para su país."
+            #             if (postResponse['errorsArray'][i].indexOf("fk_redeemCoupons_labeledSerials1")!=-1)
+            #                 logger.logError "Ingresaste cupones invalidos. Intenta de nuevo!"
+            #             if (postResponse['errorsArray'][i].indexOf("token_UNIQUE")!=-1)
+            #                 logger.logError "Ingresaste un token ya registrado!"
+            #             if postResponse['zGlobalResult']
+            #                 logger.logSuccess "Has registrado Exitosamente " + ((postResponse['arrayQueries'].length)-1).toString() + " Tokens en tu cuenta!"
+            #                 $scope.revert()
+
 
         # Getting redeemCoupons4user
         redeemCoupons4user = ->
@@ -111,14 +139,16 @@ angular.module('app.redemptions.ctrls', [])
                 $scope.redeemCoupons=postResponse
         redeemCoupons4user()
 
+        $scope.itemSelected=null
+
         # Getting reachableItems4user
         reachableItems4user = ->
             $filters=
                 userID: $scope.currentUser.userID
-            $http({ url: REST_API   .hostname+"/server/ajax/item/listReachable.php", method: "POST", data: JSON.stringify($filters) })
+            $http({ url: REST_API.hostname+"/server/ajax/Item/listReachable.php", method: "POST", data: JSON.stringify($filters) })
             .success (postResponse) ->
                 console.log postResponse
-                # $scope.redeemCoupons=postResponse
+                $scope.reachableItems=postResponse
         reachableItems4user()
 
 ])

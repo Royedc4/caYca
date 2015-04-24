@@ -4,7 +4,7 @@
 
 		<section class="panel panel-box">
 			<div class="panel-left panel-item bg-warning">
-				<i class="fa fa-dollar text-huge"></i>
+				<i class="fa fa-ticket text-huge"></i>
 			</div>
 			<div class="panel-right panel-item bg-reverse">
 				<p class="size-h1">{{raffleCoupons.length}} </p>
@@ -13,7 +13,7 @@
 			</div>
 		</section>
 
-		<alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
+		<alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)" ng-show="quantity>0">{{alert.msg}}</alert>
 
 		<section class="panel panel-default">
 			<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Cantidad de tokens a registrar</strong></div>
@@ -23,13 +23,21 @@
 					<input type="number" id="quantity" class="form-control" data-min=0 ng-minlenght=0 ng-maxlenght=30 ng-model="quantity" placeholder="Cantidad de Tokens">
 				</div>
 
-				<div class="col-sm-10 form-group">
+				<div class="col-sm-6 form-group">
 					<button ng-click="loadInputs()" class="btn btn-primary btn-block"><span class="fa fa-file-o"></span> Preparar Formulario</button>
 				</div>
+
+				<div class="col-sm-2 form-group">
+					<p>Registrar para Canje?</p>
+				</div>
+				<div class="col-sm-2 form-group">
+					<label class="switch switch-success"><input type="checkbox" ng-model="oneAtATime"><i></i></label>
+				</div>
+
 			</div>	
 		</section>
 
-		<section class="panel panel-default">
+		<section class="panel panel-default" ng-show="quantity>0">
 			<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Formulario de Tokens </strong></div>
 			<div class="panel-body" >
 				<div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 form-group" ng-repeat="inp in inputs">
@@ -51,7 +59,7 @@
 		<section class="panel panel-default">
 			<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Inscripcion de Tokens </strong></div>
 			<div class="panel-body" >
-				
+			
 				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 form-group">
 					<button class="btn btn-default btn-block"
 					data-ng-disabled="!canRevert()"
@@ -72,12 +80,12 @@
 					<button ng-show="currentUser.userTypeID=='ADM'" class='btn btn-danger btn-block' ng-click="roYTesting()"><span class="fa fa-user-secret"></span> Roy TesT</button>
 				</div>
 
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
+				<hr>
 					<div class="callout callout-info">
 						<p>El boton de Inscribir Tokens estará disponible cuando se ingresen correctamente todos los tokens.</p>
 						<p>El Boton de limpiar formulario estara disponible cuando algun dato se haya ingresado.</p>
 					</div>
-				</div>
+				
 
 			</div>
 		</section>

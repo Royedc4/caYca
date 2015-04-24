@@ -33,7 +33,7 @@
 				<thead>
 					<tr>
 						<th><div class="th">
-							Numero Cupon
+							#
 							<span id="orderIDRaffleUP" class="glyphicon glyphicon-chevron-up"
 							data-ng-click=" order('raffleCouponID') "
 							data-ng-class="{active: row == 'raffleCouponID'}"></span>
@@ -51,7 +51,7 @@
 							data-ng-class="{active: row == '-token'}"></span>
 						</div></th>
 						<th><div class="th">
-							Fecha De Registro
+							Fecha
 							<span class="glyphicon glyphicon-chevron-up"
 							data-ng-click=" order('creationDate') "
 							data-ng-class="{active: row == 'creationDate'}"></span>
@@ -60,7 +60,7 @@
 							data-ng-class="{active: row == '-creationDate'}"></span>
 						</div></th>
 						<th><div class="th">
-							Descripción de Rifa
+							Rifa
 							<span class="glyphicon glyphicon-chevron-up"
 							data-ng-click=" order('description') "
 							data-ng-class="{active: row == 'description'}"></span>
@@ -75,6 +75,7 @@
 						<td>{{raffleCoupon.raffleCouponID}}</td>
 						<td>{{raffleCoupon.token}}</td>
 						<td>{{raffleCoupon.creationDate}}</td>
+						<!-- <td>{{raffleCoupon.creationDate | date:'dd/MM/yyyy' }}</td> -->
 						<td>{{raffleCoupon.description}}</td>
 					</tr>
 				</tbody>

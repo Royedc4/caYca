@@ -22,7 +22,7 @@ angular.module('app.raffles.ctrls', [])
         #Array of Inputs
         $scope.inputs = []
         #Selected Quantity
-        $scope.quantity = 1
+        $scope.quantity = 0
         
         # Debuging Purposes only
         $scope.roYTesting = ->
@@ -169,7 +169,9 @@ angular.module('app.raffles.ctrls', [])
             $http({ url: REST_API.hostname+"/server/ajax/raffleCoupon/listByuserID.php", method: "POST", data: JSON.stringify($filters) })
             .success (postResponse) ->
                 $scope.raffleCoupons=postResponse
-                # console.log postResponse
+                for i in [0...$scope.raffleCoupons.length] by 1
+                    $scope.raffleCoupons[i]['creationDate']=moment($scope.raffleCoupons[i]['creationDate']).format("DD/MM/YYYY")
+            
                 # Only way to make react on filter to show items on table
                 setTimeout ->
                     $('#searchKeywords').focus()

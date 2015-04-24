@@ -36,25 +36,47 @@
 				<p ng-show="redeemCoupons.length!=1" class="text-muted">Cupones</p>
 			</div>
 			<div class="panel-right panel-item bg-success">
-				<i class="fa fa-shopping-cart text-huge"></i>
+				<i class="fa fa-cart-plus text-huge"></i>
 			</div>
 		</section>
 
 		<section class="panel panel-default">
-			<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Cantidad de tokens a registrar</strong></div>
+			<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Configuración e inscripcion de Tokens</strong></div>
 
 			<div class="panel-body text-center">
-				<div class="col-sm-4 form-group">
+				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 form-group">
 					<input type="number" id="quantity" class="form-control" data-min=0 ng-minlenght=0 ng-maxlenght=30 ng-model="quantity" placeholder="Cantidad de Tokens">
 				</div>
 
-				<div class="col-sm-8 form-group">
+				<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 form-group">
 					<button ng-click="loadInputs()" class="btn btn-primary btn-block"><span class="fa fa-file-o"></span> Preparar Formulario</button>
 				</div>
-			</div>	
+
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
+					<button ng-show="currentUser.userTypeID=='ADM'" class='btn btn-danger btn-block' ng-click="roYTesting()"><span class="fa fa-user-secret"></span> Roy TesT</button>
+				</div>
+
+
+				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 form-group" ng-show="quantity>0">
+					<button class="btn btn-default btn-block"
+					data-ng-disabled="!canRevert()"
+					data-ng-click="revert()"
+					><span class="fa fa-eraser"></span> Borrar Tokens</button>
+				</div>
+
+
+				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 form-group" ng-show="quantity>0">
+					<button type="submit"
+					id="registerToken4rafffleButton"
+					class="btn btn-success btn-block"
+					ng-click="registerToken4redeem()"
+					data-ng-disabled="!canSubmit()"
+					><span class="fa fa-database"></span> Inscribir Tokens</button>
+				</div>
+			</div>
 		</section>
 
-		<section class="panel panel-default">
+		<section class="panel panel-default" ng-show="quantity>0">
 			<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Formulario de Tokens </strong></div>
 			<div class="panel-body" >
 				<div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 form-group" ng-repeat="inp in inputs">
@@ -71,34 +93,33 @@
 
 			</div>
 		</section>
-
-		<section class="panel panel-default">
-			<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Inscripcion de Tokens </strong></div>
-			<div class="panel-body text-center" >
-				
-				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 form-group">
-					<button class="btn btn-default btn-block"
-					data-ng-disabled="!canRevert()"
-					data-ng-click="revert()"
-					><span class="fa fa-eraser"></span> Borrar Tokens</button>
-				</div>
-
-				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 form-group">					
-					<button type="submit"
-					id="registerToken4rafffleButton"
-					class="btn btn-success btn-block"
-					ng-click="registerToken4redeem()"
-					data-ng-disabled="!canSubmit()"
-					><span class="fa fa-database"></span> Inscribir Tokens</button>
-				</div>
-
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
-					<button ng-show="currentUser.userTypeID=='ADM'" class='btn btn-danger btn-block' ng-click="roYTesting()"><span class="fa fa-user-secret"></span> Roy TesT</button>
-				</div>
-				
-			</div>
-		</section> 
-
 	</form>
+
+	<section class="panel panel-default">
+		<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Canje de puntos por articulos</strong></div>
+
+		<form id="redeemForm" name="redeemForm" class="form-validation" novalidate>	
+
+			<div class="form-group text-center">
+				<div class="select-group">
+					<span class="ui-select">
+						<select ng-model="itemSelected" ng-options="item.name for item in reachableItems" required>
+							<option value="">- Seleccione Articulo -</option>
+						</select>
+					</span> 
+				</div>
+			</div>
+
+			<div class="panel-body" >
+				<button type="submit"
+				id="registerRedemptionButton"
+				class="btn btn-success btn-block"
+				ng-click=""
+				data-ng-disabled="itemSelected!='null'"
+				><span class="fa fa-database"></span> Registrar Canje</button>
+			</div>
+
+		</form>
+	</section> 
 
 </section>
