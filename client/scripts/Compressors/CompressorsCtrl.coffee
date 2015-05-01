@@ -11,7 +11,7 @@ angular.module('app.compressors', [])
 
         #Load Countries
         getCountries = ->
-            $http.post(REST_API.hostname+"/server/ajax/Tables/getCountry.php").success (data) ->
+            $http.post(REST_API.hostname+"/server/ajax/Country/list.php").success (data) ->
                 $scope.countries = data
                 return
             return
@@ -26,7 +26,7 @@ angular.module('app.compressors', [])
             $data4post = 
                 country: $scope.countrySelected.country
                 type: 'T'
-            $http({url:REST_API.hostname+"/server/ajax/Tokens/listAll.php", method: "POST", data: JSON.stringify($data4post) })
+            $http({url:REST_API.hostname+"/server/ajax/Tokens/listFiltered.php", method: "POST", data: JSON.stringify($data4post) })
             .success (dataTEC) ->
                 iterator=0
                 while (iterator<dataTEC.length)
@@ -37,7 +37,7 @@ angular.module('app.compressors', [])
             $data4post = 
                 country: $scope.countrySelected.country
                 type: 'V'
-            $http({url:REST_API.hostname+"/server/ajax/Tokens/listAll.php", method: "POST", data: JSON.stringify($data4post) })
+            $http({url:REST_API.hostname+"/server/ajax/Tokens/listFiltered.php", method: "POST", data: JSON.stringify($data4post) })
             .success (dataDV) ->
                 iterator=0
                 while (iterator<dataDV.length)
@@ -259,22 +259,16 @@ angular.module('app.compressors', [])
           dropbox.addEventListener "dragenter", handleDragover, false
           dropbox.addEventListener "dragover", handleDragover, false
           dropbox.addEventListener "drop", handleDrop, false
-        
-        #Load Countries
-        getCountries = ->
-            $http.post(REST_API.hostname+"/server/ajax/Tables/getCountry.php").success (data) ->
-                $scope.countries = data
-                return
-            return
-        getCountries()
 
         #Load Companies
-        getCompanies = ->
-            $http.post(REST_API.hostname+"/server/ajax/Tables/getCompany.php").success (data) ->
-                $scope.companies = data
-                return
+        getImporterCompanies = ->
+            $filters=
+                isImporter: true
+            $http({ url: REST_API.hostname+"/server/ajax/Company/listFiltered.php", method: "POST", data: JSON.stringify($filters) })
+                .success (postResponse) ->
+                    $scope.companies =postResponse
             return
-        getCompanies()
+        getImporterCompanies()
 
         #Save Serials
         $scope.addSerials = ->
@@ -291,9 +285,9 @@ angular.module('app.compressors', [])
             $scope.data["serialsSelected"] = $serialsWithoutNo
             $http.defaults.headers.post["Content-Type"] = "application/json"            
             console.log ($scope.data)
-            $http({ url: REST_API.hostname+"/server/ajax/Serials/addSerial.php", method: "POST", data: JSON.stringify(JSON.stringify($scope.data)) })
+            $http({ url: REST_API.hostname+"/server/ajax/Serials/addSerial.php", method: "POST", data: JSON.stringify($scope.data) })
             .success (postResponse) ->
-                console.log "success: " + postResponse
+                console.log "postResponse: " + postResponse
             return
         return
 ])

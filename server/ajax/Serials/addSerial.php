@@ -1,21 +1,8 @@
 <?php 
 require_once '../../secure/db.php'; // The mysql database connection script
-header('Access-Control-Allow-Origin: *');  
-header("Access-Control-Allow-Headers: Content-Type, Origin, X-Requested-With, Accept");
 
-
-// header('Access-Control-Allow-Headers: Content-Type, x-xsrf-token');
-//Add certain amounts of serials to the database.
-// echo $_POST;
-// echo $HTTP_RAW_POST_DATA;
-
-
-
-$data =  (json_decode($HTTP_RAW_POST_DATA));
+$data = file_get_contents("php://input");
 $array=json_decode($data, true);
-echo sizeof($array);
-echo sizeof($array["companySelected"]);
-echo sizeof($array["serialsSelected"]);
 
 $hoy = date("Y-m-d H:i:s");
 
@@ -24,13 +11,19 @@ $success = array('loggedIn' => true, 'success' => 'Fuck yeaH... U did it.');
 //Lopping
 for ($i = 0; $i < sizeof($array["serialsSelected"]); $i++) {
 	// echo "<br> Inserting " . $i . " ";
-	$query="INSERT INTO serial VALUES ('" . $array["serialsSelected"][$i]["serialID"] . "', '" . $array["serialsSelected"][$i]["compressorID"] . "', '" . $array["companySelected"]["companyID"] . "',DEFAULT, NULL,DEFAULT, NULL, '$hoy')";
+	$query="INSERT INTO serial VALUES ('" . $array["serialsSelected"][$i]["serialID"] . "', '" . $array["serialsSelected"][$i]["compressorID"] . "', '" . $array["companySelected"]["companyID"] . "','$hoy')";
+	// $query="INSERT INTO serial VALUES ('" . $array["serialsSelected"][$i]["serialID"] . "', '" . $array["serialsSelected"][$i]["compressorID"] . "', '" . $array["companySelected"]["companyID"] . "',DEFAULT, NULL,DEFAULT, NULL, '$hoy')";
 	// echo $query;
 	$result = $mysqli->query($query) or die($mysqli->error.__LINE__);
 	$result = $mysqli->affected_rows;
 	// echo $json_response = json_encode($query);		
 }
 echo $json_response = json_encode($result);	
+
+
+
+
+
 
 
 // $success = array('loggedIn' => true, 'success' => 'Fuck yeaH You are logged in.');

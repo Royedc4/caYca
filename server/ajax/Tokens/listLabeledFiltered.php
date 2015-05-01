@@ -9,7 +9,7 @@ if ( ($data =  $postdata)  != NULL )
 	$country = $array['country'];
 	$type = $array['type'];
 
-	$outerQuery="CALL tLabeled('$type', '$country')";
+	$outerQuery="CALL `token-listLabeled`('$type', '$country')";
 
 	$outerResult=$mysqli->query($outerQuery) or die($mysqli->error.__LINE__);
 	$arr = array();

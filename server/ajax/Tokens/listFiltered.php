@@ -6,9 +6,10 @@ $postdata = file_get_contents("php://input");
 if ( ($data =  $postdata)  != NULL )
 {
 	$array=json_decode($data, true);
-	$companyID = $array['companyID'];
+	$country = $array['country'];
+	$type = $array['type'];
 
-	$outerQuery="CALL companyByID('$companyID')";
+	$outerQuery="CALL `token-listFiltered`('$type', '$country')";
 
 	$outerResult=$mysqli->query($outerQuery) or die($mysqli->error.__LINE__);
 	$arr = array();

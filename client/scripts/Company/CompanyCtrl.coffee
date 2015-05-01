@@ -21,7 +21,7 @@ angular.module('app.company.ctrls', [])
 
         # Load cities
         getCities = ->
-            $http.post(REST_API.hostname+"/server/ajax/Tables/getCity.php").success (data) ->
+            $http.post(REST_API.hostname+"/server/ajax/City/list.php").success (data) ->
                 $scope.cities = data
                 return
             return
@@ -62,7 +62,7 @@ angular.module('app.company.ctrls', [])
                 
             $http.defaults.headers.post["Content-Type"] = "application/json"            
                         
-            $http({ url: REST_API.hostname+"/server/ajax/Companies/addCompany.php", method: "POST", data: JSON.stringify(JSON.stringify($scope.data)) })
+            $http({ url: REST_API.hostname+"/server/ajax/Company/addCompany.php", method: "POST", data: JSON.stringify(JSON.stringify($scope.data)) })
             .success (postResponse) ->
                 if (typeof postResponse) == "string"
                     if (postResponse.indexOf("NIT") > -1)
@@ -78,7 +78,7 @@ angular.module('app.company.ctrls', [])
                     $scope.revert()
 
                     #Sending Email
-                    $http({ url: REST_API.hostname+"/server/ajax/Companies/addCompanyConfirm.php", method: "POST", data: JSON.stringify(JSON.stringify($scope.data)) })
+                    $http({ url: REST_API.hostname+"/server/ajax/Company/addCompanyConfirm.php", method: "POST", data: JSON.stringify(JSON.stringify($scope.data)) })
                     .success (postResponseB) ->
                         console.log "Roy: " + JSON.stringify(postResponseB)
                         logger.logSuccess "Se ha enviado el correo exitosamente a: "+ $scope.data.email

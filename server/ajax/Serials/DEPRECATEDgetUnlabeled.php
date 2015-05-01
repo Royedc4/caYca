@@ -1,6 +1,8 @@
 <?php 
 require_once '../../secure/db.php'; // The mysql database connection script
 
+// DEPRECATED FOR POST VALUES... 
+
 $companyID = '%';
 if(isset($_GET['companyID']))
 	$companyID = $_GET['companyID'];

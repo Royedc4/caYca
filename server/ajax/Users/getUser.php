@@ -30,7 +30,7 @@ if ( ($data =  ($postdata))  != NULL )
 		if ($is_match){
 			$successQuery="UPDATE user SET lastLogOn='$rightNow' WHERE email='$email'";
 			$successResult=$mysqli->query($successQuery) or die($mysqli->error.__LINE__);
-			$innerQuery="SELECT u.ID, u.email, u.passWord, u.fullName, u.address, u.celphone, u.phone, u.userTypeID, u.city_geoID, u.companyID, u.lastLogOn, u.userCreation, u.isActive, c.country FROM user u JOIN city c ON (c.geoID=u.city_geoID) where u.email='$email' and u.password COLLATE utf8_bin = '$hashedStoredPassword'";
+			$innerQuery="SELECT u.userID, u.ID, u.email, u.passWord, u.fullName, u.address, u.celphone, u.phone, u.userTypeID, u.city_geoID, u.companyID, u.lastLogOn, u.userCreation, u.isActive, c.country FROM user u JOIN city c ON (c.geoID=u.city_geoID) where u.email='$email' and u.password COLLATE utf8_bin = '$hashedStoredPassword'";
 			// should wait couple of seconds 4 security...
 			$innerResult = $mysqli->query($innerQuery) or die($mysqli->error.__LINE__);
 			while($row = $innerResult->fetch_assoc()) {
