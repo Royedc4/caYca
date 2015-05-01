@@ -17,7 +17,7 @@ for ($i = -1; $i < sizeof($array["token"]); $i++) {
 		$query="START TRANSACTION";
 	}
 	else{
-		$query="CALL `newRaffleCoupon`('" . $array["token"][$i] . "','" . $array["userID"] . "','" . $array["country"] . "','" . $array["userTypeID"] . "','" . $array["createdBy"] . "','$hoy')";
+		$query="CALL `redeemCoupon10new`('" . $array["token"][$i] . "','" . $array["userID"] . "','" . $array["country"] . "','" . $array["userTypeID"] . "','" . $array["createdBy"] . "','$hoy')";
 	}
 	$mysqli->query($query) ? false : $zGlobalResult=false;
 	array_push($queriesArray, $query);

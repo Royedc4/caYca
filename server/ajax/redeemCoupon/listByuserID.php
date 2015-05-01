@@ -8,7 +8,7 @@ if ( ($data =  $postdata)  != NULL )
 	$array=json_decode($data, true);
 	$userID = $array['userID'];
 
-	$outerQuery="CALL rcByUserID('$userID')";
+	$outerQuery="CALL `redeemCoupon20listByuserID`('$userID')";
 
 	$outerResult=$mysqli->query($outerQuery) or die($mysqli->error.__LINE__);
 	$arr = array();

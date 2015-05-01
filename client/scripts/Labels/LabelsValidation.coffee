@@ -20,11 +20,11 @@ angular.module('app.labels.validation', [])
 
                 # Storing values on differents Arrays depending on inputLocation
                 if scope.consecSer.indexOf(parseInt(element['0'].name.substr(5,3))) != -1
-                    scope.data2label['serial'].push(element.context.value)
+                    scope.data2label['serial'].push(element.context.value.toUpperCase())
                 if scope.consecTec.indexOf(parseInt(element['0'].name.substr(5,3))) != -1
-                    scope.data2label['tokenTec'].push(element.context.value)
+                    scope.data2label['tokenTec'].push(element.context.value.toUpperCase())
                 if scope.consecVen.indexOf(parseInt(element['0'].name.substr(5,3))) != -1
-                    scope.data2label['tokenVen'].push(element.context.value)
+                    scope.data2label['tokenVen'].push(element.context.value.toUpperCase())
 
                 element['0']['disabled']=true
         )
@@ -41,19 +41,29 @@ angular.module('app.labels.validation', [])
                 if typeof(value)!='object'
                     # console.log "Escribiendo=" + value
                     valid = false
+                    alreadyLabeled = false
 
                     # Validating the write of SERIALS
                     if scope.consecSer.indexOf(parseInt(ele['0'].name.substr(5,3))) != -1
+                        #Looping at Unlabeled
                         for unlabeledSerial in scope.unlabeledSerials
                             do (unlabeledSerial) ->
-                                if (unlabeledSerial['SERIAL']==value)
-                                    if scope.data2label['serial'].length>0
-                                        if scope.data2label['serial'].indexOf(value) ==-1
-                                            # Not repeated
+                                # It's unlabeled
+                                if (unlabeledSerial['SERIAL']==value.toUpperCase())
+                                    #Looping at Labeled
+                                    for labeledSerial in scope.labeledSerials
+                                        do (labeledSerial) ->
+                                            # It's Labeled
+                                            if (labeledSerial['SERIAL']==value.toUpperCase())
+                                                alreadyLabeled = true
+                                    if !alreadyLabeled
+                                        if scope.data2label['serial'].length>0
+                                            if scope.data2label['serial'].indexOf(value.toUpperCase()) ==-1
+                                                # Not repeated
+                                                valid=true
+                                        else
+                                            # First Item 
                                             valid=true
-                                    else
-                                        # First Item 
-                                        valid=true
                                     # console.log "Unlabeled:"+unlabeledSerial['SERIAL']
                                     # console.log "Se guarda"
                         # console.log "ESCRIBIENDO 1 serial"
@@ -62,9 +72,9 @@ angular.module('app.labels.validation', [])
                     if scope.consecTec.indexOf(parseInt(ele['0'].name.substr(5,3))) != -1
                         for unlabeledTokenTec in scope.unlabeledTokenTecs
                             do (unlabeledTokenTec) ->
-                                if (unlabeledTokenTec['token']==value)
+                                if (unlabeledTokenTec['token']==value.toUpperCase())
                                     if scope.data2label['tokenTec'].length>0
-                                        if scope.data2label['tokenTec'].indexOf(value) ==-1
+                                        if scope.data2label['tokenTec'].indexOf(value.toUpperCase()) ==-1
                                             valid=true
                                     else
                                         valid=true
@@ -73,9 +83,9 @@ angular.module('app.labels.validation', [])
                     if scope.consecVen.indexOf(parseInt(ele['0'].name.substr(5,3))) != -1
                         for unlabeledTokenVen in scope.unlabeledTokenVens
                             do (unlabeledTokenVen) ->
-                                if (unlabeledTokenVen['token']==value)
+                                if (unlabeledTokenVen['token']==value.toUpperCase())
                                     if scope.data2label['tokenVen'].length>0
-                                        if scope.data2label['tokenVen'].indexOf(value) ==-1
+                                        if scope.data2label['tokenVen'].indexOf(value.toUpperCase()) ==-1
                                             valid=true
                                     else
                                         valid=true

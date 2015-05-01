@@ -28,6 +28,7 @@ angular.module('app.labels.ctrls', [])
         
         # Serials and Label db
         $scope.unlabeledSerials = null
+        $scope.labeledSerials = null
         $scope.unlabeledTokenTecs = null
         $scope.unlabeledTokenVens = null
 
@@ -45,11 +46,7 @@ angular.module('app.labels.ctrls', [])
             i++
 
         # Debuging Purposes only
-        $scope.roYTesting = ->
-            # console.log ">>unlabeledTokenVens>>"
-            # console.log $scope.unlabeledTokenVens    
-            # console.log ">>unlabeledTokenTecs>>"
-            # console.log $scope.unlabeledTokenTecs    
+        $scope.roYTesting = ->  
             console.log ">>data2label>>"
             console.log $scope.data2label
             console.log ">>data2insert>>"
@@ -70,10 +67,21 @@ angular.module('app.labels.ctrls', [])
 
         # Creation of Input Dinamically
         $scope.loadInputs = ->
+            getunlabeledTokenTec()
+            getunlabeledTokenVens()
+            getLabeledSerials()
             # 4not Adding more
+            $scope.data2label=
+                serial: []
+                tokenTec: []
+                tokenVen: []
             $scope.inputs = []
             i=0
             while i<($scope.quantity)
+                if i==0
+                    setTimeout ->
+                        document.getElementById('input1').focus()
+                    , 100
                 # console.log i+"/"+$scope.quantity
                 j=i+1
                 $scope.inputs.push({ placeholder: "Serial Compresor # " + j})
@@ -83,6 +91,16 @@ angular.module('app.labels.ctrls', [])
             logger.log("Se ha preparado el formulario. Proceda a leer los seriales con el lector de codigo de barras.") 
 
         # Roy: Loading DATA FORM DB
+        # Loading labeled Serials
+        getLabeledSerials = ->
+            $filters=
+                companyID: '20'
+            $http({ url: REST_API.hostname+"/server/ajax/Serials/listLabeledFiltered.php", method: "POST", data: JSON.stringify($filters) })
+            .success (postResponse) ->
+                $scope.labeledSerials=postResponse
+            return
+        getLabeledSerials()
+
         # Loading unlabeled Serials
         getUnlabeledSerials = ->
             $filters=
@@ -133,14 +151,19 @@ angular.module('app.labels.ctrls', [])
         # Saving Labels 4 Prints at bartender
         $scope.requestLabels = ->                 
             preparingData()
+            console.log $data2insert
             $http({ url: REST_API.hostname+"/server/ajax/labeledSerials/add.php", method: "POST", data: JSON.stringify($data2insert) })
             .success (postResponse) ->
-                if (typeof postResponse) == "string"
-                    if (parseInt(postResponse)>=1)
-                        logger.logSuccess "Se han registrado exitosamente las " +$scope.data2label['serial'].length + " Etiqueta(s)."
-                    if (postResponse.indexOf("PRIMARY")!=-1)
-                        logger.logWarning "Ya solicitaste la(s) " +$scope.data2label['serial'].length + " Etiquetas. Si ya se imprimieron debes confirmar para finalizar."
                 console.log postResponse
+                console.log 'errorsArray: ' + postResponse['errorsArray'].indexOf('PRIMARY')
+                console.log 'errorsArray pos3: ' + postResponse['errorsArray'][postResponse['errorsArray'].length-1]
+                
+                if (typeof postResponse) == "object"
+                    if ((postResponse['zGlobalResult'])==true)
+                        logger.logSuccess "Se han registrado exitosamente las " +$scope.data2label['serial'].length + " Etiqueta(s)."
+                    if (postResponse['errorsArray'][postResponse['errorsArray'].length-1].indexOf("PRIMARY")!=-1)
+                        logger.logWarning "Ya solicitaste la etiqueta del token " + postResponse['errorsArray'][postResponse['errorsArray'].length-1].substr(postResponse['errorsArray'][postResponse['errorsArray'].length-1].indexOf('entry')+7,14) + " Etiquetas. Si ya se etiquetaron exitosamente debes confirmar para finalizar."
+                
         
         $scope.confirmLabels = ->
             preparingData()
