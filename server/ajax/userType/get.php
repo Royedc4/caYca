@@ -6,9 +6,9 @@ $postdata = file_get_contents("php://input");
 if ( ($data =  $postdata)  != NULL )
 {
 	$array=json_decode($data, true);
-	$geoID = $array['geoID'];
+	$userTypeID = $array['userTypeID'];
 
-	$outerQuery="CALL cityByID('$geoID')";
+	$outerQuery="CALL `userType-get`('$userTypeID')";
 
 	$outerResult=$mysqli->query($outerQuery) or die($mysqli->error.__LINE__);
 	$arr = array();

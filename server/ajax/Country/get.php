@@ -6,9 +6,9 @@ $postdata = file_get_contents("php://input");
 if ( ($data =  $postdata)  != NULL )
 {
 	$array=json_decode($data, true);
-	$userTypeID = $array['userTypeID'];
+	$country = $array['country'];
 
-	$outerQuery="CALL userTypeByID('$userTypeID')";
+	$outerQuery="CALL `country-get`('$country')";
 
 	$outerResult=$mysqli->query($outerQuery) or die($mysqli->error.__LINE__);
 	$arr = array();

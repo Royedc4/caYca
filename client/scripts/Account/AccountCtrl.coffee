@@ -19,7 +19,7 @@ angular.module('app.account.ctrls', [])
         getCountry4user = (user) ->
             $filters=
                 country: user['country']
-            $http({ url: REST_API.hostname+"/server/ajax/Country/getByID.php", method: "POST", data: JSON.stringify($filters) })
+            $http({ url: REST_API.hostname+"/server/ajax/Country/get.php", method: "POST", data: JSON.stringify($filters) })
                 .success (postResponse) ->
                     $scope.currentUser['country']=postResponse['0']
 
@@ -27,7 +27,7 @@ angular.module('app.account.ctrls', [])
         getCompany4user = (user) ->
             $filters=
                 companyID: user['companyID']
-            $http({ url: REST_API.hostname+"/server/ajax/Companies/getByID.php", method: "POST", data: JSON.stringify($filters) })
+            $http({ url: REST_API.hostname+"/server/ajax/Company/get.php", method: "POST", data: JSON.stringify($filters) })
                 .success (postResponse) ->
                     $scope.currentUser['company']=postResponse['0']
 
@@ -35,7 +35,7 @@ angular.module('app.account.ctrls', [])
         getCity4user = (user) ->
             $filters=
                 geoID: user['city_geoID']
-            $http({ url: REST_API.hostname+"/server/ajax/City/getByID.php", method: "POST", data: JSON.stringify($filters) })
+            $http({ url: REST_API.hostname+"/server/ajax/City/get.php", method: "POST", data: JSON.stringify($filters) })
                 .success (postResponse) ->
                     $scope.currentUser['city']=postResponse['0']
 
@@ -43,7 +43,7 @@ angular.module('app.account.ctrls', [])
         getUserType4user = (user) ->
             $filters=
                 userTypeID: user['userTypeID']
-            $http({ url: REST_API.hostname+"/server/ajax/userType/getByID.php", method: "POST", data: JSON.stringify($filters) })
+            $http({ url: REST_API.hostname+"/server/ajax/userType/get.php", method: "POST", data: JSON.stringify($filters) })
                 .success (postResponse) ->
                     $scope.currentUser['userType']=postResponse['0']
 
@@ -129,15 +129,18 @@ angular.module('app.account.ctrls', [])
 
         #Load companies
         getRetailerCompanies = ->
-            $http.post(REST_API.hostname+"/server/ajax/Tables/getRetailerCompanies.php").success (data) ->
-                $scope.retailers = data
-                return
+            $filters=
+                isRetailer: true
+            $http({ url: REST_API.hostname+"/server/ajax/Company/listFiltered.php", method: "POST", data: JSON.stringify($filters) })
+                .success (postResponse) ->
+                    console.log postResponse
+                    $scope.retailers =postResponse
             return
         getRetailerCompanies()
 
          #Load cities
         getCities = ->
-            $http.post(REST_API.hostname+"/server/ajax/Tables/getCity.php").success (data) ->
+            $http.post(REST_API.hostname+"/server/ajax/City/list.php").success (data) ->
                 $scope.cities = data
                 return
             return
@@ -224,7 +227,7 @@ angular.module('app.account.ctrls', [])
 
         #Load cities
         getCities = ->
-            $http.post(REST_API.hostname+"/server/ajax/Tables/getCity.php").success (data) ->
+            $http.post(REST_API.hostname+"/server/ajax/City/list.php").success (data) ->
                 $scope.cities = data
                 return
             return
