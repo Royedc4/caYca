@@ -1,128 +1,124 @@
 <div class="page" data-ng-controller="salesCtrl">
 
-	<div class="panel panel-default">
-		<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Informacion Temporal</strong></div>
-		<div class="panel-body">
-			<p><span class="dropcap-circle colored">R</span>
-				En esta pagina hace falta >> Cambios de tipos de letras, ajuste de campos de texto y de regionalizacion de moneda y lenguaje.</p>
-			</div>
-		</div>
+	<form id="invoiceForm" name="invoiceForm" class="form-validation" novalidate>
 
-		<!-- Accordion -->
-		<section class="panel panel-default">
-			<div class="panel-heading"><span class="glyphicon glyphicon-th"></span>  Nueva Factura Modo Acordeon</div>
-			<div class="panel-body" data-ng-controller="AccordionDemoCtrl">
-				<accordion class="ui-accordion">
-			
+		<div class="panel panel-default">
+			<!-- Accordion -->
+			<section class="panel panel-default">
+				<div class="panel-heading"><span class="glyphicon glyphicon-th"></span> Encabezado</div>
+				<div class="panel-body">
+
+					<!-- Typeahead of Retailers -->
+					<div class="col-sm-6">
+
+						<label for="" class="col-sm-4 form-group">DATOS </label>
+						<div class="col-sm-8 input-group">
+							<span class="input-group-addon"><i class="fa fa-user"></i></span>
+							<input type="text" data-ng-controller="TypeaheadCtrl"
+							ng-model="selected"
+							typeahead="state for state in states | filter:$viewValue | limitTo:8"
+							class="form-control"
+							placeholder="Nombre del cliente.">
+						</div>
+					</div>
+
 					<!-- Fecha -->
-					<div class="panel-body" data-ng-controller="DatepickerDemoCtrl">
-						<label for="" class="col-sm-1">Fecha: </label>
-						<div class="col-sm-11 input-group ui-datepicker">
+					<div class="col-sm-6">
+						<label for="" class="col-sm-4 form-group">Fecha: </label>
+						<div class="col-sm-8 input-group ui-datepicker">
 							<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-							<input type="text" 
+							<input type="text" data-ng-controller="DatepickerDemoCtrl"
 							class="form-control"
 							datepicker-popup="{{format}}"
-							ng-model="dt"
+							ng-model="data2insert.date"
 							is-open="opened"
 							min="minDate"
-							max="'2015-06-22'"
+							max="'2016-06-01'"
 							datepicker-options="dateOptions" 
 							date-disabled="disabled(date, mode)"
 							ng-required="true" 
 							close-text="Close">
 						</div>
 					</div>
-					<!-- Typeahead -->
-					<div class="panel-body" data-ng-controller="TypeaheadCtrl">
 
-						<label for="" class="col-sm-1">Cliente: </label>
 
-						<div class="col-sm-11 input-group">
-							<span class="input-group-addon"><i class="fa fa-user"></i></span>
-							<input type="text" 
-							ng-model="selected"
-							typeahead="state for state in states | filter:$viewValue | limitTo:8"
-							class="form-control"
-							placeholder="Escriba aquí el nombre del cliente.">
+					<div class="col-sm-6">
+
+						<label for="" class="col-sm-4">Factura: </label>
+						<div class="col-sm-8 input-group">
+							<span class="input-group-addon"><i class="fa fa-file-text-o"></i></span><input ng-model="numFactura" type="text" class="form-control" placeholder="#Factura, debe ser unico.">
 						</div>
 					</div>
 
-					<div class="panel-body" data-ng-controller="TypeaheadCtrl">
-						<label for="" class="col-sm-1">Factura: </label>
-						<div class="col-sm-11 input-group">
-							<span class="input-group-addon"><i class="fa fa-file-text-o"></i></span><input ng-model="numFactura" type="text" class="form-control" placeholder="Escriba aquí el numero de factura, recuerde: debe ser unico en su facturación.">
+					<div class="col-sm-6">
+						<label for="" class="col-sm-4">Cantidad de Compresores: </label>
+						<div class="input-group col-sm-8">
+							<span class="input-group-addon"><i class="fa fa-calculator"></i></span>
+							<input type="number" placeholder="Cantidad" class="form-control" ng-minlenght=0 ng-maxlenght=30 ng-model="quantity">
 						</div>
 					</div>
 
-
-				<accordion-group heading="Información de los compresores" is-open="true">
-				Lista de compresores
-			</accordion-group>
-
-			<!-- Roy:Just this easy		 -->
-		<!-- <accordion-group heading="{{group.title}}" ng-repeat="group in groups">
-			{{group.content}}
-		</accordion-group> -->
-	</accordion>
-</div>
-</section>
-<!-- end Accordion -->
-
-<!-- <section class="panel panel-default">
-	<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Nueva Factura Modo Wizard</strong></div>
-	<div class="panel-body">
-		<div data-ui-wizard-form>
-			<h1>Factura</h1>
-			<div>
-				<div class="panel-body" data-ng-controller="DatepickerDemoCtrl">
-					<label for="" class="col-sm-1">Fecha: </label>
-					<div class="col-sm-11 input-group ui-datepicker">
-						<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-						<input type="text" 
-						class="form-control"
-						datepicker-popup="{{format}}"
-						ng-model="dt"
-						is-open="opened"
-						min="minDate"
-						max="'2015-06-22'"
-						datepicker-options="dateOptions" 
-						date-disabled="disabled(date, mode)"
-						ng-required="true" 
-						close-text="Close">
+					<div class="col-sm-12">
+						<button ng-click="loadInputs()" class="btn btn-primary btn-block"><span class="fa fa-file-o"></span> Preparar Formulario</button>
 					</div>
-				</div>
-				<div class="panel-body" data-ng-controller="TypeaheadCtrl">
 
-					<label for="" class="col-sm-1">Cliente: </label>
-
-					<div class="col-sm-11 input-group">
-						<span class="input-group-addon"><i class="fa fa-user"></i></span>
-						<input type="text" 
-						ng-model="selected"
-						typeahead="state for state in states | filter:$viewValue | limitTo:8"
-						class="form-control"
-						placeholder="Escriba aquí el nombre del cliente.">                    
-					</div>
 				</div>
 
-				<div class="panel-body" data-ng-controller="TypeaheadCtrl">
-					<label for="" class="col-sm-1">Factura: </label>
-					<div class="col-sm-11 input-group">
-						<span class="input-group-addon"><i class="fa fa-file-text-o"></i></span><input ng-model="numFactura" type="text" class="form-control" placeholder="Escriba aquí el numero de factura, recuerde: debe ser unico en su facturación.">
+			</section>
+
+			<section class="panel panel-default">
+				<div class="panel-heading"><span class="glyphicon glyphicon-th"></span> Compresores</div>
+				<div class="panel-body">
+
+					<div class="col-sm-3 form-group" ng-repeat="inp in inputs">
+						<input type="text"
+						class="form-control input-warning"
+						required
+						data-ng-trim='false'
+						ng-model="inp"
+						placeholder={{inp.placeholder}} 
+						ng-enter-serials
+						data-validate-serials
+						name="input{{$index+1}}" id="input{{$index+1}}" > 
+					</div>
+
+				</div>
+
+			</section>
+
+
+			<section class="panel panel-default">
+				<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Guardar </strong></div>
+				<div class="panel-body" >
+
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 form-group">
+						<button class="btn btn-default btn-block"
+						data-ng-disabled="!canRevert()"
+						data-ng-click="revert()"
+						><span class="fa fa-eraser"></span> Limpiar Formulario</button>
+					</div>
+
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 form-group">					
+						<button type="submit"
+						id="registerToken4rafffleButton"
+						class="btn btn-success btn-block"
+						ng-click="saveBill()"
+						data-ng-disabled="!canSubmit()"
+						><span class="fa fa-database"></span> Guardar Factura</button>
+					</div>
+
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
+						<button ng-show="currentUser.userTypeID=='ADM' || currentUser.userTypeID=='MA'" class='btn btn-danger btn-block' ng-click="roYTesting()"><span class="fa fa-user-secret"></span> Roy TesT</button>
+					</div>
+
+					<div div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group callout callout-info">
+						<p>Guardar Factura estará disponible cuando se ingresen y validen todos los seriales y datos del detal.</p>
+						<p>El Boton de Limpiar Formulario estara disponible cuando algun dato se haya ingresado.</p>
 					</div>
 				</div>
-			</div>
+			</section>
 
-			<h1>Detalle de factura</h1>
-			<div>Lista de compresores</div>
-
-			<h1>Confirmación</h1>
-			<div>Third Content</div>  
 		</div>
 
-	</div>
-</section>
- -->
-
-
+	</form>
 </div>
