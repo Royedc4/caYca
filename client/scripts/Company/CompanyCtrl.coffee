@@ -21,10 +21,11 @@ angular.module('app.company.ctrls', [])
 
         # Load cities
         getCities = ->
-            $http.post(REST_API.hostname+"/server/ajax/City/list.php").success (data) ->
-                $scope.cities = data
-                return
-            return
+            $filters=
+                country: $scope.currentUser.country.country
+            $http({ url: REST_API.hostname+"/server/ajax/City/listFiltered.php", method: "POST", data: JSON.stringify($filters) })
+                .success (postResponse) ->
+                    $scope.cities = postResponse
         getCities()
 
         $scope.showInfoOnSubmit = false

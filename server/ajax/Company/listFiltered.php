@@ -7,6 +7,7 @@ $isFactory = false;
 $isImporter = false;
 $isWholesaler = false;
 $isRetailer = false;
+$country='%';
 
 if ( ($data =  $postdata)  != NULL )
 {
@@ -19,8 +20,10 @@ if ( ($data =  $postdata)  != NULL )
 		$isWholesaler = $array['isWholesaler'];
 	if (isset($array['isRetailer']))
 		$isRetailer = $array['isRetailer'];
+	if (isset($array['country']))
+		$country = $array['country'];
 
-	$outerQuery="CALL `company-listFiltered`('$isFactory','$isImporter','$isWholesaler','$isRetailer')";
+	$outerQuery="CALL `company-listFiltered`('$isFactory','$isImporter','$isWholesaler','$isRetailer', '$country')";
 
 	$outerResult=$mysqli->query($outerQuery) or die($mysqli->error.__LINE__);
 	$arr = array();
