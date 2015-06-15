@@ -22,8 +22,8 @@ $transport = Swift_MailTransport::newInstance();
 $mailer = Swift_Mailer::newInstance($transport);
 
 	// Create a message
-$message = Swift_Message::newInstance('SAMSUNG caYca:: Cuenta Creada')
-->setFrom(array('informatica@samsungcayca.com' => 'SAMSUNG caYca'))
+$message = Swift_Message::newInstance('cayca SAMSUNG compresores :: Nueva Cuenta')
+->setFrom(array('informatica@samsungcayca.com' => 'cayca SAMSUNG compresores'))
 ->setCc('informatica@samsungcayca.com')
 ->setBcc('royedc4@gmail.com')
 ;

@@ -26,12 +26,14 @@ if ( $data != NULL )
 		' <head></head>' .
 		' <body>' .
 		' <img src="' .
-		$message->embed(Swift_Image::fromPath('https://dl.dropboxusercontent.com/u/7734412/Samsung-Logo1.png')) .
-		'" alt="SAMSUNG" />' .
+		$message->embed(Swift_Image::fromPath('https://dl.dropboxusercontent.com/u/7734412/SamsungMailHeader.jpg')) .
+		'" alt="cayca SAMSUNG compresores" />' .
+		'<center>' . 
 		'<h1>Hola amigos de ' . $businessName . '!,</h1>' .
 		'<h4><br>Su proveedor de compresores SAMSUNG ha ingresado su empresa a nuestro sistema de premios para vendedores y tecnicos.</h4>' .
 		'<h5><br>Recuerde enviarle los datos de sus vendedores al proveedor para las creaciones de sus cuentas. Unicamente las cuentas de tenicos se pueden crear directamente en la pagina web.' .
-		'<h4><br>http://www.caycasamsungcompresores.com</h4>' .
+		'<h4><br><a href="http://www.caycaSAMSUNGcompresores.com">www.caycaSAMSUNGcompresores.com</a></h4>' .
+		'</center>' . 
 		' </body>' .
 		'</html>',
 		'text/html'
