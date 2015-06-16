@@ -10,7 +10,7 @@
                     <div class="panel-body"  data-ng-controller="NewAccountCtrl">
 
                         <form name="form_NewAccount" class="form-horizontal form-validation" data-ng-submit="submitForm()">
-                            <!-- company Select -->
+                            <!-- userType Select -->
                             <div class="form-group text-center">
                                 <div class="select-group">
                                     <span class="ui-select">
@@ -20,7 +20,8 @@
                                     </span> 
                                 </div>
                             </div>
-                            <!-- end company Select -->
+                            <!-- end userType Select -->
+
                             <!-- city Select -->
                             <div class="form-group text-center">
                                 <div class="select-group">
@@ -32,125 +33,173 @@
                                 </div>
                             </div>
                             <!-- end city Select -->
+
                             <!-- Company Selection -->
+
+
+                            <!-- retailer Select -->
+                            <div class="form-group text-center">
+                                <div class="select-group" ng-show="user.userTypeSelected.userTypeID=='DV'">
+                                    <span class="ui-select">
+                                        <select ng-model="user.retailerSelected" ng-options="retailer.businessName for retailer in retailers" required="false">
+                                            <option value="">- Seleccione el detal-</option>
+                                        </select>
+                                    </span> 
+                                </div>
+                            </div>
+                            <!-- end retailer Select -->
+
                             <!-- Typeahead -->
-                            <div class="form-group"
-                            >
-                            <div class="input-group input-group-lg"
-                            ng-show="user.userTypeSelected.userTypeID=='DV'">
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-briefcase"></span>
-                            </span>
-                            <input type="text"
-                            ng-show="user.userTypeSelected.userTypeID=='DV'"
-                            ng-model="selected"
-                            typeahead="retailer.businessName for retailer in retailers | filter:$viewValue | limitTo:20"
-                            class="form-control"
-                            placeholder="Nombre de empresa"
-                            >
-
+                            <!-- <div class="form-group">
+                                <div class="input-group input-group-lg"
+                                ng-show="user.userTypeSelected.userTypeID=='DV'">
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-briefcase"></span>
+                                </span>
+                                <input type="text"
+                                ng-show="user.userTypeSelected.userTypeID=='DV'"
+                                ng-model="selected"
+                                typeahead="retailer.businessName for retailer in retailers | filter:$viewValue | limitTo:20"
+                                class="form-control"
+                                placeholder="Nombre de empresa">
+                            </div>
+                        </div> -->
+                        <!-- end Company Selection -->
+                        <div class="form-group">
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-credit-card"></span>
+                                </span>
+                                <input type="text"
+                                class="form-control"
+                                name="ID"
+                                placeholder="Documento de identidad"
+                                required
+                                data-ng-minlength=8
+                                data-ng-maxlength=11
+                                data-ng-pattern="/^[a-zA-Z]{1,2}[0-9]+$/"
+                                data-ng-model="user.ID"
+                                >
+                            </div>
+                            <p ng-show="form_NewAccount.ID.$invalid && form_NewAccount.ID.$dirty" class="text-danger">Se debe agregar el tipo de documento (CC o CE) segun corresponda.</p>      
                         </div>
-                    </div>
-                    <!-- end Company Selection -->
-                    <div class="form-group">
-                        <div class="input-group input-group-lg">
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-user"></span>
-                            </span>
-                            <input  type="text"
-                            class="form-control"
-                            placeholder="Nombre Completo"
-                            data-ng-model="user.fullName"
-                            popover="Su nombre debe ser completo."
-                            popover-trigger="focus"
-                            required
-                            data-ng-minlength="7"
-                            data-ng-maxlength="40">
+                        <div class="form-group">
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-user"></span>
+                                </span>
+                                <input  type="text"
+                                class="form-control"
+                                placeholder="Nombre Completo"
+                                data-ng-model="user.fullName"
+                                popover="El nombre debe ser completo."
+                                popover-trigger="focus"
+                                required
+                                data-ng-minlength="7"
+                                data-ng-maxlength="40">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-group input-group-lg">
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-envelope"></span>
-                            </span>
-                            <input type="email"
-                            class="form-control"
-                            placeholder="Correo Electronico"
-                            data-ng-model="user.email"
-                            required>
+                        <div class="form-group">
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-envelope"></span>
+                                </span>
+                                <input type="email"
+                                class="form-control"
+                                placeholder="Correo Electronico"
+                                data-ng-model="user.email"
+                                name="email"
+                                required>
+                            </div>
+                            <p ng-show="form_NewAccount.email.$invalid && form_NewAccount.email.$dirty" class="text-danger">Verifique la validez del correo.</p>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-group input-group-lg">
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-map-marker"></span>
-                            </span>
-                            <input type="text"
-                            class="form-control"
-                            placeholder="Dirección"
-                            data-ng-model="user.address"
-                            required>
+                        <div class="form-group">
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-map-marker"></span>
+                                </span>
+                                <input type="text"
+                                class="form-control"
+                                placeholder="Dirección"
+                                data-ng-minlength=15
+                                data-ng-model="user.address"
+                                required>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-group input-group-lg">
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-phone-alt"></span>
-                            </span>
-                            <input type="tel"
-                            class="form-control"
-                            placeholder="Telefono Hogar"
-                            data-ng-model="user.phone"
-                            required>
+                        <div class="form-group">
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-phone-alt"></span>
+                                </span>
+                                <input type="tel"
+                                class="form-control"
+                                placeholder="Telefono Hogar"
+                                name="phone"
+                                required
+                                data-ng-minlength=10
+                                data-ng-maxlength=12
+                                data-ng-pattern="/^[0-9]+$/"
+                                data-ng-model="user.phone">
+                            </div>
+                            <p ng-show="form_NewAccount.phone.$invalid && form_NewAccount.phone.$dirty" class="text-danger">El numero de telefono debe tener entre 10 y 12 números unicamente. Recuerdo incluir el codigo de pais.</p>      
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-group input-group-lg">
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-phone"></span>
-                            </span>
-                            <input type="tel"
-                            class="form-control"
-                            placeholder="Telefono celular"
-                            data-ng-model="user.celphone"
-                            required>
+                        <div class="form-group">
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-phone"></span>
+                                </span>
+                                <input type="tel"
+                                class="form-control"
+                                name="celphone"
+                                placeholder="Telefono celular"
+                                required
+                                data-ng-minlength=10
+                                data-ng-maxlength=12
+                                data-ng-pattern="/^[0-9]+$/"
+                                data-ng-model="user.celphone"
+                                >
+                            </div>
+                            <p ng-show="form_NewAccount.celphone.$invalid && form_NewAccount.celphone.$dirty" class="text-danger">El numero de telefono debe tener entre 10 y 12 números unicamente. Recuerdo incluir el codigo de pais.</p>      
                         </div>
-                    </div>
 
 
-                    <div class="form-group">
-                        <div class="col-md-6">
-                            <button
-                            class="btn btn-success btn-block btn-lg"
-                            data-ng-disabled="!canSubmit()"
-                            ng-click="createNewAccount()">Crear Nueva Cuenta</button>
+
+
+
+
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                <button
+                                class="btn btn-success btn-block btn-lg"
+                                data-ng-disabled="!canSubmit()"
+                                ng-click="createNewAccount()">Crear Nueva Cuenta</button>
+                            </div>
+
+                            <div class="col-md-6">
+                                <button class="btn btn-default btn-block btn-lg "
+                                data-ng-disabled="!canRevert()"
+                                data-ng-click="revert()"
+                                >Borrar</button>
+                            </div>
                         </div>
 
-                        <div class="col-md-6">
-                            <button class="btn btn-default btn-block btn-lg "
-                            data-ng-disabled="!canRevert()"
-                            data-ng-click="revert()"
-                            >Borrar</button>
+                        <div class="callout callout-info">
+                            <p>Al crear la cuenta se enviara un email a la cuenta especificada conteniendo la información de inicio de sesión.</p>
+                            <p>El Boton de crear estara disponible cuando se llenen todos los campos requeridos.</p>
+                            <p>El Boton de borrar estara disponible cuando algun campo este lleno.</p>
                         </div>
-                    </div>
-
-                    <div class="callout callout-info">
-                        <p>Al crear la cuenta se enviara un email a la cuenta especificada conteniendo la información de inicio de sesión.</p>
-                        <p>El Boton de crear estara disponible cuando se llenen todos los campos requeridos.</p>
-                        <p>El Boton de borrar estara disponible cuando algun campo este lleno.</p>
-                    </div>
 
 
-                    <div class="form-group">
-                        <p class="text-muted text-small">Haciendo clic en Crear Nueva Cuenta, usted acepta los <a href="javascript:;">Terminos, condiciones </a> y la <a href="javascript:;">politica de privacidad.</a></p>
-                        <div class="divider"></div>
-                    </div>
+                        <div class="form-group">
+                            <p class="text-muted text-small">Haciendo clic en Crear Nueva Cuenta, usted acepta los <a href="javascript:;">Terminos, condiciones </a> y la <a href="javascript:;">politica de privacidad.</a></p>
+                            <div class="divider"></div>
+                        </div>
 
-                </form>
-            </div>
-        </section>
+                    </form>
+                </div>
+            </section>
+        </div>
+
     </div>
-
-</div>
 </div>
 </div>

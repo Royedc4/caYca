@@ -21,6 +21,7 @@ angular.module('app.account.ctrls', [])
                 country: user['country']
             $http({ url: REST_API.hostname+"/server/ajax/Country/get.php", method: "POST", data: JSON.stringify($filters) })
                 .success (postResponse) ->
+                    console.log postResponse
                     $scope.currentUser['country']=postResponse['0']
 
         # get company4User
@@ -121,7 +122,6 @@ angular.module('app.account.ctrls', [])
             citySelected: ''
             companySelected: ''
 
-
         # var 4 select
         $scope.userTypes = []
         $scope.selected = undefined
@@ -131,19 +131,22 @@ angular.module('app.account.ctrls', [])
         getRetailerCompanies = ->
             $filters=
                 isRetailer: true
+                country: $scope.currentUser.country.country
             $http({ url: REST_API.hostname+"/server/ajax/Company/listFiltered.php", method: "POST", data: JSON.stringify($filters) })
                 .success (postResponse) ->
-                    console.log postResponse
+                    # console.log postResponse
                     $scope.retailers =postResponse
             return
         getRetailerCompanies()
 
-         #Load cities
+
+        # Load cities
         getCities = ->
-            $http.post(REST_API.hostname+"/server/ajax/City/list.php").success (data) ->
-                $scope.cities = data
-                return
-            return
+            $filters=
+                country: $scope.currentUser.country.country
+            $http({ url: REST_API.hostname+"/server/ajax/City/listFiltered.php", method: "POST", data: JSON.stringify($filters) })
+                .success (postResponse) ->
+                    $scope.cities = postResponse
         getCities()
 
         $scope.showInfoOnSubmit = false
@@ -163,12 +166,14 @@ angular.module('app.account.ctrls', [])
 
         $scope.submitForm = ->
              $scope.showInfoOnSubmit = true
-             $scope.revert()     
+             # $scope.revert()     
         
         #Load userTypes
         getUserType = ->
             $http.post(REST_API.hostname+"/server/ajax/Users/m_getUserType.php").success (data) ->
                 $scope.userTypes = data
+                console.log data
+                $scope.user.userTypeSelected=data[0]
                 return
             return
         getUserType()
@@ -176,13 +181,10 @@ angular.module('app.account.ctrls', [])
         # Create New Account
         $scope.createNewAccount = ->
             # Defining my data Object
-            $scope.user.password = generatePassword(18, false);
+            $scope.user.password = generatePassword(6, false);
             # $scope.user.companySelected.companyID = null unless $scope.user.companySelected?
-
-
             # $scope.user.companySelected.companyID=null
             
-
             $scope.data = 
                 userID : $scope.user.userID
                 ID: $scope.user.ID
@@ -191,21 +193,38 @@ angular.module('app.account.ctrls', [])
                 password: $scope.user.password
                 userTypeID: $scope.user.userTypeSelected.userTypeID
                 geoID: $scope.user.citySelected.geoID
-                companyID: $scope.user.companySelected.companyID
-            # console.log $scope.user.email + " " + $scope.user.password
+                companyID: $scope.user.retailerSelected.companyID
+                address: $scope.user.address
+                phone: $scope.user.phone
+                celphone: $scope.user.celphone
+            
             console.log ($scope.data)
-            # $scope.data["countrySelected"] = $scope.countrySelected
-            # $scope.data["serialsSelected"] = $serialsWithoutNo
-            $http.defaults.headers.post["Content-Type"] = "application/json"            
-            # console.log ($scope.data)
-            $http({ url: REST_API.hostname+"/server/ajax/Users/addUser.php", method: "POST", data: JSON.stringify(JSON.stringify($scope.data)) })
+            
+            
+            $http({ url: REST_API.hostname+"/server/ajax/Users/addUser.php", method: "POST", data: JSON.stringify($scope.data) })
             .success (postResponse) ->
-                console.log "success postResponse: " + (postResponse)
-                console.log "success stringify: " + JSON.stringify(postResponse)
-                logger.logSuccess('Se ha creado exitosamente la cuenta.')
-            return
-        return
-        
+                if (typeof postResponse) == "string"
+                    if (postResponse.indexOf("ID") > -1)
+                        console.log "Roy    : " + JSON.stringify(postResponse)
+                        logger.logError "El usuario con cedula de idenficicación: " + $scope.data.ID + " ya está en la base de datos."
+                    if (postResponse.indexOf("email") > -1)
+                        console.log "Roy: " + JSON.stringify(postResponse)
+                        logger.logError "El usuario con ese EMAIL: " + $scope.data.email + " ya está en la base de datos."
+                else
+                    console.log "Roy: " + JSON.stringify(postResponse)
+                    logger.logSuccess "Se ha creado exitosamente el usuario: "+$scope.data.fullName
+                    # logger.logWarning "Espere unos momentos se esta enviando el correo..."
+                    $scope.revert()
+                    #Sending Email
+                    $http({ url: REST_API.hostname+"/server/ajax/Users/addUserConfirm.php", method: "POST", data: JSON.stringify($scope.data) })
+                    .success (postResponseB) ->
+                        console.log "Roy: " + JSON.stringify(postResponseB)
+                        logger.logSuccess "Se ha enviado el correo con la información de registro a: "+ $scope.data.email
+                    .error (postResponseB) ->
+                        console.log "error enviando el correo"
+                        logger.logError "Ha ocurrido un error enviando el correo. Por favor contacte al Administrador"
+            .error (postResponse) ->
+                console.log "error"                
 ])
 
 
@@ -225,12 +244,13 @@ angular.module('app.account.ctrls', [])
             citySelected: ''
 
 
-        #Load cities
+        # Load cities
         getCities = ->
-            $http.post(REST_API.hostname+"/server/ajax/City/list.php").success (data) ->
-                $scope.cities = data
-                return
-            return
+            $filters=
+                country: $scope.currentUser.country.country
+            $http({ url: REST_API.hostname+"/server/ajax/City/listFiltered.php", method: "POST", data: JSON.stringify($filters) })
+                .success (postResponse) ->
+                    $scope.cities = postResponse
         getCities()
 
         $scope.showInfoOnSubmit = false
@@ -254,7 +274,7 @@ angular.module('app.account.ctrls', [])
         # Create New Account
         $scope.createNewAccount = ->
             # Defining my data Object
-            $scope.user.password = generatePassword(18, false);
+            $scope.user.password = generatePassword(6, false);
             
             $scope.data = 
                 email: $scope.user.email
