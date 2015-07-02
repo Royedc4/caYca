@@ -1,0 +1,110 @@
+<div class="page" data-ng-controller="listCompaniesCtrl">
+	<section class="panel panel-default table-dynamic">
+		<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span><span data-i18n=" Listado de cupones registrados para la rifa"></span></strong></div>
+
+		<div ng-show="retailers.length==0" class="callout callout-danger">
+			<h4>No se encontraron empresas</h4>
+			<p>Recuerde que debe registrar las empresas previamente usando la opción <a href="#/companies/new">Nueva Empresa</a></p>
+		</div>
+
+		<div ng-show="retailers.length!=0">
+
+			<div class="table-filters">
+				<div class="row">
+					<div class="col-sm-4 col-xs-6">
+						<form>
+							<input type="text"
+							placeholder="buscar"
+							id="searchKeywords"
+							class="form-control"
+							data-ng-model="searchKeywords"
+							data-ng-keyup="search()" />
+						</form>
+					</div>
+					<div class="col-sm-3 col-xs-6 filter-result-info">
+						<span>
+							Mostrando {{filteredRetailers.length}}/{{Retailers.length}} registros
+						</span>              
+					</div>
+				</div>
+			</div>
+
+			<table ng-table="retailerTable" class="table table-bordered table-striped table-responsive">
+				<thead>
+					<tr>
+						<th><div class="th">
+							NIT
+							<span id="orderIDretailerUP" class="glyphicon glyphicon-chevron-up"
+							data-ng-click=" order('NIT') "
+							data-ng-class="{active: row == 'NIT'}"></span>
+							<span class="glyphicon glyphicon-chevron-down"
+							data-ng-click=" order('-NIT') "
+							data-ng-class="{active: row == '-NIT'}"></span>
+						</div></th>
+						<th><div class="th">
+							Empresa
+							<span class="glyphicon glyphicon-chevron-up"
+							data-ng-click=" order('businessName') "
+							data-ng-class="{active: row == 'businessName'}"></span>
+							<span class="glyphicon glyphicon-chevron-down"
+							data-ng-click=" order('-businessName') "
+							data-ng-class="{active: row == '-businessName'}"></span>
+						</div></th>
+						<th><div class="th">
+							Propietario
+							<span class="glyphicon glyphicon-chevron-up"
+							data-ng-click=" order('businessOwner') "
+							data-ng-class="{active: row == 'businessOwner'}"></span>
+							<span class="glyphicon glyphicon-chevron-down"
+							data-ng-click=" order('-businessOwner') "
+							data-ng-class="{active: row == '-businessOwner'}"></span>
+						</div></th>
+						<th><div class="th">
+							Email
+							<span class="glyphicon glyphicon-chevron-up"
+							data-ng-click=" order('email') "
+							data-ng-class="{active: row == 'email'}"></span>
+							<span class="glyphicon glyphicon-chevron-down"
+							data-ng-click=" order('-email') "
+							data-ng-class="{active: row == '-email'}"></span>
+						</div></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr data-ng-repeat="retailer in currentPageRetailers">
+						<td>{{retailer.NIT}}</td>
+						<td>{{retailer.businessName}}</td>
+						<td>{{retailer.businessOwner}}</td>
+						<td>{{retailer.email}}</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<footer class="table-footer">
+				<div class="row">
+					<div class="col-md-6 page-num-info">
+						<span>
+							Mostrar 
+							<select id="selectNumPerPage" data-ng-model="numPerPage"
+							data-ng-options="num for num in numPerPageOpt"
+							data-ng-change="onNumPerPageChange()">
+						</select> 
+						registros por pagina
+					</span>
+				</div>
+				<div class="col-md-6 text-right pagination-container">
+					<pagination class="pagination-sm"
+					page="currentPage"
+					total-items="filteredRetailers.length"
+					max-size="4"
+					on-select-page="select(page)"
+					items-per-page="numPerPage"
+					rotate="false"
+					boundary-links="true"></pagination>
+				</div>
+			</div>
+
+		</footer>
+	</div>
+</section>
+</div>

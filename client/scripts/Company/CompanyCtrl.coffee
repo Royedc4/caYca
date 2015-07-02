@@ -94,3 +94,107 @@ angular.module('app.company.ctrls', [])
         
 ])
 
+
+.controller('listCompaniesCtrl', [
+    'REST_API','$scope', 'logger', '$http', '$filter', '$timeout'
+    (REST_API,$scope, logger, $http, $filter, $timeout) ->
+        # Definition of objets
+
+        # Control Data
+        
+        # xD
+        console.log 'listCompaniesCtrl'
+
+        $scope.retailers = []
+        $scope.searchKeywords = ''
+        $scope.filteredRetailers = []
+        $scope.row = ''
+
+        $scope.select = (page) ->
+            start = (page - 1) * $scope.numPerPage
+            end = start + $scope.numPerPage
+            $scope.currentPageRetailers = $scope.filteredRetailers.slice(start, end)
+
+        # on page change: change numPerPage, filtering string
+        $scope.onFilterChange = ->
+            $scope.select(1)
+            $scope.currentPage = 1
+            $scope.row = ''
+
+        $scope.onNumPerPageChange = ->
+            $scope.select(1)
+            $scope.currentPage = 1
+
+        $scope.onOrderChange = ->
+            $scope.select(1)
+            $scope.currentPage = 1            
+
+
+        $scope.search = ->
+            $scope.filteredRetailers = $filter('filter')($scope.retailers, $scope.searchKeywords)
+            $scope.onFilterChange()
+
+        # orderBy
+        $scope.order = (rowName)->
+            if $scope.row == rowName
+                return
+            $scope.row = rowName
+            $scope.filteredRetailers = $filter('orderBy')($scope.retailers, rowName)
+            $scope.onOrderChange()
+
+        # pagination
+        $scope.numPerPageOpt = [3, 5, 10, 20]
+        $scope.numPerPage = $scope.numPerPageOpt[2]
+        $scope.currentPage = 1
+        $scope.currentPageRetailers = []
+
+        # init
+        $scope.init = ->
+            $scope.search()
+            $scope.select($scope.currentPage)
+        $scope.init()
+
+        #Load companies
+        getRetailerCompanies = ->
+            $filters=
+                isRetailer: true
+                country: $scope.currentUser.country.country
+            $http({ url: REST_API.hostname+"/server/ajax/Company/listFiltered.php", method: "POST", data: JSON.stringify($filters) })
+                .success (postResponse) ->
+                    console.log postResponse
+                    $scope.retailers =postResponse
+                # Only way to make react on filter to show items on table
+                setTimeout ->
+                    $('#searchKeywords').focus()
+                    angular.element('#orderIDretailerUP').trigger('click')
+                    if $scope.filteredRetailers.length==0
+                        logger.logError "No se encontraron empresas registradas en su pais."
+                    else
+                        logger.logSuccess "Tiene "+$scope.filteredRetailers.length+" empresas registradas."
+                , 100
+            return
+        getRetailerCompanies()
+
+        # # Getting retailers4country
+        # retailers4country = ->
+        #     $filters=
+        #         userID: $scope.currentUser.userID
+        #     $http({ url: REST_API.hostname+"/server/ajax/raffleCoupon/listByuserID.php", method: "POST", data: JSON.stringify($filters) })
+        #     .success (postResponse) ->
+        #         $scope.retailers=postResponse
+        #         for i in [0...$scope.retailers.length] by 1
+        #             $scope.retailers[i]['creationDate']=moment($scope.retailers[i]['creationDate']).format("DD/MM/YYYY")
+            
+        #         # Only way to make react on filter to show items on table
+        #         setTimeout ->
+        #             $('#searchKeywords').focus()
+        #             angular.element('#orderIDretailerUP').trigger('click')
+        #             if $scope.filteredRetailers.length==0
+        #                 logger.logError "No se encontraron cupones registrados en su cuenta."
+        #             else
+        #                 logger.logSuccess "Tiene "+$scope.filteredRetailers.length+" cupones de Rifa."
+        #         , 100
+                
+        # retailers4country()
+
+])

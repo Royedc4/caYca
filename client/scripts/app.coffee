@@ -52,7 +52,10 @@ angular.module('app', [
     ])
 
 .constant 'REST_API',
+    # hostname:       'http://www.samsungcayca.com'
+    # hostname:       'http://www.caycaSAMSUNGcompresores.com'
     hostname:       'http://cayca:8888'
+    
     
 .constant 'AUTH_EVENTS',
     loginSuccess:       'auth-login-success'
@@ -137,6 +140,15 @@ angular.module('app', [
                     ]
                 )
             .when(
+                '/accounts/list'
+                templateUrl: 'views/accounts/list.html'                
+                data:
+                    authorizedRoles: [
+                        USER_ROLES.wholeSalerMGC,
+                        USER_ROLES.admin
+                    ]
+                )
+            .when(
                 '/accounts/signIn'
                 templateUrl: 'views/accounts/signIn.html'
                 data:
@@ -152,6 +164,15 @@ angular.module('app', [
             .when(
                 '/companies/new'
                 templateUrl: 'views/companies/new.html'                
+                data:
+                    authorizedRoles: [
+                        USER_ROLES.wholeSalerMGC,
+                        USER_ROLES.admin
+                    ]
+                )
+            .when(
+                '/companies/list'
+                templateUrl: 'views/companies/list.html'                
                 data:
                     authorizedRoles: [
                         USER_ROLES.wholeSalerMGC,
@@ -181,6 +202,24 @@ angular.module('app', [
             .when(
                 '/sales/newInvoice'
                 templateUrl: 'views/sales/newInvoice.html'                
+                data:
+                    authorizedRoles: [
+                        USER_ROLES.wholeSalerMA,
+                        USER_ROLES.admin
+                    ]                
+                )
+            .when(
+                '/sales/list'
+                templateUrl: 'views/sales/list.html'                
+                data:
+                    authorizedRoles: [
+                        USER_ROLES.wholeSalerMA,
+                        USER_ROLES.admin
+                    ]                
+                )
+            .when(
+                '/sales/print'
+                templateUrl: 'views/sales/print.html'                
                 data:
                     authorizedRoles: [
                         USER_ROLES.wholeSalerMA,
