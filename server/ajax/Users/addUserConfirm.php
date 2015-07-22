@@ -2,7 +2,7 @@
 require_once '../../lib/swift_required.php'; //SwiftMail Library
 require_once '../../secure/mailer.php'; // Account details
 
-$data =  (json_decode(file_get_contents("php://input")));
+$data =  file_get_contents("php://input");
 $array=json_decode($data, true);
 
 if ( $data != NULL )
@@ -18,15 +18,17 @@ if ( $data != NULL )
 		' <head></head>' .
 		' <body>' .
 		' <img src="' .
-		$message->embed(Swift_Image::fromPath('https://dl.dropboxusercontent.com/u/7734412/Samsung-Logo1.png')) .
+		$message->embed(Swift_Image::fromPath('https://dl.dropboxusercontent.com/u/7734412/SamsungMailHeader.jpg')) .
 		'" alt="SAMSUNG" />' .
+		'<center>' . 
 		'<h1>Hola ' . $fullName . '!,</h1>' .
 		'<h4><br>Bienvenido al sistema de RIFAS y CANJEOS de compresores SAMSUNG.</h4>' .
 		'<h5><br>Los datos de tu cuenta son:' .
 		'<br><br>Correo Electronico: ' . $email . 
 		'<br>Contraseña: ' . $password . 
 		'<br><br>Haciendo clic en el siguiente enlace podras acceder a tu cuenta... </h5>' .
-		'<br>http://www.caYcaSAMSUNGcompresores.com' .
+		'<h4><br><a href="http://www.caycaSAMSUNGcompresores.com">www.caycaSAMSUNGcompresores.com</a></h4>' .
+		'</center>' . 
 		' </body>' .
 		'</html>',
 		'text/html'

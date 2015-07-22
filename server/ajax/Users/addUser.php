@@ -1,11 +1,12 @@
 <?php 
 require_once '../../secure/db.php'; // The mysql database connection script
 
-$data =  (json_decode(file_get_contents("php://input")));
+$data =  file_get_contents("php://input");
 $array=json_decode($data, true);
 
 if ( $data != NULL )
 {
+	// echo json_encode($array);
 	// Required Values
 	$ID = $array['ID'];
 	$email = $array['email'];
@@ -15,9 +16,10 @@ if ( $data != NULL )
 	// Important
 	$geoID = $array['geoID'];
 	
-	// SET IT DIFERENTLY
-	// $companyID = $array['companyID'];
+	// Could get this
 	$companyID = 'NULL';
+	if (isset($array['companyID']))
+		$companyID = $array['companyID'];
 
 	// Other Values
 	$address = $array['address'];
@@ -31,7 +33,7 @@ if ( $data != NULL )
 	
 	$hoy = date("Y-m-d H:i:s");
 
-	$query="INSERT INTO user VALUES (NULL, '$userTypeID','$ID', '$email', '$hashed_password', '$fullName',  '$geoID', NULL, '$address', '$celphone', '$phone', NULL, '$hoy', DEFAULT, NULL, NULL)";
+	$query="INSERT INTO user VALUES (NULL, '$userTypeID','$ID', '$email', '$hashed_password', '$fullName',  '$geoID', '$companyID', '$address', '$celphone', '$phone', NULL, '$hoy', DEFAULT, NULL, NULL)";
 
 	$result = $mysqli->query($query) or die($mysqli->error.__LINE__);
 	$result = $mysqli->affected_rows;
