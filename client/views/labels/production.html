@@ -46,25 +46,25 @@
 			<div class="panel-body" >
 
 				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 form-group">
-					<button class="btn btn-default"
+					<button class="btn btn-default btn-block"
 					data-ng-disabled="!canRevert()"
 					data-ng-click="revert()"
 					><span class="fa fa-eraser"></span> Limpiar Formulario</button>
 				</div>
 
 				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 form-group">
-					<button class='btn btn-info' data-ng-disabled="!canSubmit()" ng-click="requestLabels()"><span class="fa fa-print"></span> Solicitar Etiquetas</button>
+					<button class='btn btn-info btn-block' data-ng-disabled="!canSubmit()" ng-click="requestLabels()"><span class="fa fa-print"></span> Solicitar Etiquetas</button>
 				</div>
 				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 form-group">
 					<button type="submit"
-					class="btn btn-success"
+					class="btn btn-success btn-block"
 					ng-click="confirmLabels()"
 					data-ng-disabled="!canSubmit()"
 					><span class="fa fa-database"></span> Confirmar Impresiones</button>
 				</div>
 
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
-					<button ng-show="currentUser.userTypeID=='ADM'" class='btn btn-danger' ng-click="roYTesting()"><span class="fa fa-user-secret"></span> Roy TesT</button>
+					<button ng-show="currentUser.userTypeID=='ADM'" class='btn btn-danger btn-block' ng-click="roYTesting()"><span class="fa fa-user-secret"></span> Roy TesT</button>
 				</div>
 
 				<hr>
