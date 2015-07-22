@@ -41,7 +41,7 @@
                             <div class="form-group text-center">
                                 <div class="select-group" ng-show="user.userTypeSelected.userTypeID=='DV'">
                                     <span class="ui-select">
-                                        <select ng-model="user.retailerSelected" ng-options="retailer.businessName for retailer in retailers" required="false">
+                                        <select ng-model="user.retailerSelected" ng-options="retailer.businessName for retailer in retailers">
                                             <option value="">- Seleccione el detal-</option>
                                         </select>
                                     </span> 
@@ -75,8 +75,8 @@
                                 name="ID"
                                 placeholder="Documento de identidad"
                                 required
-                                data-ng-minlength=8
-                                data-ng-maxlength=11
+                                data-ng-minlength=7
+                                data-ng-maxlength=12
                                 data-ng-pattern="/^[a-zA-Z]{1,2}[0-9]+$/"
                                 data-ng-model="user.ID"
                                 >

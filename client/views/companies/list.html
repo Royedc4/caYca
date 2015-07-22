@@ -1,6 +1,6 @@
 <div class="page" data-ng-controller="listCompaniesCtrl">
 	<section class="panel panel-default table-dynamic">
-		<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span><span data-i18n=" Listado de cupones registrados para la rifa"></span></strong></div>
+		<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> <span data-i18n="Listado de empresas"></span></strong></div>
 
 		<div ng-show="retailers.length==0" class="callout callout-danger">
 			<h4>No se encontraron empresas</h4>
@@ -23,7 +23,7 @@
 					</div>
 					<div class="col-sm-3 col-xs-6 filter-result-info">
 						<span>
-							Mostrando {{filteredRetailers.length}}/{{Retailers.length}} registros
+							Mostrando {{filteredRetailers.length}}/{{retailers.length}} registros
 						</span>              
 					</div>
 				</div>
