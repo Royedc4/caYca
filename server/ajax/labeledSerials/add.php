@@ -19,19 +19,8 @@ for ($i = -1; $i < sizeof($array["token"]); $i++) {
 		$query="START TRANSACTION";
 	}
 	else{
-		$query="CALL `ls-Insert`('". $array["token"][$i] . "','" . $array["serial"][$i] .  "',NULL)";
+		$query="CALL `ls-Insert`('". $array["token"][$i] . "','" . $array["serial"][$i] .  "','$hoy')";
 	}
-
-
-
-
-
-			// for ($i = 0; $i < sizeof($array["token"]); $i++) {
-			// 	// echo "<br> Inserting " . $i . " ";
-			// 	$query="CALL `ls-Insert`('". $array["token"][$i] . "','" . $array["serial"][$i] .  "',NULL)";
-			// 	// $query="INSERT INTO token VALUES ('" . $array["token"][$i] . "','$hoy','" . $array["type"][$i] . "','" . $array["country"] . "')";
-			// 	// echo $query;
-
 	array_push($queriesArray, $query);
 	array_push($errorsArray, $mysqli->error.__LINE__);
 	array_push($affectedsArray, $mysqli->affected_rows);
@@ -47,8 +36,8 @@ for ($i = -1; $i < sizeof($array["token"]); $i++) {
 
 $resultObj = (object) array('arrayQueries' => $queriesArray, 'affectedsArray' => $affectedsArray, 'errorsArray' => $errorsArray, 'zGlobalResult' => $zGlobalResult, 'hoy' => $hoy);
 
-
-// $resultObj = (object) array('result' => $result,'query' => $query, 'error' => $error, 'hoy' => $hoy);
+$zGlobalResult ? $mysqli->commit() : $mysqli->rollback(); 
 echo $json_response = json_encode($resultObj);	
+$mysqli->close(); 
 
 ?>
