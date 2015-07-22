@@ -246,9 +246,7 @@ angular.module('app.account.ctrls', [])
 
         # Load cities
         getCities = ->
-            $filters=
-                country: $scope.currentUser.country.country
-            $http({ url: REST_API.hostname+"/server/ajax/City/listFiltered.php", method: "POST", data: JSON.stringify($filters) })
+            $http({ url: REST_API.hostname+"/server/ajax/City/list.php", method: "POST" })
                 .success (postResponse) ->
                     $scope.cities = postResponse
         getCities()
@@ -321,4 +319,88 @@ angular.module('app.account.ctrls', [])
             return
         return        
         
+])
+
+.controller('listSellersCtrl', [
+    'REST_API','$scope', 'logger', '$http', '$filter', '$timeout'
+    (REST_API,$scope, logger, $http, $filter, $timeout) ->
+        # Definition of objets
+
+        # Control Data
+        
+        # xD
+        console.log 'listSellersCtrl'
+
+        $scope.sellers = []
+        $scope.searchKeywords = ''
+        $scope.filteredSellers = []
+        $scope.row = ''
+
+        $scope.select = (page) ->
+            start = (page - 1) * $scope.numPerPage
+            end = start + $scope.numPerPage
+            $scope.currentPageSellers = $scope.filteredSellers.slice(start, end)
+
+        # on page change: change numPerPage, filtering string
+        $scope.onFilterChange = ->
+            $scope.select(1)
+            $scope.currentPage = 1
+            $scope.row = ''
+
+        $scope.onNumPerPageChange = ->
+            $scope.select(1)
+            $scope.currentPage = 1
+
+        $scope.onOrderChange = ->
+            $scope.select(1)
+            $scope.currentPage = 1            
+
+
+        $scope.search = ->
+            $scope.filteredSellers = $filter('filter')($scope.sellers, $scope.searchKeywords)
+            $scope.onFilterChange()
+
+        # orderBy
+        $scope.order = (rowName)->
+            if $scope.row == rowName
+                return
+            $scope.row = rowName
+            $scope.filteredSellers = $filter('orderBy')($scope.sellers, rowName)
+            $scope.onOrderChange()
+
+        # pagination
+        $scope.numPerPageOpt = [3, 5, 10, 20]
+        $scope.numPerPage = $scope.numPerPageOpt[2]
+        $scope.currentPage = 1
+        $scope.currentPageSellers = []
+
+        # init
+        $scope.init = ->
+            $scope.search()
+            $scope.select($scope.currentPage)
+        $scope.init()
+
+        #Load companies
+        getSellers = ->
+            $filters=
+                userTypeID: 'DV%'
+                country: $scope.currentUser.country.country
+            $http({ url: REST_API.hostname+"/server/ajax/Users/listFiltered.php", method: "POST", data: JSON.stringify($filters) })
+                .success (postResponse) ->
+                    console.log postResponse
+                    $scope.sellers =postResponse
+                # Only way to make react on filter to show items on table
+                setTimeout ->
+                    $('#searchKeywords').focus()
+                    angular.element('#orderIDsellerUP').trigger('click')
+                    if $scope.filteredSellers.length==0
+                        logger.logError "No se encontraron vendedores registradas en su pais."
+                    else
+                        logger.logSuccess "Tiene "+$scope.sellers.length+" vendedores registrados."
+                , 100
+            return
+        getSellers()
+
+       
+
 ])

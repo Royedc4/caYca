@@ -179,6 +179,15 @@ angular.module('app', [
                         USER_ROLES.admin
                     ]
                 )
+            #Admin
+            .when(
+                '/admin/databaseJobs'
+                templateUrl: 'views/admin/databaseJobs.html'                
+                data:
+                    authorizedRoles: [
+                        USER_ROLES.admin
+                    ]
+                )
             #Compressors
             .when(
                 '/compressors/newImportation'
@@ -220,6 +229,15 @@ angular.module('app', [
             .when(
                 '/sales/print'
                 templateUrl: 'views/sales/print.html'                
+                data:
+                    authorizedRoles: [
+                        USER_ROLES.wholeSalerMA,
+                        USER_ROLES.admin
+                    ]                
+                )
+            .when(
+                '/sales/erase'
+                templateUrl: 'views/sales/erase.html'                
                 data:
                     authorizedRoles: [
                         USER_ROLES.wholeSalerMA,

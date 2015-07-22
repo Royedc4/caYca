@@ -17,14 +17,14 @@ angular.module('app.labels.ctrls', [])
         # Data 2 Insert
         $scope.data2label=
             serial: []
-            tokenTec: []
+            tokenTec: []    
             tokenVen: []
 
         #Array of Inputs
         $scope.inputs = []
 
         #Selected Quantity
-        $scope.quantity = 1
+        $scope.quantity = 10
         
         # Serials and Label db
         $scope.unlabeledSerials = null
@@ -179,6 +179,10 @@ angular.module('app.labels.ctrls', [])
                         logger.logWarning "Ya cumlminaste la impresion de la(s) " +$scope.data2label['serial'].length + " Etiqueta(s)."
                         $scope.revert()
                 console.log postResponse
+
+        setTimeout ->
+            $scope.loadInputs()
+        , 100
 
 ])
 

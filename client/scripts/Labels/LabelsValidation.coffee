@@ -15,16 +15,37 @@ angular.module('app.labels.validation', [])
                 # No Enter(ing)
                 event.preventDefault()
                 # IF !last -> Focus Next 
-                if element.context.nextSibling.parentElement.nextElementSibling
-                    element.context.nextSibling.parentElement.nextElementSibling.firstElementChild.focus()
+                # if element.context.nextSibling.parentElement.nextElementSibling
+                #     element.context.nextSibling.parentElement.nextElementSibling.firstElementChild.focus()
 
                 # Storing values on differents Arrays depending on inputLocation
+                # console.log element['0'].name.substr(0,5)+(parseInt(element['0'].name.substr(5,3))+3).toString()
+                # console.log (parseInt(element['0'].name.substr(5,3))+3)
+                # console.log scope.quantity*3
+                # console.log (parseInt(element['0'].name.substr(5,3))+3)<=scope.quantity*3
                 if scope.consecSer.indexOf(parseInt(element['0'].name.substr(5,3))) != -1
                     scope.data2label['serial'].push(element.context.value.toUpperCase())
+                    if (parseInt(element['0'].name.substr(5,3))+3)==31
+                        document.getElementById('input2').focus()
+                        # console.log "viene el 2"
+                    else
+                        document.getElementById('input'+(parseInt(element['0'].name.substr(5,3))+3).toString()).focus()
+                    
+
                 if scope.consecTec.indexOf(parseInt(element['0'].name.substr(5,3))) != -1
                     scope.data2label['tokenTec'].push(element.context.value.toUpperCase())
+                    if (parseInt(element['0'].name.substr(5,3))+3)==32
+                        document.getElementById('input3').focus()
+                        # console.log "vienen 3"
+                    else
+                        document.getElementById('input'+(parseInt(element['0'].name.substr(5,3))+3).toString()).focus()    
+
                 if scope.consecVen.indexOf(parseInt(element['0'].name.substr(5,3))) != -1
                     scope.data2label['tokenVen'].push(element.context.value.toUpperCase())
+                    if (parseInt(element['0'].name.substr(5,3))+3)==33
+                        console.log "Se completo el formulario!"
+                    else
+                        document.getElementById('input'+(parseInt(element['0'].name.substr(5,3))+3).toString()).focus()
 
                 element['0']['disabled']=true
         )

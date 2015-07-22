@@ -7,7 +7,7 @@ angular.module('app.page.ctrls', [])
     ($scope, $window) ->
 
         $scope.printInvoice = ->
-            printContents = document.getElementById('ROOOOY').innerHTML;
+            printContents = document.getElementById('invoice').innerHTML;
             originalContents = document.body.innerHTML;        
             popupWin = window.open();
             popupWin.document.open()
