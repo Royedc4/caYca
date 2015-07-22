@@ -1,0 +1,110 @@
+<div class="page" data-ng-controller="listSellersCtrl">
+	<section class="panel panel-default table-dynamic">
+		<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span><span data-i18n=" Listado de vendedores"></span></strong></div>
+
+		<div ng-show="sellers.length==0" class="callout callout-danger">
+			<h4>No se encontraron Vendedores</h4>
+			<p>Para ver los vendedores recuerde que debe registrarlos previamente usando la opción <a href="#/accounts/new">Nuevo Usuario</a></p>
+		</div>
+
+		<div ng-show="sellers.length!=0">
+
+			<div class="table-filters">
+				<div class="row">
+					<div class="col-sm-4 col-xs-6">
+						<form>
+							<input type="text"
+							placeholder="buscar"
+							id="searchKeywords"
+							class="form-control"
+							data-ng-model="searchKeywords"
+							data-ng-keyup="search()" />
+						</form>
+					</div>
+					<div class="col-sm-3 col-xs-6 filter-result-info">
+						<span>
+							Mostrando {{filteredSellers.length}}/{{sellers.length}} registros
+						</span>              
+					</div>
+				</div>
+			</div>
+
+			<table ng-table="sellersTable" class="table table-bordered table-striped table-responsive">
+				<thead>
+					<tr>
+						<th><div class="th">
+							Cedula
+							<span id="orderIDsellerUP" class="glyphicon glyphicon-chevron-up"
+							data-ng-click=" order('ID') "
+							data-ng-class="{active: row == 'ID'}"></span>
+							<span class="glyphicon glyphicon-chevron-down"
+							data-ng-click=" order('-ID') "
+							data-ng-class="{active: row == '-ID'}"></span>
+						</div></th>
+						<th><div class="th">
+							Nombre
+							<span class="glyphicon glyphicon-chevron-up"
+							data-ng-click=" order('fullName') "
+							data-ng-class="{active: row == 'fullName'}"></span>
+							<span class="glyphicon glyphicon-chevron-down"
+							data-ng-click=" order('-fullName') "
+							data-ng-class="{active: row == '-fullName'}"></span>
+						</div></th>
+						<th><div class="th">
+							Email
+							<span class="glyphicon glyphicon-chevron-up"
+							data-ng-click=" order('email') "
+							data-ng-class="{active: row == 'email'}"></span>
+							<span class="glyphicon glyphicon-chevron-down"
+							data-ng-click=" order('-email') "
+							data-ng-class="{active: row == '-email'}"></span>
+						</div></th>
+						<th><div class="th">
+							Ciudad
+							<span class="glyphicon glyphicon-chevron-up"
+							data-ng-click=" order('city') "
+							data-ng-class="{active: row == 'city'}"></span>
+							<span class="glyphicon glyphicon-chevron-down"
+							data-ng-click=" order('-city') "
+							data-ng-class="{active: row == '-city'}"></span>
+						</div></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr data-ng-repeat="seller in currentPageSellers">
+						<td>{{seller.ID}}</td>
+						<td>{{seller.fullName}}</td>
+						<td>{{seller.email}}</td>
+						<td>{{seller.city}}</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<footer class="table-footer">
+				<div class="row">
+					<div class="col-md-6 page-num-info">
+						<span>
+							Mostrar 
+							<select id="selectNumPerPage" data-ng-model="numPerPage"
+							data-ng-options="num for num in numPerPageOpt"
+							data-ng-change="onNumPerPageChange()">
+						</select> 
+						registros por pagina
+					</span>
+				</div>
+				<div class="col-md-6 text-right pagination-container">
+					<pagination class="pagination-sm"
+					page="currentPage"
+					total-items="filteredSellers.length"
+					max-size="4"
+					on-select-page="select(page)"
+					items-per-page="numPerPage"
+					rotate="false"
+					boundary-links="true"></pagination>
+				</div>
+			</div>
+
+		</footer>
+	</div>
+</section>
+</div>

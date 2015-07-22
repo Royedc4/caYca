@@ -1,6 +1,26 @@
 
 // Bootstrap, Note: files that has CONTENT changed are "_variables.scss", "_grid.scss"
 // -------------------------
+
+div.col-sm-7.five-three {
+	width: 60% !important;
+	background: green;
+    height:100%;   
+    border: solid;
+}
+
+div.col-sm-5.five-two {
+	width: 40% !important;
+	background: yellow;
+    height:100%;   
+    border: solid;
+}
+
+#demo-12-col{
+    background:blue;
+    height: 15vh;
+}
+
 @import "global/var";
 @import "bootstrap-sass/bootstrap";
 

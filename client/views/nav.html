@@ -7,7 +7,15 @@
     data-highlight-active>
 
     <li >
-        <a href="#/dashboard"> <i class="fa fa-dashboard"></i><span data-i18n="Panel Inicial {{currentUser.userTypeID}}"></span></a>
+        <a href="#/dashboard"> <i class="fa fa-dashboard"></i><span data-i18n="Panel Inicial"></span></a>
+    </li>
+
+    <!-- Roy: ADMIN [Rol: caYca Admin ] -->
+    <li ng-show="currentUser.userTypeID=='ADM'">
+        <a href="#/admin"><i class="fa fa-user-secret"></i><span data-i18n="Admin"></span></a>
+        <ul>
+            <li><a href="#/admin/databaseJobs"><i class="fa fa-database"></i> <span data-i18n="Database Jobs"></span></a></li>
+        </ul>
     </li>
 
     <!-- Roy: Compresors [Rol: caYca Admin or Gerente] -->
@@ -27,12 +35,14 @@
         <a href="#/accounts"><i class="fa fa-users"></i><span data-i18n="Cuentas"></span></a>
         <ul>
             <li><a href="#/accounts/new"><i class="fa fa-user"></i> <span data-i18n="Crear Nueva Cuenta"></span></a></li>
+            <li><a href="#/accounts/list"><i class="fa fa-users"></i> <span data-i18n="Ver Cuentas"></span></a></li>
         </ul>
     </li>
     <li ng-show="currentUser.userTypeID=='MGC' || currentUser.userTypeID=='ADM'">
         <a href="#/companies"><i class="fa fa-building"></i><span data-i18n="Empresas"></span></a>
         <ul>
             <li><a href="#/companies/new"><i class="fa fa-suitcase"></i> <span data-i18n="Crear nueva empresa"></span></a></li>
+            <li><a href="#/companies/list"><i class="fa fa-briefcase"></i> <span data-i18n="Ver Empresas"></span></a></li>
         </ul>
     </li>
 
@@ -49,7 +59,9 @@
         <a href="#/sales"><i class="fa fa-cart-plus"></i><span data-i18n="Ventas"></span></a>
         <ul>
             <li><a href="#/sales/newInvoice"><i class="fa fa-file"></i> <span data-i18n="Nueva Factura"></span></a></li>
-            <li><a href="#/sales/print"><i class="fa fa-print"></i> <span data-i18n="Imprimir Factura"></span></a></li>
+            <li><a href="#/sales/list"><i class="fa fa-list"></i> <span data-i18n="Ver Facturas"></span></a></li>
+            <li><a href="#/sales/erase"><i class="fa fa-times"></i> <span data-i18n="Eliminar Factura"></span></a></li>
+            <!-- <li><a href="#/sales/print"><i class="fa fa-print"></i> <span data-i18n="Imprimir Factura"></span></a></li> -->
         </ul>
     </li>
 
