@@ -62,7 +62,10 @@ angular.module('app.account.ctrls', [])
                     getUserType4user(user)
                     getCity4user(user)
                     $scope.setCurrentUser user
-                    $location.path('/dashboard') 
+                    if (user.userTypeID=='TEC' || user.userTypeID=='DV' || user.userTypeID=='DVC')
+                        $location.path('/dashboard') 
+                    else    
+                        $location.path('/dashboard2') 
                 else
                     console.log "SingIn Error."
                     $rootScope.$broadcast AUTH_EVENTS.loginFailed

@@ -129,6 +129,23 @@ angular.module('app', [
                         USER_ROLES.wholeSalerMGC
                         ]
                 )
+            .when(
+                '/dashboard2'
+                templateUrl: 'views/dashboard2.html'
+                data:
+                    authorizedRoles: [
+                        USER_ROLES.admin,
+                        USER_ROLES.technician,
+                        USER_ROLES.caYcaALM, 
+                        USER_ROLES.caYcaCGG,
+                        USER_ROLES.retailDV,
+                        USER_ROLES.retailDVC,
+                        USER_ROLES.wholeSalerMA,
+                        USER_ROLES.wholeSalerMAC,
+                        USER_ROLES.wholeSalerMG,
+                        USER_ROLES.wholeSalerMGC
+                        ]
+                )
             #Accounts
             .when(
                 '/accounts/new'
