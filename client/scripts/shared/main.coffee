@@ -59,8 +59,98 @@ angular.module('app.controllers', [])
 ])
 
 .controller('DashboardCtrl', [
-    '$scope'
-    ($scope) ->
+    'REST_API','AUTH_EVENTS','$scope', '$http', 'LoginService', 'logger', '$rootScope', '$location'
+    (REST_API,AUTH_EVENTS, $scope, $http, LoginService, logger, $rootScope, $location) ->
+
+        # Widgets Data
+        $scope.salesProgressPieChart = 
+            percent: 1
+            options:
+                animate:
+                    duration: 5000
+                    enabled: true
+                barColor: '#66B5D7'
+                lineCap: 'round'
+                size: 180
+                lineWidth: 10
+        
+        $scope.labelingProgressPieChart = 
+            percent: 1
+            options:
+                animate:
+                    duration: 5000
+                    enabled: true
+                barColor: '#31C0BE'
+                lineCap: 'round'
+                size: 180
+                lineWidth: 12
+
+        $scope.donutData = [
+            {label: 'Compresores', value: 1 }
+            
+        ]
+        
+        $scope.companyStock=[]
+
         console.log "On DashboardCtrl"
+        if ($scope.currentUser.userTypeID=='TEC' || $scope.currentUser.userTypeID=='DV' || $scope.currentUser.userTypeID=='DVC')
+            console.log('Cosas de tecnico') 
+        else    
+            console.log('Loading widgets4companiesUsers') 
+            # Load companyStock
+            getCompanyStock = ->
+                $filters=
+                    companyID: $scope.currentUser.companyID
+                $http({ url: REST_API.hostname+"/server/ajax/Widgets/companyStock.php", method: "POST", data: JSON.stringify($filters) })
+                    .success (postResponse) ->
+                        postResponse.forEach (item) ->
+                            $scope.companyStock.push({ label:item['compressorID'], value: parseInt(item['stock'])})
+                        setTimeout (->
+                            $scope.$apply ->
+                                $scope.donutData = $scope.companyStock
+                                return
+                                return
+                                ), 500
+            getCompanyStock()
+            # Load companyStock
+            getCompanySales = ->
+                $filters=
+                    companyID: $scope.currentUser.companyID
+                $http({ url: REST_API.hostname+"/server/ajax/Widgets/companySales.php", method: "POST", data: JSON.stringify($filters) })
+                    .success (postResponse) ->
+                        $scope.companySales = postResponse
+                        console.log $scope.companySales
+            getCompanySales()
+            # Load companyStock
+            getLabelingProgress = ->
+                $filters=
+                    companyID: $scope.currentUser.companyID
+                $http({ url: REST_API.hostname+"/server/ajax/Widgets/labelingProgress.php", method: "POST", data: JSON.stringify($filters) })
+                    .success (postResponse) ->
+                        $scope.labelingProgress = postResponse
+                        setTimeout (->
+                            $scope.$apply ->
+                                $scope.labelingProgressPieChart = 
+                                    percent: $scope.labelingProgress[0].porcentaje
+                                return
+                                return
+                                ), 1500 
+            getLabelingProgress()
+            # Load companyStock
+            getSalesProgress = ->
+                $filters=
+                    companyID: $scope.currentUser.companyID
+                $http({ url: REST_API.hostname+"/server/ajax/Widgets/salesProgress.php", method: "POST", data: JSON.stringify($filters) })
+                    .success (postResponse) ->
+                        $scope.salesProgress = postResponse
+                        setTimeout (->
+                            $scope.$apply ->
+                                $scope.salesProgressPieChart = 
+                                    percent: $scope.salesProgress[0].porcentaje
+                                return
+                                return
+                                ), 1500 
+            getSalesProgress()
+
 
 ])

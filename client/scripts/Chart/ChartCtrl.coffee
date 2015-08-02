@@ -22,7 +22,7 @@ angular.module('app.chart.ctrls', [])
             percent: 83
             options:
                 animate:
-                    duration: 1000
+                    duration: 3000
                     enabled: true
                 barColor: '#66B5D7'
                 lineCap: 'round'
