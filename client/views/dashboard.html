@@ -70,43 +70,39 @@
     </div>
 
 
-    <div data-ng-controller="morrisChartCtrl">
-        <div class="panel panel-default" ng-show="currentUser.userTypeID=='MA' || currentUser.userTypeID=='ADM'">
-            <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Stock de Compresores</strong></div>
-            <div class="panel-body">
-                <div morris-chart
-                data-data="donutData"
-                data-type="donut"
-                data-xkey="year"
-                data-colors='["#60CD9B","#66B5D7","#EEC95A","#E87352","#EE82EE","#6A5ACD","#FF8080","#00CED1","#FFA07A","#7FFFD4"]'
-                ></div>
-            </div>
+    
+    <div class="panel panel-default" ng-show="(currentUser.userTypeID=='MA' || currentUser.userTypeID=='ADM')">
+        <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Stock de Compresores</strong></div>
+        <div class="panel-body">
+            <div 
+            donut-chart
+            donut-data=donutData
+            donut-colors='["#60CD9B","#66B5D7","#EEC95A","#E87352","#EE82EE","#6A5ACD","#FF8080","#00CED1","#FFA07A","#7FFFD4"]' />
         </div>
     </div>
+    
 
-    <div data-ng-controller="chartCtrl">
-        <div ng-show="currentUser.userTypeID=='MA' || currentUser.userTypeID=='ADM'" class="row">
-            <div class="col-sm-6">
-                <div class="panel panel-default">
-                    <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Progreso de Etiquetado</strong></div>
-                    <div class="panel-body text-center">
-                        <div easypiechart options="easypiechart.options" percent="easypiechart.percent" class="easypiechart">
-                            <span class="pie-percent" ng-bind="easypiechart.percent"></span>
-                        </div>
+    <div ng-show="currentUser.userTypeID=='MA' || currentUser.userTypeID=='ADM'" class="row">
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Progreso de Etiquetado</strong></div>
+                <div class="panel-body text-center">
+                    <div easypiechart options="labelingProgressPieChart.options" percent="labelingProgressPieChart.percent" class="easypiechart">
+                        <span class="pie-percent" ng-bind="labelingProgressPieChart.percent"></span>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="col-sm-6">
-                <div class="panel panel-default">
-                    <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Progreso de ventas</strong></div>
-                    <div class="panel-body text-center">
-                        <div easypiechart options="easypiechart2.options" percent="easypiechart2.percent" class="easypiechart">
-                            <span class="pie-percent" ng-bind="easypiechart2.percent"></span>
-                        </div>
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Progreso de ventas</strong></div>
+                <div class="panel-body text-center">
+                    <div easypiechart options="salesProgressPieChart.options" percent="salesProgressPieChart.percent" class="easypiechart">
+                        <span class="pie-percent" ng-bind="salesProgressPieChart.percent"></span>
                     </div>
-                </div>            
-            </div>
+                </div>
+            </div>            
         </div>
     </div>
 
