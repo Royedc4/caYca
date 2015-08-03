@@ -53,9 +53,9 @@ angular.module('app', [
     ])
 
 .constant 'REST_API',
-    # hostname:       'http://www.samsungcayca.com'
+    hostname:       'http://www.samsungcayca.com'
     # hostname:       'http://www.caycaSAMSUNGcompresores.com'
-    hostname:       'http://cayca:8888'
+    # hostname:       'http://cayca:8888'
     
     
 .constant 'AUTH_EVENTS',
