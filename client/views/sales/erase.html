@@ -3,24 +3,19 @@
 		<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Eliminación de Facturas</strong></div>
 
 		<div class="panel-body text-center">
-			<div class="col-lg-8 form-group">
-				<div class="input-group input-block input-group-lg">
-					<span class="input-group-addon">
-						<span class="glyphicon glyphicon-file"></span>
-					</span>
-					<input  type="text" 
-					class="form-control"
-					placeholder="Ingrese el numero de factura a eliminar"
-					data-ng-model="invoiceNumber"
-					required>
-				</div>
+			<div class="input-group input-block input-group-lg">
+				<span class="input-group-addon">
+					<span class="glyphicon glyphicon-file"></span>
+				</span>
+				<input  type="text" 
+				class="form-control"
+				placeholder="Ingrese el numero de factura a eliminar"
+				data-ng-model="invoiceNumber">
 			</div>
 
-			<div class="col-lg-4 form-group">
-				<button ng-click="eraseInvoice()" class="btn btn-lg btn-block btn-danger"><span class="fa fa-times"></span> Eliminar Factura</button>
-			</div>
+			<button ng-click="eraseInvoice()" class="btn btn-lg btn-block btn-danger">Eliminar Factura</button>
+
 		</div>
-
 
 	</section>
 </div>

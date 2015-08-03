@@ -21,7 +21,6 @@ angular.module('app.account.ctrls', [])
                 country: user['country']
             $http({ url: REST_API.hostname+"/server/ajax/Country/get.php", method: "POST", data: JSON.stringify($filters) })
                 .success (postResponse) ->
-                    console.log postResponse
                     $scope.currentUser['country']=postResponse['0']
 
         # get company4User
@@ -62,10 +61,7 @@ angular.module('app.account.ctrls', [])
                     getUserType4user(user)
                     getCity4user(user)
                     $scope.setCurrentUser user
-                    if (user.userTypeID=='TEC' || user.userTypeID=='DV' || user.userTypeID=='DVC')
-                        $location.path('/dashboard') 
-                    else    
-                        $location.path('/dashboard2') 
+                    $location.path('/dashboard') 
                 else
                     console.log "SingIn Error."
                     $rootScope.$broadcast AUTH_EVENTS.loginFailed
@@ -175,7 +171,6 @@ angular.module('app.account.ctrls', [])
         getUserType = ->
             $http.post(REST_API.hostname+"/server/ajax/Users/m_getUserType.php").success (data) ->
                 $scope.userTypes = data
-                console.log data
                 $scope.user.userTypeSelected=data[0]
                 return
             return
