@@ -67,7 +67,7 @@ angular.module('app.controllers', [])
             percent: 1
             options:
                 animate:
-                    duration: 5000
+                    duration: 4250
                     enabled: true
                 barColor: '#66B5D7'
                 lineCap: 'round'
@@ -78,7 +78,7 @@ angular.module('app.controllers', [])
             percent: 1
             options:
                 animate:
-                    duration: 5000
+                    duration: 4250
                     enabled: true
                 barColor: '#31C0BE'
                 lineCap: 'round'
@@ -86,7 +86,7 @@ angular.module('app.controllers', [])
                 lineWidth: 12
 
         $scope.donutData = [
-            {label: 'Compresores', value: 1 }
+            {label: 'Cargando Compresores', value: 1 }
             
         ]
         
