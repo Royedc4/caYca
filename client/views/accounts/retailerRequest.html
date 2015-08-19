@@ -1,0 +1,120 @@
+<div class="page-signup">
+
+	<div class="signin-header">
+		<div class="container text-center">
+			<section class="logo">
+				<a href="#/">{{main.brand}}</a>
+			</section>
+		</div>
+	</div>
+
+	<div class="signin-body" >
+		<div class="container">
+			<div class="form-container" data-ng-controller="retailerRequestCtrl">
+				
+				<form name="form_retailerRequest" novalidate class="form-horizontal form-validation" data-ng-submit="submitForm()">
+
+					<div class="form-group">
+						<div class="input-group input-group-lg">
+							<span class="input-group-addon">
+								<span class="glyphicon glyphicon-user"></span>
+							</span>
+							<input  type="text"
+							class="form-control"
+							placeholder="Nombre Completo"
+							data-ng-model="company.owner"
+							popover="Su nombre debe ser completo."
+							popover-trigger="focus"
+							required
+							data-ng-minlength="7"
+							data-ng-maxlength="40">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="input-group input-group-lg">
+							<span class="input-group-addon">
+								<span class="glyphicon glyphicon-credit-card"></span>
+							</span>
+							<input type="text"
+							name="NIT"
+							class="form-control"
+							placeholder="Numero de identificación tributaria"
+							data-ng-model="company.NIT"
+							data-ng-minlength=8
+							data-ng-maxlength=11
+							required>
+						</div>
+						<p ng-show="form_retailerRequest.NIT.$invalid && form_retailerRequest.NIT.$dirty" class="text-danger">Escriba correctamente su NIT</p>
+					</div>
+					<div class="form-group">
+						<div class="input-group input-group-lg">
+							<span class="input-group-addon">
+								<span class="glyphicon glyphicon-envelope"></span>
+							</span>
+							<input type="email"
+							name="email"
+							class="form-control"
+							placeholder="Correo Electronico"
+							data-ng-model="company.email"
+							data-ng-minlength=15
+							required>
+						</div>
+						<p ng-show="form_retailerRequest.email.$invalid && form_retailerRequest.email.$dirty" class="text-danger">Verifique la validez del correo.</p>
+					</div>
+					<div class="form-group">
+						<div class="input-group input-group-lg">
+							<span class="input-group-addon">
+								<span class="glyphicon glyphicon-map-marker"></span>
+							</span>
+							<input type="text"
+							data-ng-minlength=15
+							class="form-control"
+							placeholder="Dirección"
+							data-ng-model="company.address"
+							required>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="input-group input-group-lg">
+							<span class="input-group-addon">
+								<span class="glyphicon glyphicon-phone-alt"></span>
+							</span>
+							<input type="tel"
+							name="phone"
+							data-ng-minlength=10
+							data-ng-maxlength=12
+							data-ng-pattern="/^[0-9]+$/"
+							class="form-control"
+							placeholder="Telefono Principal"
+							data-ng-model="company.phone"
+							required>
+						</div>
+						<p ng-show="form_retailerRequest.phone.$invalid && form_retailerRequest.phone.$dirty" class="text-danger">El numero de telefono debe tener entre 10 y 12 números unicamente. Recuerdo incluir el codigo de pais.</p>
+					</div>
+
+					<!-- city Select -->
+					<div class="form-group text-center">
+						<div class="select-group">
+							<span class="ui-select">
+								<select ng-model="company.citySelected" ng-options="city.name for city in cities" required>
+									<option value="">- Seleccione la ciudad-</option>
+								</select>
+							</span> 
+						</div>
+					</div>
+					<!-- end city Select -->
+
+
+					<div class="form-group">
+						<p class="text-muted text-small">Haciendo click en contactar vendedor SAMSUNG aceptas los <a href="javascript:;">terminos, condiciones</a> y <a href="javascript:;">la politica de privacidad</a></p>
+						<div class="divider"></div>
+						<a ng-click="createNewAccount()" class="btn btn-primary btn-block btn-lg" data-ng-disabled="!canSubmit()">Contactar vendedor SAMSUNG</a>
+					</div>
+
+				</form>
+
+
+			</div>
+		</div>
+	</div>
+</div>

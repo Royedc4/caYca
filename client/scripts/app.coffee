@@ -161,6 +161,12 @@ angular.module('app', [
                 data:
                     authorizedRoles: [USER_ROLES.public]
                 )
+            .when(
+                '/accounts/retailerRequest'
+                templateUrl: 'views/accounts/retailerRequest.html'                
+                data:
+                    authorizedRoles: [USER_ROLES.public]
+                )
             #Companies
             .when(
                 '/companies/new'

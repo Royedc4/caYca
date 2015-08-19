@@ -402,3 +402,46 @@ angular.module('app.account.ctrls', [])
        
 
 ])
+
+
+.controller('retailerRequestCtrl', [
+    'REST_API','$scope', 'logger', '$http'
+    (REST_API,$scope, logger, $http ) ->
+        console.log "@retailerRequestCtrl 4 every1 :)"
+        # ng-model 4 user
+        $scope.company = 
+            NIT: ''
+            owner: ''
+            email: ''
+            address: ''
+            phone: ''
+            citySelected: ''
+
+        # var 4 select
+        $scope.selected = undefined
+
+        # Load cities
+        getCities = ->
+            $http({ url: REST_API.hostname+"/server/ajax/City/list.php", method: "POST" })
+                .success (postResponse) ->
+                    $scope.cities = postResponse
+        getCities()
+
+        $scope.showInfoOnSubmit = false
+
+        original = angular.copy($scope.company)
+
+        $scope.revert = ->
+            $scope.company = angular.copy(original)
+            $scope.form_retailerRequest.$setPristine()
+
+        $scope.canRevert = ->
+            return !angular.equals($scope.company, original) || !$scope.form_retailerRequest.$pristine
+
+        $scope.canSubmit = ->
+            return $scope.form_retailerRequest.$valid && !angular.equals($scope.company, original)
+
+        $scope.submitForm = ->
+             $scope.showInfoOnSubmit = true
+             # $scope.revert()     
+])
