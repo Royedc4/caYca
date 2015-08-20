@@ -15,6 +15,7 @@ angular.module('app', [
     'ngTagsInput'
     'ui.mask'
     'angular.morris-chart'
+    'timer'
 
     # Custom modules
     'app.ui.ctrls'

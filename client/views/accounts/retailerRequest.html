@@ -17,6 +17,23 @@
 					<div class="form-group">
 						<div class="input-group input-group-lg">
 							<span class="input-group-addon">
+								<span class="glyphicon glyphicon-briefcase"></span>
+							</span>
+							<input  type="text"
+							class="form-control"
+							placeholder="Nombre comercial"
+							data-ng-model="company.businessName"
+							popover="El nombre parece muy corto."
+							popover-trigger="focus"
+							required
+							data-ng-minlength="5"
+							data-ng-maxlength="40">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="input-group input-group-lg">
+							<span class="input-group-addon">
 								<span class="glyphicon glyphicon-user"></span>
 							</span>
 							<input  type="text"
@@ -64,19 +81,6 @@
 					<div class="form-group">
 						<div class="input-group input-group-lg">
 							<span class="input-group-addon">
-								<span class="glyphicon glyphicon-map-marker"></span>
-							</span>
-							<input type="text"
-							data-ng-minlength=15
-							class="form-control"
-							placeholder="Dirección"
-							data-ng-model="company.address"
-							required>
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="input-group input-group-lg">
-							<span class="input-group-addon">
 								<span class="glyphicon glyphicon-phone-alt"></span>
 							</span>
 							<input type="tel"
@@ -106,9 +110,9 @@
 
 
 					<div class="form-group">
-						<p class="text-muted text-small">Haciendo click en contactar vendedor SAMSUNG aceptas los <a href="javascript:;">terminos, condiciones</a> y <a href="javascript:;">la politica de privacidad</a></p>
+						<p class="text-muted text-small">Haciendo click en <strong>Contactar</strong> se enviaran tus datos a un vendedor SAMSUNG</p>
 						<div class="divider"></div>
-						<a ng-click="createNewAccount()" class="btn btn-primary btn-block btn-lg" data-ng-disabled="!canSubmit()">Contactar vendedor SAMSUNG</a>
+						<a ng-click="createNewAccount()" class="btn btn-primary btn-block btn-lg" data-ng-disabled="!canSubmit()">Contactar</a>
 					</div>
 
 				</form>
