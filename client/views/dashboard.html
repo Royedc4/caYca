@@ -13,28 +13,28 @@
 -->
 
 <!-- Technician -->
-<div ng-show="currentUser.userTypeID=='TEC'" class="row">
-    <div class="col-lg-3 col-xsm-6">
+<div ng-show="currentUser.userTypeID=='TEC' || currentUser.userTypeID=='DV' || currentUser.userTypeID=='DVC'" class="row">
+    <div class="col-lg-6 col-md-6 col-sm-6">
         <div class="panel mini-box">
-            <span class="box-icon bg-warning">
+            <span class="box-icon bg-success">
+                <i class="fa fa-ticket"></i>
+            </span>
+            <div class="box-info">
+                <p class="size-h2">123</p>
+                <p class="text-muted"><span data-i18n="Cupones en Rifa"></span></p>
+            </div>
+        </div>        
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">
+        <div class="panel mini-box">
+            <span class="box-icon bg-success">
                 <i class="fa fa-money"></i>
             </span>
             <div class="box-info">
-                <p class="size-h2">50000</p>
-                <p class="text-muted"><span data-i18n="Puntos Recaudados"></span></p>
+                <p class="size-h2">456 </p>
+                <p class="text-muted"><span data-i18n="Dinero Por Canjear"></span></p>
             </div>
-        </div>
-    </div>
-    <div class="col-lg-3 col-xsm-6">
-        <div class="panel mini-box">
-            <span class="box-icon bg-danger">
-                <i class="fa fa-dollar"></i>
-            </span>
-            <div class="box-info">
-                <p class="size-h2">10000</p>
-                <p class="text-muted"><span data-i18n="Credito Disponible"></span></p>
-            </div>
-        </div>
+        </div>        
     </div>
 
 </div>

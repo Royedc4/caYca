@@ -8,7 +8,7 @@
                 <div class="panel-heading text-center bg-info">
                     <img alt="" src="images/g1.jpg" class="img-circle img80_80">
                     <h3>{{currentUser.fullName}}</h3>
-                    <p>-</p>                    
+                    <p>{{currentUser.userType.name}}</p>                    
                 </div>
                 <!-- <div class="list-justified-container">
                     <ul class="list-justified text-center">
@@ -76,55 +76,6 @@
 
         <div class="col-md-6">
 
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="panel mini-box">
-                        <span class="box-icon bg-danger">
-                            <i class="fa fa-film"></i>
-                        </span>
-                        <div class="box-info">
-                            <p class="size-h2">39</p>
-                            <p class="text-muted">Amazing Films</p>
-                        </div>
-                    </div>                    
-                </div>
-                <div class="col-sm-6">
-                    <div class="panel mini-box">
-                        <span class="box-icon bg-warning">
-                            <i class="fa fa-camera"></i>
-                        </span>
-                        <div class="box-info">
-                            <p class="size-h2">63</p>
-                            <p class="text-muted">Wonderful Photos</p>
-                        </div>
-                    </div>                    
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="panel mini-box">
-                        <span class="box-icon bg-success">
-                            <i class="fa fa-bookmark-o"></i>
-                        </span>
-                        <div class="box-info">
-                            <p class="size-h2">55</p>
-                            <p class="text-muted">New Collections</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="panel mini-box">
-                        <span class="box-icon bg-info">
-                            <i class="fa fa-check"></i>
-                        </span>
-                        <div class="box-info">
-                            <p class="size-h2">34</p>
-                            <p class="text-muted">Tasks Finised</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <div class="panel panel-default">
                 <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Profile Info</strong></div>
                 <div class="panel-body">
@@ -133,7 +84,7 @@
                             <ul class="list-unstyled list-info">
                                 <li>
                                     <span class="icon glyphicon glyphicon-user"></span>
-                                    <label>User name</label>
+                                    <label>Nombre</label>
                                     {{currentUser.fullName}}
                                 </li>
                                 <li>
@@ -143,18 +94,18 @@
                                 </li>
                                 <li>
                                     <span class="icon glyphicon glyphicon-home"></span>
-                                    <label>Address</label>
+                                    <label>Dirección</label>
                                     {{currentUser.address}}
                                 </li>
                                 <li>
                                     <span class="icon glyphicon glyphicon-earphone"></span>
-                                    <label>Contact</label>
+                                    <label>Telefono Celular</label>
                                     {{currentUser.celphone}}
                                 </li>
                                 <li>
                                     <span class="icon glyphicon glyphicon-flag"></span>
-                                    <label>Nationality</label>
-                                    {{currentUser.country}}
+                                    <label>Nationalidad</label>
+                                    {{currentUser.country.capital}}, {{currentUser.country.alternatename}}
                                 </li>
                             </ul>
                             
