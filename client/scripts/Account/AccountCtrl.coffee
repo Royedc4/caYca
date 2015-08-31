@@ -191,13 +191,16 @@ angular.module('app.account.ctrls', [])
                 password: $scope.user.password
                 userTypeID: $scope.user.userTypeSelected.userTypeID
                 geoID: $scope.user.citySelected.geoID
-                companyID: $scope.user.retailerSelected.companyID
                 address: $scope.user.address
                 phone: $scope.user.phone
                 celphone: $scope.user.celphone
+
+            if $scope.user.userTypeSelected.userTypeID !='DV' && $scope.user.userTypeSelected.userTypeID !='DVC'
+                $scope.data["companyID"] = $scope.currentUser.company.companyID
+            else
+                $scope.data["companyID"] = $scope.user.retailerSelected.companyID
             
             console.log ($scope.data)
-            
             
             $http({ url: REST_API.hostname+"/server/ajax/Users/addUser.php", method: "POST", data: JSON.stringify($scope.data) })
             .success (postResponse) ->

@@ -71,7 +71,7 @@
 
 
     
-    <div class="panel panel-default" ng-show="(currentUser.userTypeID=='MA' || currentUser.userTypeID=='ADM')">
+    <div class="panel panel-default" ng-show="(currentUser.userTypeID=='MA' || currentUser.userTypeID=='ADM' ||  currentUser.userTypeID=='MGC')">
         <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Stock de Compresores</strong></div>
         <div class="panel-body">
             <div 
@@ -82,7 +82,7 @@
     </div>
     
 
-    <div ng-show="currentUser.userTypeID=='MA' || currentUser.userTypeID=='ADM'" class="row">
+    <div ng-show="currentUser.userTypeID=='MA' || currentUser.userTypeID=='ADM' ||  currentUser.userTypeID=='MGC'" class="row">
         <div class="col-sm-6">
             <div class="panel panel-default">
                 <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Progreso de Etiquetado</strong></div>

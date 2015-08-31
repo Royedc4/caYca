@@ -324,7 +324,20 @@ angular.module('app', [
                         USER_ROLES.admin,
                         USER_ROLES.technician,
                         USER_ROLES.retailDV,
-                        USER_ROLES.retailDVC
+                        USER_ROLES.retailDVC,
+                        USER_ROLES.wholeSalerMGC,
+                        ]
+                )
+            .when(
+                '/raffles/info'
+                templateUrl: 'views/raffles/info.html'
+                data:
+                    authorizedRoles: [
+                        USER_ROLES.admin,
+                        USER_ROLES.technician,
+                        USER_ROLES.retailDV,
+                        USER_ROLES.retailDVC,
+                        USER_ROLES.wholeSalerMGC,
                         ]
                 )
             # Get Raffle Coupon

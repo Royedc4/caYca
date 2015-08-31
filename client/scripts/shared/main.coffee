@@ -62,42 +62,41 @@ angular.module('app.controllers', [])
 .controller('DashboardCtrl', [
     'REST_API','AUTH_EVENTS','$scope', '$http', 'LoginService', 'logger', '$rootScope', '$location'
     (REST_API,AUTH_EVENTS, $scope, $http, LoginService, logger, $rootScope, $location) ->
-
-        # Widgets Data
-        $scope.salesProgressPieChart = 
-            percent: 1
-            options:
-                animate:
-                    duration: 4250
-                    enabled: true
-                barColor: '#66B5D7'
-                lineCap: 'round'
-                size: 180
-                lineWidth: 10
-        
-        $scope.labelingProgressPieChart = 
-            percent: 1
-            options:
-                animate:
-                    duration: 4250
-                    enabled: true
-                barColor: '#31C0BE'
-                lineCap: 'round'
-                size: 180
-                lineWidth: 12
-
-        $scope.donutData = [
-            {label: 'Cargando Compresores', value: 1 }
-            
-        ]
-        
-        $scope.companyStock=[]
-
         console.log "On DashboardCtrl"
+
         if ($scope.currentUser.userTypeID=='TEC' || $scope.currentUser.userTypeID=='DV' || $scope.currentUser.userTypeID=='DVC')
-            console.log('Cosas de tecnico') 
-        else    
-            console.log('Loading widgets4companiesUsers') 
+            console.log('widgets4tecsAndSellers') 
+        else
+            console.log('widgets4companiesUsers') 
+            # Widgets Data
+            $scope.salesProgressPieChart = 
+                percent: 1
+                options:
+                    animate:
+                        duration: 4250
+                        enabled: true
+                    barColor: '#66B5D7'
+                    lineCap: 'round'
+                    size: 180
+                    lineWidth: 10
+            
+            $scope.labelingProgressPieChart = 
+                percent: 1
+                options:
+                    animate:
+                        duration: 4250
+                        enabled: true
+                    barColor: '#31C0BE'
+                    lineCap: 'round'
+                    size: 180
+                    lineWidth: 12
+
+            $scope.donutData = [
+                {label: 'Cargando Compresores', value: 1 }
+                
+            ]
+            
+            $scope.companyStock=[]
             # Load companyStock
             getCompanyStock = ->
                 $filters=
@@ -152,6 +151,4 @@ angular.module('app.controllers', [])
                                 return
                                 ), 1500 
             getSalesProgress()
-
-
 ])
