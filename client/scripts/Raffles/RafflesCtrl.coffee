@@ -9,12 +9,19 @@ angular.module('app.raffles.ctrls', [])
     'REST_API','$scope', 'logger', '$http'
     (REST_API,$scope, logger, $http) ->
         console.log 'newCouponCtrl'
-
+        $scope.canjeAutomatico = false
+        $scope.oneAtATime = true
         $scope.raffleCoupons = []
 
+        $scope.showInformation = ->
+            if $scope.canjeAutomatico
+                swal("Canje Automatico Activado!", "Los cupones que registres se canjearan automáticamente a tu cuenta, ya puedes ir a canjearlo en tu tienda de preferencia.", "success")
+            else
+                swal("Canje Automatico Desactivado!", "Los cupones que registres no se canjearan automáticamente a tu cuenta, los podras entregar a otra persona para que los aproveche.", "error")
+            
         # Alert Message
         $scope.alerts = [
-            { type: 'info', msg: 'TIPS: Escriba unicamente las letras o numeros, no es necesario escribir los guiones. ni seleccionar el siguiente campo de texto, el formulario va haciendo todo automáticamente.' }
+            { type: 'info', msg: 'TIPS: Escriba unicamente las letras o numeros, ni seleccionar el siguiente campo de texto, el formulario hace todo automáticamente. El boton de Inscribir Tokens estará disponible cuando se ingresen todos los tokens.' }
         ]
         $scope.closeAlert = (index)->
             $scope.alerts.splice(index, 1)
@@ -88,10 +95,15 @@ angular.module('app.raffles.ctrls', [])
                             logger.logError "Ingresaste cupones invalidos. Intenta de nuevo!"
                         if (postResponse['errorsArray'][i].indexOf("token_UNIQUE")!=-1)
                             logger.logError "Ingresaste un token ya registrado!"
+                        if (postResponse['errorsArray'][i].indexOf("vendido")!=-1)
+                            logger.logError "El token #: "+i+" ("+postResponse['arrayQueries'][i].substring(26, 40)+"), no ha sido vendido por ningun detal."
                         if postResponse['zGlobalResult']
                             logger.logSuccess "Has registrado Exitosamente " + ((postResponse['arrayQueries'].length)-1).toString() + " Tokens en tu cuenta!"
                             $scope.revert()
                             raffleCoupons4user()
+            if $scope.canjeAutomatico
+                console.log "Tambien se canjeara el cupon."
+
 
         # Getting raffleCoupons4user
         raffleCoupons4user = ->

@@ -3,7 +3,7 @@
 	<form id="serialsForm" name="serialsForm" class="form-validation" novalidate>	
 
 		<section class="panel panel-box">
-			<div class="panel-left panel-item bg-warning">
+			<div class="panel-left panel-item bg-success">
 				<i class="fa fa-ticket text-huge"></i>
 			</div>
 			<div class="panel-right panel-item bg-reverse">
@@ -19,19 +19,31 @@
 			<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Cantidad de tokens a registrar</strong></div>
 
 			<div class="panel-body text-center">
-				<div class="col-sm-2 form-group">
+				<div class="col-xs-3 col-sm-3 col-md-2 col-lg-1 form-group">
 					<input type="number" id="quantity" class="form-control" data-min=0 ng-minlenght=0 ng-maxlenght=30 ng-model="quantity" placeholder="Cantidad de Tokens">
 				</div>
 
-				<div class="col-sm-6 form-group">
+				<div class="col-xs-7 col-sm-6 col-md-3 col-lg-3 form-group">
 					<button ng-click="loadInputs()" class="btn btn-primary btn-block"><span class="fa fa-file-o"></span> Preparar Formulario</button>
 				</div>
 
-				<div class="col-sm-2 form-group">
-					<p>Registrar para Canje?</p>
+				<div class="col-xs-2 col-sm-3 col-md-1 col-lg-2 form-group">
+					<label class="switch switch-success"><input type="checkbox" ng-model="canjeAutomatico" ng-click="showInformation()"><i></i></label>
 				</div>
-				<div class="col-sm-2 form-group">
-					<label class="switch switch-success"><input type="checkbox" ng-model="oneAtATime"><i></i></label>
+				<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 form-group">
+					<button class="btn btn-default btn-block"
+					data-ng-disabled="!canRevert()"
+					data-ng-click="revert()"
+					><span class="fa fa-eraser"></span> Borrar Tokens</button>
+				</div>
+
+				<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 form-group">					
+					<button type="submit"
+					id="registerToken4rafffleButton"
+					class="btn btn-success btn-block"
+					ng-click="registerToken4raffle()"
+					data-ng-disabled="!canSubmit()"
+					><span class="fa fa-database"></span> Inscribir Tokens</button>
 				</div>
 
 			</div>	
@@ -52,40 +64,6 @@
 					name="input{{$index+1}}" id="input{{$index+1}}"
 					>
 				</div>
-
-			</div>
-		</section>
-
-		<section class="panel panel-default">
-			<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Inscripcion de Tokens </strong></div>
-			<div class="panel-body" >
-			
-				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 form-group">
-					<button class="btn btn-default btn-block"
-					data-ng-disabled="!canRevert()"
-					data-ng-click="revert()"
-					><span class="fa fa-eraser"></span> Borrar Tokens</button>
-				</div>
-
-				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 form-group">					
-					<button type="submit"
-					id="registerToken4rafffleButton"
-					class="btn btn-success btn-block"
-					ng-click="registerToken4raffle()"
-					data-ng-disabled="!canSubmit()"
-					><span class="fa fa-database"></span> Inscribir Tokens</button>
-				</div>
-
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
-					<button ng-show="currentUser.userTypeID=='ADM'" class='btn btn-danger btn-block' ng-click="roYTesting()"><span class="fa fa-user-secret"></span> Roy TesT</button>
-				</div>
-
-				<hr>
-					<div class="callout callout-info">
-						<p>El boton de Inscribir Tokens estará disponible cuando se ingresen correctamente todos los tokens.</p>
-						<p>El Boton de limpiar formulario estara disponible cuando algun dato se haya ingresado.</p>
-					</div>
-				
 
 			</div>
 		</section>
