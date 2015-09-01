@@ -158,16 +158,13 @@ angular.module('app.sales.ctrls', [])
     'REST_API','$scope', 'logger', '$http', '$filter', '$timeout'
     (REST_API,$scope, logger, $http, $filter, $timeout) ->
         # Definition of objets
-
-        # Control Data
-        
-        # xD
-        console.log 'listSalesCtrl'
-
         $scope.sales = []
         $scope.searchKeywords = ''
         $scope.filteredSales = []
         $scope.row = ''
+
+        # xD
+        console.log 'listSalesCtrl'
 
         $scope.select = (page) ->
             start = (page - 1) * $scope.numPerPage
@@ -187,7 +184,6 @@ angular.module('app.sales.ctrls', [])
         $scope.onOrderChange = ->
             $scope.select(1)
             $scope.currentPage = 1            
-
 
         $scope.search = ->
             $scope.filteredSales = $filter('filter')($scope.sales, $scope.searchKeywords)
@@ -216,25 +212,48 @@ angular.module('app.sales.ctrls', [])
         #Load companies
         getInvoices = ->
             $filters=
-                seller_userID: $scope.currentUser.userID
-            $http({ url: REST_API.hostname+"/server/ajax/Bill/listFiltered.php", method: "POST", data: JSON.stringify($filters) })
+                companyID: $scope.currentUser.company.companyID
+            $http({ url: REST_API.hostname+"/server/ajax/company/getMA4company.php", method: "POST", data: JSON.stringify($filters) })
                 .success (postResponse) ->
-                    console.log postResponse
-                    $scope.sales =postResponse
-                # Only way to make react on filter to show items on table
-                setTimeout ->
-                    $('#searchKeywords').focus()
-                    angular.element('#orderIDsalesUP').trigger('click')
-                    if $scope.filteredSales.length==0
-                        logger.logError "No se encontraron ventas registradas en su empresa."
-                    else
-                        logger.logSuccess "Tiene "+$scope.sales.length+" ventas registradas."
-                , 250
-            return
+                    console.log postResponse['0']['@ma4company']
+                    $filters=
+                        seller_userID: postResponse['0']['@ma4company']
+                    $http({ url: REST_API.hostname+"/server/ajax/Bill/listFiltered.php", method: "POST", data: JSON.stringify($filters) })
+                        .success (postResponse) ->
+                            console.log postResponse                    
+                            $scope.sales =postResponse
+                        # Only way to make react on filter to show items on table
+                        setTimeout ->
+                            $('#searchKeywords').focus()
+                            angular.element('#orderIDsalesUP').trigger('click')
+                            if $scope.filteredSales.length==0
+                                logger.logError "No se encontraron ventas registradas en su empresa."
+                            else
+                                logger.logSuccess "Tiene "+$scope.sales.length+" ventas registradas."
+                        , 250
+                    return
         getInvoices()
 
-       
 
+        #Load companies
+        # getInvoices = ->
+        #     $filters=
+        #         seller_userID: $scope.currentUser.userID
+        #     $http({ url: REST_API.hostname+"/server/ajax/Bill/listFiltered.php", method: "POST", data: JSON.stringify($filters) })
+        #         .success (postResponse) ->
+        #             console.log postResponse
+        #             $scope.sales =postResponse
+        #         # Only way to make react on filter to show items on table
+        #         setTimeout ->
+        #             $('#searchKeywords').focus()
+        #             angular.element('#orderIDsalesUP').trigger('click')
+        #             if $scope.filteredSales.length==0
+        #                 logger.logError "No se encontraron ventas registradas en su empresa."
+        #             else
+        #                 logger.logSuccess "Tiene "+$scope.sales.length+" ventas registradas."
+        #         , 250
+        #     return
+        # getInvoices()
 ])
 
 

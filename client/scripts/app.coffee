@@ -231,6 +231,7 @@ angular.module('app', [
                 data:
                     authorizedRoles: [
                         USER_ROLES.wholeSalerMA,
+                        USER_ROLES.wholeSalerMGC,
                         USER_ROLES.admin
                     ]                
                 )

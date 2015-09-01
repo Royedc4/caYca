@@ -7,7 +7,7 @@ if(isset($_GET['userTypeID']))
 	$userTypeID = $_GET['userTypeID'];
 
 // Unicamente Tecnico y Vendedor de detal
-$outerQuery="SELECT userTypeID, name, description FROM userType WHERE userTypeID='MAC' OR userTypeID='MA' OR userTypeID='DV'";
+$outerQuery="SELECT userTypeID, name, description FROM userType WHERE userTypeID='MAC' OR userTypeID='DVC' OR userTypeID='DV'";
 
 $outerResult=$mysqli->query($outerQuery) or die($mysqli->error.__LINE__);
 $arr = array();
