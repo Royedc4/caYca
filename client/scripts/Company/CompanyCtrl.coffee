@@ -67,13 +67,13 @@ angular.module('app.company.ctrls', [])
             .success (postResponse) ->
                 if (typeof postResponse) == "string"
                     if (postResponse.indexOf("NIT") > -1)
-                        console.log "Roy: " + JSON.stringify(postResponse)
+                        # console.log "Roy: " + JSON.stringify(postResponse)
                         logger.logError "La empresa con el NIT" + $scope.data.nit + "ya está en la base de datos."
                     if (postResponse.indexOf("email") > -1)
-                        console.log "Roy: " + JSON.stringify(postResponse)
+                        # console.log "Roy: " + JSON.stringify(postResponse)
                         logger.logError "La empresa con ese EMAIL" + $scope.data.email + " ya está en la base de datos."
                 else
-                    console.log "Roy: " + JSON.stringify(postResponse)
+                    # console.log "Roy: " + JSON.stringify(postResponse)
                     logger.logSuccess "Se ha creado exitosamente la empresa: "+$scope.data.businessName
                     # logger.logWarning "Espere unos momentos se esta enviando el correo..."
                     $scope.revert()
@@ -81,10 +81,10 @@ angular.module('app.company.ctrls', [])
                     #Sending Email
                     $http({ url: REST_API.hostname+"/server/ajax/Company/addCompanyConfirm.php", method: "POST", data: JSON.stringify(JSON.stringify($scope.data)) })
                     .success (postResponseB) ->
-                        console.log "Roy: " + JSON.stringify(postResponseB)
+                        # console.log "Roy: " + JSON.stringify(postResponseB)
                         logger.logSuccess "Se ha enviado el correo exitosamente a: "+ $scope.data.email
                     .error (postResponseB) ->
-                        console.log "error enviando el correo"
+                        # console.log "error enviando el correo"
                         logger.logError "Ha ocurrido un error enviando el correo. Por favor contacte al Administrador"
 
             .error (postResponse) ->
@@ -161,7 +161,7 @@ angular.module('app.company.ctrls', [])
                 country: $scope.currentUser.country.country
             $http({ url: REST_API.hostname+"/server/ajax/Company/listFiltered.php", method: "POST", data: JSON.stringify($filters) })
                 .success (postResponse) ->
-                    console.log postResponse
+                    # console.log postResponse
                     $scope.retailers =postResponse
                 # Only way to make react on filter to show items on table
                 setTimeout ->

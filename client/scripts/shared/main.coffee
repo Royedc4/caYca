@@ -119,7 +119,7 @@ angular.module('app.controllers', [])
                 $http({ url: REST_API.hostname+"/server/ajax/Widgets/companySales.php", method: "POST", data: JSON.stringify($filters) })
                     .success (postResponse) ->
                         $scope.companySales = postResponse
-                        console.log $scope.companySales
+                        # console.log $scope.companySales
             getCompanySales()
             # Load companyStock
             getLabelingProgress = ->

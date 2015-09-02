@@ -215,12 +215,12 @@ angular.module('app.sales.ctrls', [])
                 companyID: $scope.currentUser.company.companyID
             $http({ url: REST_API.hostname+"/server/ajax/company/getMA4company.php", method: "POST", data: JSON.stringify($filters) })
                 .success (postResponse) ->
-                    console.log postResponse['0']['@ma4company']
+                    # console.log postResponse['0']['@ma4company']
                     $filters=
                         seller_userID: postResponse['0']['@ma4company']
                     $http({ url: REST_API.hostname+"/server/ajax/Bill/listFiltered.php", method: "POST", data: JSON.stringify($filters) })
                         .success (postResponse) ->
-                            console.log postResponse                    
+                            # console.log postResponse                    
                             $scope.sales =postResponse
                         # Only way to make react on filter to show items on table
                         setTimeout ->

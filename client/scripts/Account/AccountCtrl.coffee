@@ -200,29 +200,29 @@ angular.module('app.account.ctrls', [])
             else
                 $scope.data["companyID"] = $scope.user.retailerSelected.companyID
             
-            console.log ($scope.data)
+            # console.log ($scope.data)
             
             $http({ url: REST_API.hostname+"/server/ajax/Users/addUser.php", method: "POST", data: JSON.stringify($scope.data) })
             .success (postResponse) ->
                 if (typeof postResponse) == "string"
                     if (postResponse.indexOf("ID") > -1)
-                        console.log "Roy    : " + JSON.stringify(postResponse)
+                        # console.log "Roy    : " + JSON.stringify(postResponse)
                         logger.logError "El usuario con cedula de idenficicación: " + $scope.data.ID + " ya está en la base de datos."
                     if (postResponse.indexOf("email") > -1)
-                        console.log "Roy: " + JSON.stringify(postResponse)
+                        # console.log "Roy: " + JSON.stringify(postResponse)
                         logger.logError "El usuario con ese EMAIL: " + $scope.data.email + " ya está en la base de datos."
                 else
-                    console.log "Roy: " + JSON.stringify(postResponse)
+                    # console.log "Roy: " + JSON.stringify(postResponse)
                     logger.logSuccess "Se ha creado exitosamente el usuario: "+$scope.data.fullName
                     # logger.logWarning "Espere unos momentos se esta enviando el correo..."
                     $scope.revert()
                     #Sending Email
                     $http({ url: REST_API.hostname+"/server/ajax/Users/addUserConfirm.php", method: "POST", data: JSON.stringify($scope.data) })
                     .success (postResponseB) ->
-                        console.log "Roy: " + JSON.stringify(postResponseB)
+                        # console.log "Roy: " + JSON.stringify(postResponseB)
                         logger.logSuccess "Se ha enviado el correo con la información de registro a: "+ $scope.data.email
                     .error (postResponseB) ->
-                        console.log "error enviando el correo"
+                        # console.log "error enviando el correo"
                         logger.logError "Ha ocurrido un error enviando el correo. Por favor contacte al Administrador"
             .error (postResponse) ->
                 console.log "error"                
@@ -388,7 +388,7 @@ angular.module('app.account.ctrls', [])
                 country: $scope.currentUser.country.country
             $http({ url: REST_API.hostname+"/server/ajax/Users/listFiltered.php", method: "POST", data: JSON.stringify($filters) })
                 .success (postResponse) ->
-                    console.log postResponse
+                    # console.log postResponse
                     $scope.sellers =postResponse
                 # Only way to make react on filter to show items on table
                 setTimeout ->

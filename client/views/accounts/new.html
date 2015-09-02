@@ -39,7 +39,7 @@
 
                             <!-- retailer Select -->
                             <div class="form-group text-center">
-                                <div class="select-group" ng-show="user.userTypeSelected.userTypeID=='DV'">
+                                <div class="select-group" ng-show="user.userTypeSelected.userTypeID=='DV' || user.userTypeSelected.userTypeID=='DVC'">
                                     <span class="ui-select">
                                         <select ng-model="user.retailerSelected" ng-options="retailer.businessName for retailer in retailers">
                                             <option value="">- Seleccione el detal-</option>
