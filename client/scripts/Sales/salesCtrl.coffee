@@ -267,7 +267,7 @@ angular.module('app.sales.ctrls', [])
             $http({ url: REST_API.hostname+"/server/ajax/Bill/listFiltered.php", method: "POST", data: JSON.stringify($filters) })
                 .success (postResponse) ->
                     $scope.sales =postResponse
-                    console.log $scope.sales
+                    # console.log $scope.sales
         getInvoices()
         
         $scope.eraseInvoice = ->

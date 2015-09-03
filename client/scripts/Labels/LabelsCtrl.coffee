@@ -10,6 +10,9 @@ angular.module('app.labels.ctrls', [])
     (REST_API,$scope, logger, $http) ->
         # Definition of objets
 
+        window.onbeforeunload = -> 
+            return "Recuerda: si solicitaste etiquetas no cierres esta ventana hasta confirmar los seriales, quieres continuar? Podrias perder información..."
+        
         # Control Data
         $scope.consecVen=[]
         $scope.consecTec=[]
