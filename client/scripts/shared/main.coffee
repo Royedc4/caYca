@@ -63,9 +63,29 @@ angular.module('app.controllers', [])
     'REST_API','AUTH_EVENTS','$scope', '$http', 'LoginService', 'logger', '$rootScope', '$location'
     (REST_API,AUTH_EVENTS, $scope, $http, LoginService, logger, $rootScope, $location) ->
         console.log "On DashboardCtrl"
+        # Vars
+        redeemableMoney=0
+        raffleCoupons=0
 
         if ($scope.currentUser.userTypeID=='TEC' || $scope.currentUser.userTypeID=='DV' || $scope.currentUser.userTypeID=='DVC')
             console.log('widgets4tecsAndSellers') 
+            # Loading user-redeemableMoney
+            redeemableMoney = ->
+                $filters=
+                    userID: $scope.currentUser.userID
+                $http({ url: REST_API.hostname+"/server/ajax/Widgets/user-redeemableMoney.php", method: "POST", data: JSON.stringify($filters) })
+                    .success (postResponse) ->
+                        $scope.redeemableMoney = postResponse['0'].redeemableMoney
+            redeemableMoney()
+
+            # Loading user-redeemableMoney
+            raffleCoupons = ->
+                $filters=
+                    userID: $scope.currentUser.userID
+                $http({ url: REST_API.hostname+"/server/ajax/Widgets/user-raffleCoupons.php", method: "POST", data: JSON.stringify($filters) })
+                    .success (postResponse) ->
+                        $scope.raffleCoupons = postResponse['0'].coupons
+            raffleCoupons()
         else
             console.log('widgets4companiesUsers') 
             # Widgets Data
