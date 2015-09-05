@@ -31,7 +31,7 @@
                 <i class="fa fa-money"></i>
             </span>
             <div class="box-info">
-                <p class="size-h2">{{redeemableMoney}}</p>
+                <p class="size-h2">{{redeemableMoney | currency: currentUser.country.currency:0}}</p>
                 <p class="text-muted"><span data-i18n="Dinero Por Canjear"></span></p>
             </div>
         </div>        

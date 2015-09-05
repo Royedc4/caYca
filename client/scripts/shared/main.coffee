@@ -76,6 +76,8 @@ angular.module('app.controllers', [])
                 $http({ url: REST_API.hostname+"/server/ajax/Widgets/user-redeemableMoney.php", method: "POST", data: JSON.stringify($filters) })
                     .success (postResponse) ->
                         $scope.redeemableMoney = postResponse['0'].redeemableMoney
+                        if $scope.redeemableMoney==null
+                            $scope.redeemableMoney=0
             redeemableMoney()
 
             # Loading user-redeemableMoney
