@@ -6,17 +6,171 @@ angular.module('app.redemptions.ctrls', [])
 # Controllers for redemptions
 
 .controller('listCtrl', [
-    'REST_API','$scope', 'logger', '$http'
-    (REST_API,$scope, logger, $http) ->
+    'REST_API','$scope', 'logger', '$http', '$filter', '$timeout'
+    (REST_API,$scope, logger, $http, $filter, $timeout) ->
         console.log 'listCtrl'
 
+        $scope.redeemCoupons = []
+        $scope.searchKeywords = ''
+        $scope.filteredRedeemCoupons = []
+        $scope.row = ''
+
+        $scope.select = (page) ->
+            start = (page - 1) * $scope.numPerPage
+            end = start + $scope.numPerPage
+            $scope.currentPageRedeemCoupons = $scope.filteredRedeemCoupons.slice(start, end)
+
+        # on page change: change numPerPage, filtering string
+        $scope.onFilterChange = ->
+            $scope.select(1)
+            $scope.currentPage = 1
+            $scope.row = ''
+
+        $scope.onNumPerPageChange = ->
+            $scope.select(1)
+            $scope.currentPage = 1
+
+        $scope.onOrderChange = ->
+            $scope.select(1)
+            $scope.currentPage = 1            
+
+        $scope.search = ->
+            $scope.filteredRedeemCoupons = $filter('filter')($scope.redeemCoupons, $scope.searchKeywords)
+            $scope.onFilterChange()
+
+        # orderBy
+        $scope.order = (rowName)->
+            if $scope.row == rowName
+                return
+            $scope.row = rowName
+            $scope.filteredRedeemCoupons = $filter('orderBy')($scope.redeemCoupons, rowName)
+            $scope.onOrderChange()
+
+        # pagination
+        $scope.numPerPageOpt = [3, 5, 10, 20]
+        $scope.numPerPage = $scope.numPerPageOpt[2]
+        $scope.currentPage = 1
+        $scope.currentPageRedeemCoupons = []
+
+        # init
+        $scope.init = ->
+            $scope.search()
+            $scope.select($scope.currentPage)
+        $scope.init()
+
+        # Getting redeemCoupons4user
+        redeemCoupons4user = ->
+            $filters=
+                userID: $scope.currentUser.userID
+            $http({ url: REST_API.hostname+"/server/ajax/redeemCoupon/redeems-list.php", method: "POST", data: JSON.stringify($filters) })
+            .success (postResponse) ->
+                $scope.redeemCoupons=postResponse
+                # Only way to make react on filter to show items on table
+                setTimeout ->
+                    $('#searchKeywords').focus()
+                    angular.element('#orderIDRedeemUP').trigger('click')
+                    if (typeof $scope.redeemCoupons['0'] == 'undefined')
+                        logger.logError "No se encontraron canjes registrados en su cuenta."
+                    else
+                        logger.logSuccess "Tiene "+$scope.redeemCoupons.length+" canjes."
+                , 100
+
+                if $scope.redeemCoupons['0'].redemptionID!=null
+                    for i in [0...$scope.redeemCoupons.length] by 1
+                        $scope.redeemCoupons[i]['creationDate']=moment($scope.redeemCoupons[i]['creationDate']).format("DD/MM/YYYY")
+                else
+                    $scope.redeemCoupons=[]                
+        redeemCoupons4user()
 ])
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 .controller('pointsCtrl', [
-    'REST_API','$scope', 'logger', '$http'
-    (REST_API,$scope, logger, $http) ->
+    'REST_API','$scope', 'logger', '$http','$filter', '$timeout'
+    (REST_API,$scope, logger, $http, $filter, $timeout) ->
         console.log 'pointsCtrl'
+
+        $scope.redeemCoupons = []
+        $scope.searchKeywords = ''
+        $scope.filteredRedeemCoupons = []
+        $scope.row = ''
+
+        $scope.select = (page) ->
+            start = (page - 1) * $scope.numPerPage
+            end = start + $scope.numPerPage
+            $scope.currentPageRedeemCoupons = $scope.filteredRedeemCoupons.slice(start, end)
+
+        # on page change: change numPerPage, filtering string
+        $scope.onFilterChange = ->
+            $scope.select(1)
+            $scope.currentPage = 1
+            $scope.row = ''
+
+        $scope.onNumPerPageChange = ->
+            $scope.select(1)
+            $scope.currentPage = 1
+
+        $scope.onOrderChange = ->
+            $scope.select(1)
+            $scope.currentPage = 1            
+
+        $scope.search = ->
+            $scope.filteredRedeemCoupons = $filter('filter')($scope.redeemCoupons, $scope.searchKeywords)
+            $scope.onFilterChange()
+
+        # orderBy
+        $scope.order = (rowName)->
+            if $scope.row == rowName
+                return
+            $scope.row = rowName
+            $scope.filteredRedeemCoupons = $filter('orderBy')($scope.redeemCoupons, rowName)
+            $scope.onOrderChange()
+
+        # pagination
+        $scope.numPerPageOpt = [3, 5, 10, 20]
+        $scope.numPerPage = $scope.numPerPageOpt[2]
+        $scope.currentPage = 1
+        $scope.currentPageRedeemCoupons = []
+
+        # init
+        $scope.init = ->
+            $scope.search()
+            $scope.select($scope.currentPage)
+        $scope.init()
+
+        # Getting redeemCoupons4user
+        redeemCoupons4user = ->
+            $filters=
+                userID: $scope.currentUser.userID
+            $http({ url: REST_API.hostname+"/server/ajax/redeemCoupon/redeems-avaiablePoints.php", method: "POST", data: JSON.stringify($filters) })
+            .success (postResponse) ->
+                $scope.redeemCoupons=postResponse
+                for i in [0...$scope.redeemCoupons.length] by 1
+                    $scope.redeemCoupons[i]['creationDate']=moment($scope.redeemCoupons[i]['creationDate']).format("DD/MM/YYYY")
+            
+                # Only way to make react on filter to show items on table
+                setTimeout ->
+                    $('#searchKeywords').focus()
+                    angular.element('#orderIDRedeemUP').trigger('click')
+                    if $scope.filteredRedeemCoupons.length==0
+                        logger.logError "No se encontraron cupones registrados en su cuenta."
+                    else
+                        logger.logSuccess "Tiene "+$scope.filteredRedeemCoupons.length+" cupones de canje."
+                , 100
+                
+        redeemCoupons4user()
 
 ])
 

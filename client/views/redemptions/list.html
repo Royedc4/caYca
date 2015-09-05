@@ -1,80 +1,119 @@
 <div class="page" data-ng-controller="listCtrl">
-    
-    <section class="ui-timeline">
-        <article class="tl-item">
-            <div class="tl-body">
-                <div class="tl-entry">
-                    <div class="tl-caption">
-                        <a href="javascript:;" class="btn btn-primary btn-block">Today</a>
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span><span data-i18n=" Resumen de canjes"></span></strong></div>
+
+        <div ng-show="redeemCoupons.length==0" class="callout callout-danger">
+            <h4>No ha registrado canjes aún... </h4>
+        </div>
+
+        <div ng-show="redeemCoupons.length!=0">
+
+            <div class="table-filters">
+                <div class="row">
+                    <div class="col-sm-4 col-xs-6">
+                        <form>
+                            <input type="text"
+                            placeholder="buscar"
+                            id="searchKeywords"
+                            class="form-control"
+                            data-ng-model="searchKeywords"
+                            data-ng-keyup="search()" />
+                        </form>
+                    </div>
+                    <div class="col-sm-3 col-xs-6 filter-result-info">
+                        <span>
+                            Mostrando {{filteredRedeemCoupons.length}}/{{redeemCoupons.length}} registros
+                        </span>              
                     </div>
                 </div>
             </div>
-        </article>
 
-        <article class="tl-item">
-            <div class="tl-body">
-                <div class="tl-entry">
-                    <div class="tl-time">3 min ago</div>
-                    <div class="tl-icon square-icon sm bg-info"><i class="fa fa-asterisk"></i></div>
-                    <div class="tl-content">
-                        <h4 class="tl-tile text-primary">Go hiking</h4>
-                        <p>Consectetur adipisicing elit. Error, accusantium debitis voluptatem dolore excepturi ducimus fugiat nulla perspiciatis quo ipsum non eligendi nisi veniam maxime in quas atque omnis cumque!</p>
-                    </div>
+            <table ng-table="redeemTable" class="table table-bordered table-striped table-responsive">
+                <thead>
+                    <tr>
+                        <th><div class="th">
+                            #
+                            <span id="orderIDRedeemUP" class="glyphicon glyphicon-chevron-up"
+                            data-ng-click=" order('redemptionID') "
+                            data-ng-class="{active: row == 'redemptionID'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                            data-ng-click=" order('-redemptionID') "
+                            data-ng-class="{active: row == '-redemptionID'}"></span>
+                        </div></th>
+                        <th><div class="th">
+                            Fecha
+                            <span class="glyphicon glyphicon-chevron-up"
+                            data-ng-click=" order('creationDate') "
+                            data-ng-class="{active: row == 'creationDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                            data-ng-click=" order('-creationDate') "
+                            data-ng-class="{active: row == '-creationDate'}"></span>
+                        </div></th>
+                        <th><div class="th">
+                            #Cup
+                            <span class="glyphicon glyphicon-chevron-up"
+                            data-ng-click=" order('coupons') "
+                            data-ng-class="{active: row == 'coupons'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                            data-ng-click=" order('-coupons') "
+                            data-ng-class="{active: row == '-coupons'}"></span>
+                        </div></th>
+                        <th><div class="th">
+                            Canje
+                            <span class="glyphicon glyphicon-chevron-up"
+                            data-ng-click=" order('itemName') "
+                            data-ng-class="{active: row == 'itemName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                            data-ng-click=" order('-itemName') "
+                            data-ng-class="{active: row == '-itemName'}"></span>
+                        </div></th>
+                        <th><div class="th">
+                            Status
+                            <span class="glyphicon glyphicon-chevron-up"
+                            data-ng-click=" order('status') "
+                            data-ng-class="{active: row == 'status'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                            data-ng-click=" order('-status') "
+                            data-ng-class="{active: row == '-status'}"></span>
+                        </div></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="redeemCoupon in currentPageRedeemCoupons">
+                        <td>{{redeemCoupon.redemptionID}}</td>
+                        <td>{{redeemCoupon.creationDate}}</td>
+                        <td>{{redeemCoupon.coupons}}</td>
+                        <td>{{redeemCoupon.itemName}}</td>
+                        <td>{{redeemCoupon.status}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <footer class="table-footer">
+                <div class="row">
+                    <div class="col-md-6 page-num-info">
+                        <span>
+                            Mostrar 
+                            <select id="selectNumPerPage" data-ng-model="numPerPage"
+                            data-ng-options="num for num in numPerPageOpt"
+                            data-ng-change="onNumPerPageChange()">
+                        </select> 
+                        registros por pagina
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                    page="currentPage"
+                    total-items="filteredRedeemCoupons.length"
+                    max-size="4"
+                    on-select-page="select(page)"
+                    items-per-page="numPerPage"
+                    rotate="false"
+                    boundary-links="true"></pagination>
                 </div>
             </div>
-        </article>
 
-
-        <article class="tl-item">
-            <div class="tl-body">
-                <div class="tl-entry">
-                    <div class="tl-caption">
-                        <a href="javascript:;" class="btn btn-danger btn-block">24 - 09 - 2014 </a>
-                    </div>
-                </div>
-            </div>
-        </article>
-
-
-        <article class="tl-item alt">
-            <div class="tl-body">
-                <div class="tl-entry">
-                    <div class="tl-time">7:30 AM</div>
-                    <div class="tl-icon square-icon sm bg-success"><i class="fa fa-camera"></i></div>
-                    <div class="tl-content">
-                        <h4 class="tl-tile text-warning">Soluta nihil</h4>
-                        <p>Incidunt, molestias odio soluta nihil accusantium sit nostrum doloremque. Recusandae, ullam, odio consequatur facere totam reiciendis similique dicta explicabo!</p>
-                    </div>
-                </div>
-            </div>
-        </article>
-
-        <article class="tl-item">
-            <div class="tl-body">
-                <div class="tl-entry">
-                    <div class="tl-time">12:55 PM</div>
-                    <div class="tl-icon square-icon sm bg-danger"><i class="fa fa-folder-o"></i></div>
-                    <div class="tl-content">
-                        <h4 class="tl-tile text-success">Voluptas molestias</h4>
-                        <p>At, veniam, officia pariatur voluptas molestias nobis distinctio quo temporibus! Nisi, fugit, ipsum, veritatis, optio consectetur nam molestiae quidem placeat deleniti animi ad nobis iure modi eius recusandae odio adipisci nesciunt.</p>
-                    </div>
-                </div>
-            </div>
-        </article>
-
-        <article class="tl-item alt">
-            <div class="tl-body">
-                <div class="tl-entry">
-                    <div class="tl-time">9:10 AM</div>
-                    <div class="tl-icon square-icon sm bg-info"><i class="fa fa-gift"></i></div>
-                    <div class="tl-content">
-                        <h4 class="tl-tile text-primary">Sed cumque temporibus</h4>
-                        <p>Deserunt sed cumque temporibus. Doloribus, iste, sit recusandae fugiat assumenda ea magni at doloremque ipsum amet molestias error mollitia maxime ad alias eos id cumque corporis placeat nisi a quaerat nemo magnam ab numquam ratione facere dolorum. Cumque, dolores, sint molestiae eaque quibusdam illo error!</p>
-                    </div>
-                </div>
-            </div>
-        </article>
-
-    </section>
-
+        </footer>
+    </div>
+</section>
 </div>
