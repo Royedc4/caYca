@@ -99,10 +99,31 @@ angular.module('app.raffles.ctrls', [])
                             logger.logError "El token #: "+i+" ("+postResponse['arrayQueries'][i].substring(26, 40)+"), no ha sido vendido por ningun detal."
                         if postResponse['zGlobalResult']
                             logger.logSuccess "Has registrado Exitosamente " + ((postResponse['arrayQueries'].length)-1).toString() + " Tokens en tu cuenta!"
-                            $scope.revert()
-                            raffleCoupons4user()
             if $scope.canjeAutomatico
-                console.log "Tambien se canjeara el cupon."
+                setTimeout ->
+                    console.log "Tambien se canjeara el cupon."
+                    # registerToken4redeem
+                    $http({ url: REST_API.hostname+"/server/ajax/redeemCoupon/new.php", method: "POST", data: JSON.stringify($scope.data2insert) })
+                    .success (postResponse) ->
+                        console.log postResponse
+                        if (typeof postResponse) == "object"
+                            for i in [1...postResponse['errorsArray'].length] by 1
+                                if (postResponse['errorsArray'][i].indexOf("redeemID")!=-1)
+                                    logger.logError "No se encuentran tokens disponibles para su país."
+                                if (postResponse['errorsArray'][i].indexOf("fk_redeemCoupons_labeledSerials1")!=-1)
+                                    logger.logError "Ingresaste cupones invalidos. Intenta de nuevo!"
+                                if (postResponse['errorsArray'][i].indexOf("token_UNIQUE")!=-1)
+                                    logger.logError "Ingresaste un token ya registrado!"
+                                if postResponse['zGlobalResult']
+                                    logger.logSuccess "Tambien registraste " + ((postResponse['arrayQueries'].length)-1).toString() + " Tokens para canjes!"
+                , 1000
+            $scope.revert()
+            setTimeout (->
+                $scope.$apply ->
+                    raffleCoupons4user()
+                    return
+                return
+            ), 500
 
 
         # Getting raffleCoupons4user

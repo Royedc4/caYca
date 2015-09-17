@@ -51,6 +51,9 @@ angular.module('app', [
     'app.sales.ctrls'
     'app.sales.directives'
     'app.sales.services'
+    'app.creditNotes.ctrls'
+    'app.creditNotes.directives'
+    'app.creditNotes.services'
     ])
 
 .constant 'REST_API',
@@ -79,6 +82,7 @@ angular.module('app', [
     wholeSalerMAC:  'MAC'
     wholeSalerMG:   'MG'
     wholeSalerMGC:  'MGC'
+    wholeSalerMOC:  'MOC'
 
 .run([
     '$rootScope', 'AUTH_EVENTS', 'LoginService', 'logger', '$location'
@@ -128,6 +132,7 @@ angular.module('app', [
                         USER_ROLES.wholeSalerMA,
                         USER_ROLES.wholeSalerMAC,
                         USER_ROLES.wholeSalerMG,
+                        USER_ROLES.wholeSalerMOC,
                         USER_ROLES.wholeSalerMGC
                         ]
                 )
@@ -215,6 +220,25 @@ angular.module('app', [
                         USER_ROLES.admin
                     ]
                 )
+            # creditNotes
+            .when(
+                '/creditNotes/new'
+                templateUrl: 'views/creditNotes/new.html'                
+                data:
+                    authorizedRoles: [
+                        USER_ROLES.wholeSalerMOC,
+                        USER_ROLES.admin
+                    ]                
+                )
+            .when(
+                '/creditNotes/list'
+                templateUrl: 'views/creditNotes/list.html'                
+                data:
+                    authorizedRoles: [
+                        USER_ROLES.wholeSalerMOC,
+                        USER_ROLES.admin
+                    ]                
+                )
             # Sales
             .when(
                 '/sales/newInvoice'
@@ -264,6 +288,15 @@ angular.module('app', [
                     ]                
                 )
             # Redemptions
+            .when(
+                '/redemptions/changeStatus'
+                templateUrl: 'views/redemptions/changeStatus.html'
+                data:
+                    authorizedRoles: [
+                        USER_ROLES.admin,
+                        USER_ROLES.wholeSalerMOC
+                        ]
+                )
             .when(
                 '/redemptions/technician'
                 templateUrl: 'views/redemptions/technician.html'

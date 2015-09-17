@@ -8,7 +8,7 @@ angular.module('app.ui.services', [])
     toastr.options =
         "closeButton": true
         "positionClass": "toast-bottom-right"
-        "timeOut": "5000"
+        "timeOut": "6000"
 
     logIt = (message, type) ->
         toastr[type](message)

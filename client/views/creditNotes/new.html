@@ -1,0 +1,107 @@
+<div class="page" data-ng-controller="salesCtrl">
+
+	<form id="invoiceForm" name="invoiceForm" class="form-validation" novalidate>
+
+		<div class="panel panel-default">
+			<!-- Accordion -->
+			<section class="panel panel-default">
+				<div class="panel-heading"><span class="glyphicon glyphicon-th"></span> Encabezado</div>
+				<div class="panel-body">
+
+					<!-- Typeahead of Retailers -->
+					<div class="col-sm-6">
+
+						<label for="" class="col-sm-4 form-group">Cliente: </label>
+						<div class="col-sm-8 input-group">
+							<span class="input-group-addon"><i class="fa fa-user"></i></span>
+							<input type="text"
+							required
+							data-validate-client data-ng-trim='false' 
+							id="buyer_businessName"
+							ng-model="buyer_businessName"
+							typeahead="retailer.businessName for retailer in retailers | filter:$viewValue | limitTo:10"
+							class="form-control input-warning"
+							placeholder="Nombre del cliente.">
+						</div>
+					</div>
+
+
+					<!-- Fecha -->
+					<div class="col-sm-6">
+						<label for="" class="col-sm-4 form-group">Fecha: </label>
+						<div class="col-sm-8 input-group ui-datepicker">
+							<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+							<!-- <input type="date" class="form-control" ng-model="date" name="date" ng-required="true"> -->
+
+							<input type="text"
+							class="form-control input-warning"
+							datepicker-popup="dd-MM-yyyy"
+							ng-model="date"
+							min="dateMin"
+							max="dateMax"
+							required="true" 
+							>
+						</div>
+					</div>
+
+					<div class="col-sm-12">
+						<button data-ng-disabled="quantity<1" ng-click="loadInputs()" class="btn btn-primary btn-block"><span class="fa fa-file-o"></span> Preparar Formulario</button>
+					</div>
+
+				</div>
+
+			</section>
+
+			<section class="panel panel-default">
+				<div class="panel-heading"><span class="glyphicon glyphicon-th"></span> Compresores</div>
+				<div class="panel-body">
+
+				Table xD
+
+				</div>
+
+			</section>
+
+
+			<section class="panel panel-default">
+				<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Guardar </strong></div>
+				<div class="panel-body" >
+
+					<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 form-group">
+						<button class="btn btn-default btn-block"
+						data-ng-disabled="!canRevert()"
+						data-ng-click="revert()"
+						><span class="fa fa-eraser"></span> Limpiar Formulario</button>
+					</div>
+
+					<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 form-group">					
+						<button type="submit"
+						class="btn btn-success btn-block"
+						ng-click="saveBill()"
+						data-ng-disabled="!canSubmit()"
+						><span class="fa fa-database"></span> Guardar Factura</button>
+					</div>
+
+					<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 form-group">				
+						<button type="submit"
+						class="btn btn-success btn-block"
+						ng-click="printInvoice()"
+						data-ng-disabled="!canSubmit()"
+						><span class="fa fa-print"></span> Imprimir Factura</button>
+					</div>
+
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
+						<button ng-show="currentUser.userTypeID=='ADM' || currentUser.userTypeID=='MA'" class='btn btn-danger btn-block' ng-click="roYTesting()"><span class="fa fa-user-secret"></span> Roy TesT</button>
+					</div>
+
+					<div div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group callout callout-info">
+						<p>Guardar Factura estará disponible cuando se ingresen y validen todos los seriales y datos del detal.</p>
+						<p>El Boton de Limpiar Formulario estara disponible cuando algun dato se haya ingresado.</p>
+					</div>
+				</div>
+			</section>
+
+		</div>
+
+	</form>
+</div>
