@@ -8,9 +8,6 @@ angular.module('app.sales.ctrls', [])
         $scope.orderedSerials=[]
         $scope.serialString=' '
         $scope.serialString2=' '
-        # $scope.orderedSerials1=
-        #   compressorID:''
-        #   serials:[]
         $scope.billsNumbers=''
         $scope.serials2sell= []
         $scope.seller_userID=''
