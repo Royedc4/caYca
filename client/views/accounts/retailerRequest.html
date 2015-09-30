@@ -23,7 +23,7 @@
 							class="form-control"
 							placeholder="Nombre comercial"
 							data-ng-model="company.businessName"
-							popover="El nombre parece muy corto."
+							popover="Nombre de la empresa."
 							popover-trigger="focus"
 							required
 							data-ng-minlength="5"
@@ -109,7 +109,7 @@
 					<!-- end city Select -->
 
 
-					<div class="form-group">
+					<div class="text-center form-group">
 						<p class="text-muted text-small">Haciendo click en <strong>Contactar</strong> se enviaran tus datos a un vendedor SAMSUNG</p>
 						<div class="divider"></div>
 						<a ng-click="createNewAccount()" class="btn btn-primary btn-block btn-lg" data-ng-disabled="!canSubmit()">Contactar</a>

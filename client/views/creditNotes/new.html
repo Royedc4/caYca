@@ -1,107 +1,112 @@
-<div class="page" data-ng-controller="salesCtrl">
+<div class="page" data-ng-controller="newCreditNoteCtrl">
+	<section class="panel panel-default table-dynamic">
+		<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span><span data-i18n=" Detales con canjes pendientes (Mostrando {{filteredRedeems.length}}/{{redeems.length}})"></span></strong></div>
 
-	<form id="invoiceForm" name="invoiceForm" class="form-validation" novalidate>
-
-		<div class="panel panel-default">
-			<!-- Accordion -->
-			<section class="panel panel-default">
-				<div class="panel-heading"><span class="glyphicon glyphicon-th"></span> Encabezado</div>
-				<div class="panel-body">
-
-					<!-- Typeahead of Retailers -->
-					<div class="col-sm-6">
-
-						<label for="" class="col-sm-4 form-group">Cliente: </label>
-						<div class="col-sm-8 input-group">
-							<span class="input-group-addon"><i class="fa fa-user"></i></span>
-							<input type="text"
-							required
-							data-validate-client data-ng-trim='false' 
-							id="buyer_businessName"
-							ng-model="buyer_businessName"
-							typeahead="retailer.businessName for retailer in retailers | filter:$viewValue | limitTo:10"
-							class="form-control input-warning"
-							placeholder="Nombre del cliente.">
-						</div>
-					</div>
-
-
-					<!-- Fecha -->
-					<div class="col-sm-6">
-						<label for="" class="col-sm-4 form-group">Fecha: </label>
-						<div class="col-sm-8 input-group ui-datepicker">
-							<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-							<!-- <input type="date" class="form-control" ng-model="date" name="date" ng-required="true"> -->
-
-							<input type="text"
-							class="form-control input-warning"
-							datepicker-popup="dd-MM-yyyy"
-							ng-model="date"
-							min="dateMin"
-							max="dateMax"
-							required="true" 
-							>
-						</div>
-					</div>
-
-					<div class="col-sm-12">
-						<button data-ng-disabled="quantity<1" ng-click="loadInputs()" class="btn btn-primary btn-block"><span class="fa fa-file-o"></span> Preparar Formulario</button>
-					</div>
-
-				</div>
-
-			</section>
-
-			<section class="panel panel-default">
-				<div class="panel-heading"><span class="glyphicon glyphicon-th"></span> Compresores</div>
-				<div class="panel-body">
-
-				Table xD
-
-				</div>
-
-			</section>
-
-
-			<section class="panel panel-default">
-				<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Guardar </strong></div>
-				<div class="panel-body" >
-
-					<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 form-group">
-						<button class="btn btn-default btn-block"
-						data-ng-disabled="!canRevert()"
-						data-ng-click="revert()"
-						><span class="fa fa-eraser"></span> Limpiar Formulario</button>
-					</div>
-
-					<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 form-group">					
-						<button type="submit"
-						class="btn btn-success btn-block"
-						ng-click="saveBill()"
-						data-ng-disabled="!canSubmit()"
-						><span class="fa fa-database"></span> Guardar Factura</button>
-					</div>
-
-					<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 form-group">				
-						<button type="submit"
-						class="btn btn-success btn-block"
-						ng-click="printInvoice()"
-						data-ng-disabled="!canSubmit()"
-						><span class="fa fa-print"></span> Imprimir Factura</button>
-					</div>
-
-					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
-						<button ng-show="currentUser.userTypeID=='ADM' || currentUser.userTypeID=='MA'" class='btn btn-danger btn-block' ng-click="roYTesting()"><span class="fa fa-user-secret"></span> Roy TesT</button>
-					</div>
-
-					<div div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group callout callout-info">
-						<p>Guardar Factura estará disponible cuando se ingresen y validen todos los seriales y datos del detal.</p>
-						<p>El Boton de Limpiar Formulario estara disponible cuando algun dato se haya ingresado.</p>
-					</div>
-				</div>
-			</section>
-
+		<div ng-show="redeems.length==0" class="callout callout-success">
+			<h4>Al día de hoy no existen notas de credito por generar... </h4>
 		</div>
 
-	</form>
+		<div ng-show="redeems.length!=0">
+
+			<div class="table-filters">
+				<div class="row">
+					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+						<form>
+							<input type="text"
+							placeholder="buscar"
+							id="searchKeywords"
+							class="form-control"
+							data-ng-model="searchKeywords"
+							data-ng-keyup="search()" />
+						</form>
+					</div>
+
+					<div ng-show="seleccionada!=null" class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-right pagination-container">
+						<button type="submit"
+						class="btn btn-success btn-block"
+						ng-click="saveCreditNote()"
+						data-ng-disabled="seleccionada==null"
+						><span class="fa fa-database"></span> Generar nota</button>
+					</div>
+				</div>
+			</div>
+
+			<table ng-table="redeemTable" class="table table-bordered table-responsive">
+				<thead>
+					<tr>
+						<th><div class="th">
+							Detal
+							<span id="orderIDRedeemUP" class="glyphicon glyphicon-chevron-up"
+							data-ng-click=" order('businessName') "
+							data-ng-class="{active: row == 'businessName'}"></span>
+							<span id="orderIDRedeemDW" class="glyphicon glyphicon-chevron-down"
+							data-ng-click=" order('-businessName') "
+							data-ng-class="{active: row == '-businessName'}"></span>
+						</div></th>
+						<th><div class="th">
+							Canjes
+							<span class="glyphicon glyphicon-chevron-up"
+							data-ng-click=" order('canRedeems') "
+							data-ng-class="{active: row == 'canRedeems'}"></span>
+							<span class="glyphicon glyphicon-chevron-down"
+							data-ng-click=" order('-canRedeems') "
+							data-ng-class="{active: row == '-canRedeems'}"></span>
+						</div></th>
+						<th><div class="th">
+							Total
+							<span class="glyphicon glyphicon-chevron-up"
+							data-ng-click=" order('moneyRedeemed') "
+							data-ng-class="{active: row == 'moneyRedeemed'}"></span>
+							<span class="glyphicon glyphicon-chevron-down"
+							data-ng-click=" order('-moneyRedeemed') "
+							data-ng-class="{active: row == '-moneyRedeemed'}"></span>
+						</div></th>
+						<th><div class="th">
+							Cupones
+							<span class="glyphicon glyphicon-chevron-up"
+							data-ng-click=" order('canTokens') "
+							data-ng-class="{active: row == 'canTokens'}"></span>
+							<span class="glyphicon glyphicon-chevron-down"
+							data-ng-click=" order('-canTokens') "
+							data-ng-class="{active: row == '-canTokens'}"></span>
+						</div></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr data-ng-repeat="redeem in currentPageRedeems" ng-click="getInfo($index)" ng-class="{'highlight':$index == selectedRow}">
+						<td>{{redeem.businessName}}</td>
+						<td>{{redeem.canRedeems}}</td>
+						<td>{{redeem.moneyRedeemed}}</td>
+						<td>{{redeem.canTokens}}</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<footer class="table-footer">
+				<div class="row">
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 page-num-info">
+						<span>
+							Mostrar 
+							<select id="selectNumPerPage" data-ng-model="numPerPage"
+							data-ng-options="num for num in numPerPageOpt"
+							data-ng-change="onNumPerPageChange()">
+						</select> 
+						registros por pagina
+					</span>
+				</div>
+				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-right pagination-container">
+					<pagination class="pagination-sm"
+					page="currentPage"
+					total-items="filteredRedeems.length"
+					max-size="4"
+					on-select-page="select(page)"
+					items-per-page="numPerPage"
+					rotate="false"
+					boundary-links="true"></pagination>
+				</div>
+			</div>
+		</footer>
+
+	</div>
+</section>
 </div>

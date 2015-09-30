@@ -1,12 +1,12 @@
-<div class="page" data-ng-controller="listSalesCtrl">
+<div class="page" data-ng-controller="listCreditNotesCtrl">
 	<section class="panel panel-default table-dynamic">
 		<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> <span data-i18n="Listado de notas de credito"></span></strong></div>
 
-		<div ng-show="sales.length==0" class="callout callout-danger">
+		<div ng-show="creditNotes.length==0" class="callout callout-danger">
 			<h4>No se encontraron notas de credito</h4>
 		</div>
 
-		<div ng-show="sales.length!=0">
+		<div ng-show="creditNotes.length!=0">
 
 			<div class="table-filters">
 				<div class="row">
@@ -22,32 +22,32 @@
 					</div>
 					<div class="col-sm-3 col-xs-6 filter-result-info">
 						<span>
-							Mostrando {{filteredSales.length}}/{{sales.length}} registros
+							Mostrando {{filteredCreditNotes.length}}/{{creditNotes.length}} registros
 						</span>              
 					</div>
 				</div>
 			</div>
 
-			<table ng-table="salesTable" class="table table-bordered table-striped table-responsive">
+			<table ng-table="creditNotesTable" class="table table-bordered table-responsive">
 				<thead>
 					<tr>
 						<th><div class="th">
 							#Factura
-							<span id="orderIDsalesUP" class="glyphicon glyphicon-chevron-up"
-							data-ng-click=" order('number') "
-							data-ng-class="{active: row == 'number'}"></span>
+							<span id="creditNoteIDUP" class="glyphicon glyphicon-chevron-up"
+							data-ng-click=" order('creditNoteID') "
+							data-ng-class="{active: row == 'creditNoteID'}"></span>
 							<span class="glyphicon glyphicon-chevron-down"
-							data-ng-click=" order('-number') "
-							data-ng-class="{active: row == '-number'}"></span>
+							data-ng-click=" order('-creditNoteID') "
+							data-ng-class="{active: row == '-creditNoteID'}"></span>
 						</div></th>
 						<th><div class="th">
 							Fecha
 							<span class="glyphicon glyphicon-chevron-up"
-							data-ng-click=" order('date') "
-							data-ng-class="{active: row == 'date'}"></span>
+							data-ng-click=" order('creationDate') "
+							data-ng-class="{active: row == 'creationDate'}"></span>
 							<span class="glyphicon glyphicon-chevron-down"
-							data-ng-click=" order('-date') "
-							data-ng-class="{active: row == '-date'}"></span>
+							data-ng-click=" order('-creationDate') "
+							data-ng-class="{active: row == '-creationDate'}"></span>
 						</div></th>
 						<th><div class="th">
 							Empresa
@@ -59,29 +59,29 @@
 							data-ng-class="{active: row == '-businessName'}"></span>
 						</div></th>
 						<th><div class="th">
-							Email
+							Monto
 							<span class="glyphicon glyphicon-chevron-up"
-							data-ng-click=" order('email') "
-							data-ng-class="{active: row == 'email'}"></span>
+							data-ng-click=" order('total') "
+							data-ng-class="{active: row == 'total'}"></span>
 							<span class="glyphicon glyphicon-chevron-down"
-							data-ng-click=" order('-email') "
-							data-ng-class="{active: row == '-email'}"></span>
+							data-ng-click=" order('-total') "
+							data-ng-class="{active: row == '-total'}"></span>
 						</div></th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr data-ng-repeat="sale in currentPageSales">
-						<td>{{sale.number}}</td>
-						<td>{{sale.date}}</td>
-						<td>{{sale.businessName}}</td>
-						<td>{{sale.email}}</td>
+					<tr data-ng-repeat="creditNotes in currentPageCreditNotes">
+						<td>{{creditNotes.creditNoteID}}</td>
+						<td>{{creditNotes.creationDate}}</td>
+						<td>{{creditNotes.businessName}}</td>
+						<td>{{creditNotes.total}}</td>
 					</tr>
 				</tbody>
 			</table>
 
 			<footer class="table-footer">
 				<div class="row">
-					<div class="col-md-6 page-num-info">
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 page-num-info">
 						<span>
 							Mostrar 
 							<select id="selectNumPerPage" data-ng-model="numPerPage"
@@ -91,10 +91,10 @@
 						registros por pagina
 					</span>
 				</div>
-				<div class="col-md-6 text-right pagination-container">
+				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-right pagination-container">
 					<pagination class="pagination-sm"
 					page="currentPage"
-					total-items="filteredSales.length"
+					total-items="filteredCreditNotes.length"
 					max-size="4"
 					on-select-page="select(page)"
 					items-per-page="numPerPage"

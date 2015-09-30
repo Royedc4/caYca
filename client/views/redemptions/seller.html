@@ -1,125 +1,84 @@
 <section class="page-form-ele page" data-ng-controller="sellerCtrl">
+	<section class="panel panel-box">
+		<div id="pointsWidget" class="panel-left panel-item bg-reverse" >
+			<p class="size-h1">{{redeemableStuff.points}} </p>
+			<p class="text-muted">Puntos</p>
+		</div>
+		<div class="panel-right panel-item bg-success">
+			<i class="fa fa-cart-plus text-huge"></i>
+		</div>
+	</section>
 
-	<form id="tokensRedeemForm" name="tokensRedeemForm" class="form-validation" novalidate>	
+	<accordion close-others="true" class="ui-accordion">
+		<accordion-group heading="Configuración e inscripcion de Tokens" is-open="false">
 
+		<form name="forms.tokensRedeemForm" class="form-validation" novalidate>	
 
-		<!-- <div class="row">
-			<div class="col-sm-6">
-				<section class="panel panel-box">
-					<div class="panel-top bg-success">
-						<i class="fa fa-shopping-cart text-large"></i>
-					</div>
-					<div class="panel-bottom bg-reverse">
-						<p class="size-h1">369</p>
-						<p class="text-muted">Puntos para canjeos</p>
-					</div>
-				</section>
+			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 form-group">
+				<input type="number" id="quantity" class="form-control" data-min=0 ng-minlenght=0 ng-maxlenght=30 ng-model="forms.quantity" placeholder="Cantidad de Tokens">
 			</div>
 
-			<div class="col-sm-6">
-				<section class="panel panel-box">
-					<div class="panel-top bg-danger">
-						<i class="fa fa-dollar text-large"></i>
-					</div>
-					<div class="panel-bottom bg-reverse">
-						<p class="size-h1">231</p>
-						<p class="text-muted">Cupones en rifas</p>
-					</div>
-				</section>
+			<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 form-group">
+				<button ng-click="loadInputs()" class="btn btn-primary btn-block"><span class="fa fa-file-o"></span> Preparar Formulario</button>
 			</div>
-		</div> -->
+			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" />
 
-		<section class="panel panel-box">
-			<div class="panel-left panel-item bg-reverse">
-				<p class="size-h1">{{redeemCoupons.length}} </p>
-				<p ng-show="redeemCoupons.length==1" class="text-muted">Cupon</p>
-				<p ng-show="redeemCoupons.length!=1" class="text-muted">Cupones</p>
-			</div>
-			<div class="panel-right panel-item bg-success">
-				<i class="fa fa-cart-plus text-huge"></i>
-			</div>
-		</section>
-
-		<section class="panel panel-default">
-			<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Configuración e inscripcion de Tokens</strong></div>
-
-			<div class="panel-body text-center">
-				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 form-group">
-					<input type="number" id="quantity" class="form-control" data-min=0 ng-minlenght=0 ng-maxlenght=30 ng-model="quantity" placeholder="Cantidad de Tokens">
-				</div>
-
-				<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 form-group">
-					<button ng-click="loadInputs()" class="btn btn-primary btn-block"><span class="fa fa-file-o"></span> Preparar Formulario</button>
-				</div>
-
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
-					<button ng-show="currentUser.userTypeID=='ADM'" class='btn btn-danger btn-block' ng-click="roYTesting()"><span class="fa fa-user-secret"></span> Roy TesT</button>
-				</div>
-
-
-				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 form-group" ng-show="quantity>0">
-					<button class="btn btn-default btn-block"
-					data-ng-disabled="!canRevert()"
-					data-ng-click="revert()"
-					><span class="fa fa-eraser"></span> Borrar Tokens</button>
-				</div>
-
-
-				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 form-group" ng-show="quantity>0">
-					<button type="submit"
-					id="registerToken4rafffleButton"
-					class="btn btn-success btn-block"
-					ng-click="registerToken4redeem()"
-					data-ng-disabled="!canSubmit()"
-					><span class="fa fa-database"></span> Inscribir Tokens</button>
-				</div>
-			</div>
-		</section>
-
-		<section class="panel panel-default" ng-show="quantity>0">
-			<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Formulario de Tokens </strong></div>
-			<div class="panel-body" >
-				<div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 form-group" ng-repeat="inp in inputs">
-					<input 
-					type="text"
-					required
-					ng-maxlength=14
-					ng-minlength=14
-					ng-model="tokensito"
-					ng-raffle-tokens-tabs="input{{$index+2}}"
-					class="form-control input-warning initialism"
-					name="input{{$index+1}}" id="input{{$index+1}}">
-				</div>
-
-			</div>
-		</section>
-	</form>
-
-	<section class="panel panel-default">
-		<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Canje de puntos por articulos</strong></div>
-
-		<form id="redeemForm" name="redeemForm" class="form-validation" novalidate>	
-
-			<div class="form-group text-center">
-				<div class="select-group">
-					<span class="ui-select">
-						<select ng-model="itemSelected" ng-options="item.name for item in reachableItems" required>
-							<option value="">- Seleccione Articulo -</option>
-						</select>
-					</span> 
-				</div>
+			<div ng-show="forms.quantity>0" class="col-xs-6 col-sm-6 col-md-6 col-lg-6 form-group">
+				<button class="btn btn-default btn-block"
+				data-ng-disabled="!canRevert()"
+				data-ng-click="revert()"
+				><span class="fa fa-eraser"></span> Borrar </button>
 			</div>
 
-			<div class="panel-body" >
+			<div ng-show="forms.quantity>0" class="col-xs-6 col-sm-6 col-md-6 col-lg-6 form-group">
 				<button type="submit"
-				id="registerRedemptionButton"
+				id="registerToken4rafffleButton"
 				class="btn btn-success btn-block"
-				ng-click=""
-				data-ng-disabled="itemSelected!='null'"
-				><span class="fa fa-database"></span> Registrar Canje</button>
+				ng-click="registerToken4redeem()"
+				data-ng-disabled="!canSubmit()"
+				><span class="fa fa-database"></span> Registrar </button>
 			</div>
+			
+			<div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 form-group" ng-show="forms.quantity>0" ng-repeat="inp in inputs">
+				<input 
+				type="text"
+				required
+				ng-maxlength=14
+				ng-minlength=14
+				ng-model="tokensito"
+				ng-raffle-tokens-tabs="input{{$index+2}}"
+				class="form-control input-warning initialism"
+				name="input{{$index+1}}" id="input{{$index+1}}">
+			</div>
+			
 
 		</form>
-	</section> 
+	</accordion-group>
+
+
+
+	<accordion-group heading="Canje de puntos por articulos" is-open="true">
+
+	<form name="forms.redeemForm" class="form-validation" novalidate>	
+		<div class="text-center">
+			<div class="select-group">
+				<span class="ui-select">
+					<select ng-model="forms.itemSelected" ng-options="item.name for item in reachableItems" required>
+						<option value="">- Seleccione Articulo -</option>
+					</select>
+				</span> 
+			</div>
+		</div>
+
+		<button type="submit"
+		id="registerRedemptionButton"
+		class="btn btn-success btn-block"
+		ng-click="registerRedemption()"
+		data-ng-disabled="forms.itemSelected==''"
+		><span class="fa fa-database"></span> Registrar Canje</button>
+
+	</form>
+</accordion-group>
+</accordion>
 
 </section>
