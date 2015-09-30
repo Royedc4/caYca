@@ -128,8 +128,8 @@ angular.module('app.compressors', [])
 ])
 
 .controller('compressorsCtrl', [
-    'REST_API','$scope', '$filter', '$http'
-    (REST_API,$scope, $filter, $http) ->
+    'REST_API','$scope', '$filter', '$http', '$logger'
+    (REST_API,$scope, $filter, $http, $logger) ->
         # filter
         $scope.companies = []
         $scope.countries = []
@@ -248,9 +248,11 @@ angular.module('app.compressors', [])
                     # while indexC < $scope.workbook.
                     # $scope.serials $scope.workbookJSON[$scope.SheetNames[0]]
                     # $scope.serials.push $scope.workbookJSON[$scope.SheetNames[1]]
-
+                    setTimeout ->
+                        $('#searchKeywords').focus()
+                        angular.element('#orderUp').trigger('click')
+                    , 675
                     return
-
                 reader.readAsBinaryString f
                 ++i
                 return
@@ -259,6 +261,7 @@ angular.module('app.compressors', [])
           dropbox.addEventListener "dragenter", handleDragover, false
           dropbox.addEventListener "dragover", handleDragover, false
           dropbox.addEventListener "drop", handleDrop, false
+        console.log "terminó de cargar2"
 
         #Load Companies
         getImporterCompanies = ->
@@ -270,24 +273,50 @@ angular.module('app.compressors', [])
             return
         getImporterCompanies()
 
+        $scope.onlySerials=[]
+        
         #Save Serials
         $scope.addSerials = ->
             $scope.data = { companySelected: [], serialsSelected: [] };
+
             # Arreglando serials sin no
             $serialsWithoutNo = []
             indexNo=0
             while indexNo < $scope.serials.length
                 delete $scope.serials[indexNo].no
                 $serialsWithoutNo.push $scope.serials[indexNo]
+                $scope.onlySerials.push $scope.serials[indexNo]["serialID"]
                 ++indexNo
             # console.log ($scope.data)
             $scope.data["companySelected"] = $scope.companySelected
             $scope.data["serialsSelected"] = $serialsWithoutNo
             $http.defaults.headers.post["Content-Type"] = "application/json"            
-            console.log ($scope.data)
             $http({ url: REST_API.hostname+"/server/ajax/Serials/addSerial.php", method: "POST", data: JSON.stringify($scope.data) })
             .success (postResponse) ->
                 console.log "postResponse: " + postResponse
-            return
-        return
+                $scope.saveBill()
+            
+        
+        $scope.saveBill = ->
+            $scope.data2insert=
+                seller_userID : $scope.currentUser.userID
+                number : $scope.number
+                buyer_companyID: $scope.companySelected.companyID
+                date: moment($scope.date).format('MM-DD-YYYY')
+                serials: $scope.onlySerials
+                description: $scope.currentUser.company.businessName+" >> "+$scope.companySelected.businessName
+            console.log $scope.data2insert
+            $http({ url: REST_API.hostname+"/server/ajax/Bill/new.php", method: "POST", data: JSON.stringify($scope.data2insert) })
+            .success (postResponse) ->
+                console.log postResponse
+                console.log typeof(postResponse)
+                if (typeof postResponse).toString() == "object"
+                    console.log "entre a postResponse"
+                    if (postResponse['zGlobalResult']==true)
+                        console.log "entre zGlobalResult"
+                        logger.logSuccess "Ha concluido el registro de " +$scope.data2insert['serials'].length + " compresor(es) en la factura "+$scope.data2insert['number']
+                        if (postResponse['errorsArray'].indexOf("Duplicate")!=-1)
+                            console.log "entre errorsArray"
+                            logger.logError "Se ha generado un error interno."
+
 ])

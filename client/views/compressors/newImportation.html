@@ -1,24 +1,17 @@
 <div class="page" data-ng-controller="compressorsCtrl">
-
 	<section class="panel panel-default">
-		<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> <span data-i18n="Cargar un archivo de EXCEL"></span></strong></div>
-		<div class="panel-body">
-         <p>Este es el proceso principal del sistema, se trata de la carga de información de compresores(seriales, modelos, cantidades) por parte el importador.</p>
-         <!-- Upload -->
-         <div class="panel-body">
-           <div>
-
-              <div id="dropbox" class="drop-box"><span data-i18n="Arrastre el documento aquí"></span></div>
-
-          </div>
+		<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> <span data-i18n="Cargar un archivo de EXCEL"></span></strong></div>		
+       <!-- Upload -->
+       <div class="panel-body">
+          <div id="dropbox" class="drop-box"><span data-i18n="Arrastre el documento aquí"></span></div>
       </div>
       <!-- end Upload -->
-  </div>
-</section> 
+
+  </section> 
 
 
 
-<section class="panel panel-default table-dynamic">
+  <section class="panel panel-default table-dynamic">
     <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span><span data-i18n="Visualización de la información procesada"></span></strong></div>
 
     <div class="table-filters">
@@ -45,7 +38,7 @@
             <tr>
                 <th><div class="th">
                     Numero
-                    <span class="glyphicon glyphicon-chevron-up"
+                    <span id="orderUp" class="glyphicon glyphicon-chevron-up"
                     data-ng-click=" order('no') "
                     data-ng-class="{active: row == 'no'}"></span>
                     <span class="glyphicon glyphicon-chevron-down"
@@ -83,7 +76,7 @@
 
     <footer class="table-footer">
         <div class="row">
-            <div class="col-md-6 page-num-info">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 page-num-info">
                 <span>
                     Mostrar 
                     <select data-ng-model="numPerPage"
@@ -93,7 +86,7 @@
                 registros por pagina
             </span>
         </div>
-        <div class="col-md-6 text-right pagination-container">
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-right pagination-container">
             <pagination class="pagination-sm"
             page="currentPage"
             total-items="filteredSerials.length"
@@ -110,19 +103,24 @@
 
 <section class="panel panel-default">
     <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> <span data-i18n="Guardar datos"></span></strong></div>
-
     <div>
-     <strong> <span class="fa fa-flag"></span> <span data-i18n="Seleccione la empresa que adquirío los compresores."></span></strong>
-     <span class="ui-select">
-        <select ng-model="companySelected" ng-options="company.businessName for company in companies">
-            <option value="">-- Seleccione Empresa --</option>
-        </select>
-    </span> 
-    <br></br>   
-    <strong> <span class="fa fa-flag"></span> <span data-i18n="Finalmente haz clic en guardar seriales para los registros en la base de datos."></span></strong>
-    <button ng-click="addSerials()" class="btn btn-success"><span class="fa fa-database"></span> Guardar seriales</button>
-    <br></br>   
-</div>
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <input id="number" ng-minlenght=1 ng-model="number" type="text" class="form-control" placeholder="#Factura" data-ng-trim='false' required>
+        </div>
+
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <span class="ui-select">
+                <select ng-model="companySelected" ng-options="company.businessName for company in companies">
+                    <option value="">-- Seleccione Empresa --</option>
+                </select>
+            </span> 
+        </div>
+
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <button ng-click="addSerials()" ng-disabled="companySelected==null" class="btn-block btn btn-success"><span class="fa fa-database"></span> Guardar seriales</button>
+        </div>
+
+    </div>
 </section> 
 
 
