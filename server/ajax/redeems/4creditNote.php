@@ -6,9 +6,10 @@ $postdata = file_get_contents("php://input");
 if ( ($data =  $postdata)  != NULL )
 {
 	$array=json_decode($data, true);
-	$userID = $array['userID'];
+	$country = $array['country'];
+	$registryDate = $array['registryDate'];
 
-	$outerQuery="CALL `item-listReachable`('$userID')";
+	$outerQuery="CALL `redeems-4creditNote`('$registryDate', '$country')";
 
 	$outerResult=$mysqli->query($outerQuery) or die($mysqli->error.__LINE__);
 	$arr = array();
