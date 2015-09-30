@@ -53,6 +53,15 @@
             <li><a href="#/reports/statistics"> <i class="fa fa-dashboard"></i> <span data-i18n="Estadisticas"></span> </a></li>
         </ul>
     </li>
+
+    <!-- MOC: creditNotes -->
+    <li ng-show="currentUser.userTypeID=='MOC'">
+        <a href="#/creditNotes"><i class="fa fa-list-ol"></i><span data-i18n="Notas credito"></span></a>
+        <ul>
+            <li><a href="#/creditNotes/new"> <i class="fa fa-file"></i> <span data-i18n="Nueva Nota"></span> </a></li>
+            <li><a href="#/creditNotes/list"> <i class="fa fa-list"></i> <span data-i18n="Notas"></span> </a></li>
+        </ul>
+    </li>
     
     <!--Roy: Ventas  [Rol: Mayor Almacenista] -->
     <li ng-show="currentUser.userTypeID=='MA' || currentUser.userTypeID=='ADM' || currentUser.userTypeID=='MGC'">
@@ -75,13 +84,14 @@
 
 
     <!--Roy: Redemptions [Rol: Technician/Seller Redemptioner/Seller] -->
-    <li ng-show="currentUser.userTypeID=='TEC' || currentUser.userTypeID=='DV' || currentUser.userTypeID=='DVC' || currentUser.userTypeID=='ADM'">
+    <li ng-show="currentUser.userTypeID=='TEC' || currentUser.userTypeID=='DV' || currentUser.userTypeID=='DVC' || currentUser.userTypeID=='ADM' || currentUser.userTypeID=='MOC'">
         <a href="#/redemptions"><i class="fa fa-shopping-cart"></i><span data-i18n="Canjes"></span></a>
         <ul>
-            <li><a href="#/redemptions/points"><i class="fa fa-dashboard"></i> <span data-i18n="Consultar Puntos"></span></a></li>
-            <li><a href="#/redemptions/list"><i class="fa fa-file-text"></i> <span data-i18n="Consultar Canjes"></span></a></li>
-            <li ng-hide="currentUser.userTypeID=='DV' || currentUser.userTypeID=='TEC'"><a href="#/redemptions/technician"><i class="fa fa-shopping-cart"></i> <span data-i18n="Canje Tecnico"></span></a></li>
-            <li ng-hide="currentUser.userTypeID=='TEC'"><a href="#/redemptions/seller"><i class="fa fa-shopping-cart"></i> <span data-i18n="Canje Vendedor"></span></a></li>
+            <li ng-hide="currentUser.userTypeID=='MOC'"><a href="#/redemptions/points"><i class="fa fa-dashboard"></i> <span data-i18n="Consultar Puntos"></span></a></li>
+            <li ng-hide="currentUser.userTypeID=='MOC'"><a href="#/redemptions/list"><i class="fa fa-file-text"></i> <span data-i18n="Consultar Canjes"></span></a></li>
+            <li ng-show="currentUser.userTypeID=='MOC'"><a href="#/redemptions/changeStatus"><i class="fa fa-shopping-cart"></i> <span data-i18n="Actualizar Status"></span></a></li>
+            <li ng-hide="currentUser.userTypeID=='DV' || currentUser.userTypeID=='TEC' || currentUser.userTypeID=='MOC'"><a href="#/redemptions/technician"><i class="fa fa-shopping-cart"></i> <span data-i18n="Canje Tecnico"></span></a></li>
+            <li ng-hide="currentUser.userTypeID=='TEC' || currentUser.userTypeID=='MOC'"><a href="#/redemptions/seller"><i class="fa fa-shopping-cart"></i> <span data-i18n="Canje Vendedor"></span></a></li>
         </ul>
     </li>
 

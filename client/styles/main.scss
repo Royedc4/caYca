@@ -21,6 +21,12 @@ div.col-sm-5.five-two {
     height: 15vh;
 }
 
+.selectedItem{
+    background:#0097cf;
+    color:white;
+    font-weight:900;
+}
+
 @import "global/var";
 @import "bootstrap-sass/bootstrap";
 

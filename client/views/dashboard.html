@@ -12,8 +12,35 @@
     </div>  
 -->
 
+<!-- MOC -->
+<div ng-show="currentUser.userTypeID=='MOC'" class="row">
+    <div class="col-lg-6 col-md-6 col-sm-6">
+        <div class="panel mini-box">
+            <span class="box-icon bg-success">
+                <i class="fa fa-ticket"></i>
+            </span>
+            <div class="box-info">
+                <p class="size-h2">5</p>
+                <p class="text-muted"><span data-i18n="Canjes de vendedor pendientes"></span></p>
+            </div>
+        </div>        
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">
+        <div class="panel mini-box">
+            <span class="box-icon bg-success">
+                <i class="fa fa-money"></i>
+            </span>
+            <div class="box-info">
+                <p class="size-h2">7</p>
+                <p class="text-muted"><span data-i18n="Empresas esperando nota de credito"></span></p>
+            </div>
+        </div>        
+    </div>
+</div>
+<!-- end MOC -->
+
 <!-- Technician -->
-<div ng-show="currentUser.userTypeID=='TEC' || currentUser.userTypeID=='DV' || currentUser.userTypeID=='DVC'" class="row">
+<div ng-show="currentUser.userTypeID=='TEC'" class="row">
     <div class="col-lg-6 col-md-6 col-sm-6">
         <div class="panel mini-box">
             <span class="box-icon bg-success">
@@ -36,9 +63,35 @@
             </div>
         </div>        
     </div>
-
 </div>
 <!-- end Technician -->
+
+<!-- Seller -->
+<div ng-show="currentUser.userTypeID=='DV' || currentUser.userTypeID=='DVC'" class="row">
+    <div class="col-lg-6 col-md-6 col-sm-6">
+        <div class="panel mini-box">
+            <span class="box-icon bg-success">
+                <i class="fa fa-ticket"></i>
+            </span>
+            <div class="box-info">
+                <p class="size-h2">{{raffleCoupons}}</p>
+                <p class="text-muted"><span data-i18n="Cupones en Rifa"></span></p>
+            </div>
+        </div>        
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">
+        <div class="panel mini-box">
+            <span class="box-icon bg-success">
+                <i class="fa fa-money"></i>
+            </span>
+            <div class="box-info">
+                <p class="size-h2">{{redeemablePoints}}</p>
+                <p class="text-muted"><span data-i18n="Puntos Por Canjear"></span></p>
+            </div>
+        </div>        
+    </div>
+</div>
+<!-- End Seller -->
 
 <!-- Maybe 4 MGC -->
 <!-- <div class="panel panel-default" ng-show="currentUser.userTypeID=='MGC' || currentUser.userTypeID=='ADM'">
