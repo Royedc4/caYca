@@ -1,11 +1,12 @@
 'use strict'
 angular.module('app.creditNotes.ctrls', [])
 .controller('newCreditNoteCtrl', [
-    'REST_API','$scope', 'logger', '$http', '$window', '$filter', '$timeout'
-    (REST_API,$scope, logger, $http, $window, $filter, $timeout) ->
+    'REST_API','$scope', 'logger', '$http', '$window', '$filter', '$timeout', 'cfpLoadingBar'
+    (REST_API,$scope, logger, $http, $window, $filter, $timeout, cfpLoadingBar) ->
         console.log 'newCreditNoteCtrl'   
 
-        # Form Stuff 
+        $scope.loadStatus=0
+        $scope.driveLink=null
         $scope.date=new Date()
 
         $scope.redeems = []
@@ -65,18 +66,16 @@ angular.module('app.creditNotes.ctrls', [])
         $scope.init()
 
         $scope.getSellersRedeems = ->
+            cfpLoadingBar.start()
             $filters=
                 country: $scope.currentUser.country.country
                 registryDate: $scope.date
             $http({ url: REST_API.hostname+"/server/ajax/redeems/4creditNote.php", method: "POST", data: JSON.stringify($filters) })
             .success (postResponse) ->
                 $scope.redeems=postResponse
-                # Only way to make react on filter to show items on table
-                setTimeout ->
-                    # $('#searchKeywords').focus()
-                    angular.element('#orderIDRedeemUP').trigger('click')
-                    angular.element('#orderIDRedeemDW').trigger('click')
-                , 250
+                cfpLoadingBar.complete()
+                $scope.loadStatus=cfpLoadingBar.status()
+                $scope.init()
         $scope.getSellersRedeems()
 
         # Form Methods
@@ -94,20 +93,26 @@ angular.module('app.creditNotes.ctrls', [])
                 registryDate: $scope.date
                 creationDate: $scope.date
                 comment: ''
+                fileURL: $scope.fileURL
                 country: $scope.currentUser.country.country
             $http({ url: REST_API.hostname+"/server/ajax/creditNotes/new.php", method: "POST", data: JSON.stringify($filters) })
             .success (postResponse) ->
-                console.log postResponse
-                setTimeout ->
-                    $scope.getSellersRedeems()        
-                , 675
+                # console.log postResponse
+                console.log postResponse.results
+                if postResponse.results.done=='1'
+                    logger.logSuccess "Se ha guardado exitosamente la nota de credito # "+postResponse.results.nextAi+"."
+                else
+                    logger.logError "No se pudo guardar la nota de credito..."
+                $scope.getSellersRedeems()        
+
+                
             
             
 ])
 
 .controller('listCreditNotesCtrl', [
-    'REST_API','$scope', 'logger', '$http', '$filter', '$timeout'
-    (REST_API,$scope, logger, $http, $filter, $timeout) ->
+    'REST_API','$scope', 'logger', '$http', '$filter', '$timeout', 'cfpLoadingBar'
+    (REST_API,$scope, logger, $http, $filter, $timeout, cfpLoadingBar) ->
         console.log 'listCreditNotesCtrl'
         # Definition of objets
         $scope.creditNotes = []
@@ -116,6 +121,7 @@ angular.module('app.creditNotes.ctrls', [])
         $scope.row = ''
         $scope.seleccionada=null
         $scope.selectedRow=null
+        $scope.loadStatus=0
 
         $scope.getInfo = (index) ->
             $scope.selectedRow = index;
@@ -168,20 +174,19 @@ angular.module('app.creditNotes.ctrls', [])
 
         
         getCreditNotes = ->
+            cfpLoadingBar.start()
             $filters=
                 countryID: $scope.currentUser.country.country
             $http({ url: REST_API.hostname+"/server/ajax/creditNotes/list.php", method: "POST", data: JSON.stringify($filters) })
                 .success (postResponse) ->
-                    $scope.creditNotes =postResponse
-                # Only way to make react on filter to show items on table
-                setTimeout ->
-                    $('#searchKeywords').focus()
-                    angular.element('#creditNoteIDUP').trigger('click')
-                    if $scope.filteredCreditNotes.length==0
+                    $scope.creditNotes=postResponse
+                    cfpLoadingBar.complete()
+                    $scope.loadStatus=cfpLoadingBar.status()
+                    $scope.init()
+                    if $scope.creditNotes.length==0
                         logger.logError "No se encontraron notas de credito registradas."
                     else
                         logger.logSuccess "Tiene "+$scope.creditNotes.length+" notas de credito registradas."
-                , 250
             return
         getCreditNotes()
 

@@ -128,8 +128,8 @@ angular.module('app.compressors', [])
 ])
 
 .controller('compressorsCtrl', [
-    'REST_API','$scope', '$filter', '$http', '$logger'
-    (REST_API,$scope, $filter, $http, $logger) ->
+    'REST_API','$scope', '$filter', '$http', 'logger'
+    (REST_API,$scope, $filter, $http, logger) ->
         # filter
         $scope.companies = []
         $scope.countries = []

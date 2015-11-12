@@ -16,6 +16,9 @@ angular.module('app', [
     'ui.mask'
     'angular.morris-chart'
     'timer'
+    'chieffancypants.loadingBar'
+    # Que hacemos
+    'duScroll'
 
     # Custom modules
     'app.ui.ctrls'
@@ -54,12 +57,16 @@ angular.module('app', [
     'app.creditNotes.ctrls'
     'app.creditNotes.directives'
     'app.creditNotes.services'
+    'app.landing.ctrls'
     ])
 
 .constant 'REST_API',
+    hostname:       'http://www.caycaSAMSUNGcompresores.com'
     # hostname:       'http://www.samsungcayca.com'
-    # hostname:       'http://www.caycaSAMSUNGcompresores.com'
-    hostname:       'http://cayca:8888'
+    # hostname:       'http://cayca.192.168.7.241.xip.io:8888'
+    # hostname:       'http://cayca.192.168.3.91.xip.io:8888'
+    # hostname:       'http://cayca:8888'
+    # hostname:       'http://192.168.3.91:8888'
     
     
 .constant 'AUTH_EVENTS',
@@ -112,9 +119,33 @@ angular.module('app', [
             #     redirectTo: '/accounts/signIn'
             #     controller: 'LoginCtrl'
             #     )
+            # .when(
+            #     '/'
+            #     redirectTo: '/accounts/signIn'
+            #     data:
+            #         authorizedRoles: [USER_ROLES.public]
+            #     )
             .when(
                 '/'
-                redirectTo: '/accounts/signIn'
+                redirectTo: '/landing'
+                data:
+                    authorizedRoles: [USER_ROLES.public]
+                )
+            .when(
+                '/landing/uno'
+                templateUrl: 'views/landing/uno.html'
+                data:
+                    authorizedRoles: [USER_ROLES.public]
+                )
+            .when(
+                '/landing'
+                templateUrl: 'views/landing/index.html'
+                data:
+                    authorizedRoles: [USER_ROLES.public]
+                )
+            .when(
+                '/landing/dos'
+                templateUrl: 'views/landing/dos.html'
                 data:
                     authorizedRoles: [USER_ROLES.public]
                 )

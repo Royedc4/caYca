@@ -23,11 +23,14 @@ angular.module('app.controllers', [])
                 '/pages/signup2'
                 '/pages/forgot'
                 '/pages/lock-screen'
+                '/landing/uno'
+                '/landing/dos'
+                '/landing'
             ], path )
 
         $scope.main =
             brand: 'SAMSUNG'
-            name: 'Roy Calderón' # those which uses i18n can not be replaced for now.
+            name: 'Usuario caYca' # those which uses i18n can not be replaced for now.
 
         $scope.currentUser = null
 
@@ -60,12 +63,9 @@ angular.module('app.controllers', [])
 ])
 
 .controller('DashboardCtrl', [
-    'REST_API','AUTH_EVENTS','$scope', '$http', 'LoginService', 'logger', '$rootScope', '$location'
-    (REST_API,AUTH_EVENTS, $scope, $http, LoginService, logger, $rootScope, $location) ->
+    'REST_API','AUTH_EVENTS','$scope', '$http', 'LoginService', 'logger', '$rootScope', '$location', 'cfpLoadingBar'
+    (REST_API,AUTH_EVENTS, $scope, $http, LoginService, logger, $rootScope, $location, cfpLoadingBar) ->
         console.log "On DashboardCtrl"
-        # Vars
-        redeemableMoney=0
-        raffleCoupons=0
 
         if ($scope.currentUser.userTypeID=='TEC' || $scope.currentUser.userTypeID=='DV' || $scope.currentUser.userTypeID=='DVC')
             console.log('widgets4tecsAndSellers') 
@@ -80,7 +80,18 @@ angular.module('app.controllers', [])
                             $scope.redeemableMoney=0
             redeemableMoney()
 
-            # Loading user-redeemableMoney
+            # Loading user-redeemablePoints
+            redeemablePoints = ->
+                $filters=
+                    userID: $scope.currentUser.userID
+                $http({ url: REST_API.hostname+"/server/ajax/Widgets/user-redeemablePoints.php", method: "POST", data: JSON.stringify($filters) })
+                    .success (postResponse) ->
+                        $scope.redeemablePoints = postResponse['0'].redeemablePoints
+                        if $scope.redeemablePoints==null
+                            $scope.redeemablePoints=0
+            redeemablePoints()
+
+            # Loading user-raffleCoupons
             raffleCoupons = ->
                 $filters=
                     userID: $scope.currentUser.userID
@@ -88,6 +99,8 @@ angular.module('app.controllers', [])
                     .success (postResponse) ->
                         $scope.raffleCoupons = postResponse['0'].coupons
             raffleCoupons()
+        if ($scope.currentUser.userTypeID=='MOC')
+            console.log('widgets4moc') 
         else
             console.log('widgets4companiesUsers') 
             # Widgets Data
@@ -113,10 +126,7 @@ angular.module('app.controllers', [])
                     size: 180
                     lineWidth: 12
 
-            $scope.donutData = [
-                {label: 'Cargando Compresores', value: 1 }
-                
-            ]
+            $scope.donutData = null
             
             $scope.companyStock=[]
             # Load companyStock
@@ -127,12 +137,7 @@ angular.module('app.controllers', [])
                     .success (postResponse) ->
                         postResponse.forEach (item) ->
                             $scope.companyStock.push({ label:item['compressorID'], value: parseInt(item['stock'])})
-                        setTimeout (->
-                            $scope.$apply ->
-                                $scope.donutData = $scope.companyStock
-                                return
-                                return
-                                ), 500
+                            $scope.donutData = $scope.companyStock
             getCompanyStock()
             # Load companyStock
             getCompanySales = ->
@@ -141,7 +146,7 @@ angular.module('app.controllers', [])
                 $http({ url: REST_API.hostname+"/server/ajax/Widgets/companySales.php", method: "POST", data: JSON.stringify($filters) })
                     .success (postResponse) ->
                         $scope.companySales = postResponse
-                        # console.log $scope.companySales
+
             getCompanySales()
             # Load companyStock
             getLabelingProgress = ->
@@ -149,14 +154,9 @@ angular.module('app.controllers', [])
                     companyID: $scope.currentUser.companyID
                 $http({ url: REST_API.hostname+"/server/ajax/Widgets/labelingProgress.php", method: "POST", data: JSON.stringify($filters) })
                     .success (postResponse) ->
-                        $scope.labelingProgress = postResponse
-                        setTimeout (->
-                            $scope.$apply ->
-                                $scope.labelingProgressPieChart = 
-                                    percent: $scope.labelingProgress[0].porcentaje
-                                return
-                                return
-                                ), 1500 
+                        $scope.labelingProgressPieChart = 
+                            percent: postResponse[0].porcentaje
+                                
             getLabelingProgress()
             # Load companyStock
             getSalesProgress = ->
@@ -164,13 +164,7 @@ angular.module('app.controllers', [])
                     companyID: $scope.currentUser.companyID
                 $http({ url: REST_API.hostname+"/server/ajax/Widgets/salesProgress.php", method: "POST", data: JSON.stringify($filters) })
                     .success (postResponse) ->
-                        $scope.salesProgress = postResponse
-                        setTimeout (->
-                            $scope.$apply ->
-                                $scope.salesProgressPieChart = 
-                                    percent: $scope.salesProgress[0].porcentaje
-                                return
-                                return
-                                ), 1500 
+                        $scope.salesProgressPieChart = 
+                            percent: postResponse[0].porcentaje
             getSalesProgress()
 ])

@@ -79,21 +79,6 @@ angular.module('app.sales.ctrls', [])
                 $scope.inputs.push({ placeholder: "Compresor #" + i})
                 i++
             logger.log("Se ha preparado el formulario. Proceda a leer los seriales con el lector de codigo de barras.") 
-
-        prepareData = ->
-            for iteration in [0..$scope.serials2sell.length-1-(Math.floor($scope.serials2sell.length/21))] by 1
-                $scope.serialString=$scope.serialString+$scope.serials2sell[iteration]+" "
-            if $scope.serials2sell.length>21
-                for iteration in [$scope.serials2sell.length-(Math.floor($scope.serials2sell.length/21))..$scope.serials2sell.length-1] by 1
-                    $scope.serialString2=$scope.serialString2+$scope.serials2sell[iteration]+" "
-
-            $scope.data2insert=
-                seller_userID : $scope.currentUser.userID
-                number : $scope.number
-                buyer_companyID: $scope.buyer_companyID
-                date: moment($scope.date).format('MM-DD-YYYY')
-                serials: $scope.serials2sell
-                description: $scope.currentUser.company.businessName+" >> "+$scope.buyer_businessName
         
         # Roy: Loading DATA FROM DB
 
@@ -127,6 +112,21 @@ angular.module('app.sales.ctrls', [])
             return
         getBillsNumbers()
 
+        prepareData = ->
+            for iteration in [0..$scope.serials2sell.length-1-(Math.floor($scope.serials2sell.length/21))] by 1
+                $scope.serialString=$scope.serialString+$scope.serials2sell[iteration]+" "
+            if $scope.serials2sell.length>21
+                for iteration in [$scope.serials2sell.length-(Math.floor($scope.serials2sell.length/21))..$scope.serials2sell.length-1] by 1
+                    $scope.serialString2=$scope.serialString2+$scope.serials2sell[iteration]+" "
+
+            $scope.data2insert=
+                seller_userID : $scope.currentUser.userID
+                number : $scope.number
+                buyer_companyID: $scope.buyer_companyID
+                date: moment($scope.date).format('MM-DD-YYYY')
+                serials: $scope.serials2sell
+                description: $scope.currentUser.company.businessName+" >> "+$scope.buyer_businessName
+
         $scope.saveBill = ->
             prepareData()
             $http({ url: REST_API.hostname+"/server/ajax/Bill/new.php", method: "POST", data: JSON.stringify($scope.data2insert) })
@@ -152,21 +152,33 @@ angular.module('app.sales.ctrls', [])
 ])
 
 .controller('listSalesCtrl', [
-    'REST_API','$scope', 'logger', '$http', '$filter', '$timeout'
-    (REST_API,$scope, logger, $http, $filter, $timeout) ->
+    'REST_API','$scope', 'logger', '$http', '$filter', '$timeout', 'cfpLoadingBar', '$rootScope'
+    (REST_API,$scope, logger, $http, $filter, $timeout, cfpLoadingBar, $rootScope) ->
         # Definition of objets
         $scope.sales = []
         $scope.searchKeywords = ''
         $scope.filteredSales = []
         $scope.row = ''
+        $scope.loadStatus=0
 
-        # xD
-        console.log 'listSalesCtrl'
+        console.log 'listSalesCtrl cfpLoadingBar'
 
         $scope.select = (page) ->
             start = (page - 1) * $scope.numPerPage
             end = start + $scope.numPerPage
             $scope.currentPageSales = $scope.filteredSales.slice(start, end)
+
+        $scope.search = ->
+            $scope.filteredSales = $filter('filter')($scope.sales, $scope.searchKeywords)
+            $scope.onFilterChange()
+
+        # orderBy
+        $scope.order = (rowName)->
+            if $scope.row == rowName
+                return
+            $scope.row = rowName
+            $scope.filteredSales = $filter('orderBy')($scope.sales, rowName)
+            $scope.onOrderChange()
 
         # on page change: change numPerPage, filtering string
         $scope.onFilterChange = ->
@@ -182,18 +194,6 @@ angular.module('app.sales.ctrls', [])
             $scope.select(1)
             $scope.currentPage = 1            
 
-        $scope.search = ->
-            $scope.filteredSales = $filter('filter')($scope.sales, $scope.searchKeywords)
-            $scope.onFilterChange()
-
-        # orderBy
-        $scope.order = (rowName)->
-            if $scope.row == rowName
-                return
-            $scope.row = rowName
-            $scope.filteredSales = $filter('orderBy')($scope.sales, rowName)
-            $scope.onOrderChange()
-
         # pagination
         $scope.numPerPageOpt = [3, 5, 10, 20]
         $scope.numPerPage = $scope.numPerPageOpt[2]
@@ -207,7 +207,9 @@ angular.module('app.sales.ctrls', [])
         $scope.init()
 
         #Load companies
+
         getInvoices = ->
+            cfpLoadingBar.start()
             $filters=
                 companyID: $scope.currentUser.company.companyID
             $http({ url: REST_API.hostname+"/server/ajax/company/getMA4company.php", method: "POST", data: JSON.stringify($filters) })
@@ -217,40 +219,26 @@ angular.module('app.sales.ctrls', [])
                         seller_userID: postResponse['0']['@ma4company']
                     $http({ url: REST_API.hostname+"/server/ajax/Bill/listFiltered.php", method: "POST", data: JSON.stringify($filters) })
                         .success (postResponse) ->
-                            # console.log postResponse                    
-                            $scope.sales =postResponse
-                        # Only way to make react on filter to show items on table
-                        setTimeout ->
-                            $('#searchKeywords').focus()
-                            angular.element('#orderIDsalesUP').trigger('click')
+                            $scope.sales=postResponse
+                            cfpLoadingBar.complete()
+                            $scope.loadStatus=cfpLoadingBar.status()
+                            $scope.init()
                             if $scope.filteredSales.length==0
                                 logger.logError "No se encontraron ventas registradas en su empresa."
                             else
                                 logger.logSuccess "Tiene "+$scope.sales.length+" ventas registradas."
-                        , 250
+                        # # Only way to make react on filter to show items on table
+                        # setTimeout ->
+                        #     $('#searchKeywords').focus()
+                        #     angular.element('#orderIDsalesUP').trigger('click')
+                        #     if $scope.filteredSales.length==0
+                        #         logger.logError "No se encontraron ventas registradas en su empresa."
+                        #     else
+                        #         logger.logSuccess "Tiene "+$scope.sales.length+" ventas registradas."
+                        # , 975
                     return
+            return
         getInvoices()
-
-
-        #Load companies
-        # getInvoices = ->
-        #     $filters=
-        #         seller_userID: $scope.currentUser.userID
-        #     $http({ url: REST_API.hostname+"/server/ajax/Bill/listFiltered.php", method: "POST", data: JSON.stringify($filters) })
-        #         .success (postResponse) ->
-        #             console.log postResponse
-        #             $scope.sales =postResponse
-        #         # Only way to make react on filter to show items on table
-        #         setTimeout ->
-        #             $('#searchKeywords').focus()
-        #             angular.element('#orderIDsalesUP').trigger('click')
-        #             if $scope.filteredSales.length==0
-        #                 logger.logError "No se encontraron ventas registradas en su empresa."
-        #             else
-        #                 logger.logSuccess "Tiene "+$scope.sales.length+" ventas registradas."
-        #         , 250
-        #     return
-        # getInvoices()
 ])
 
 

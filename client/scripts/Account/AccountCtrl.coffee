@@ -52,7 +52,7 @@ angular.module('app.account.ctrls', [])
             .then ((user) ->
 
                 if (user!=undefined)
-                    logger.logSuccess("Bienvenido a Samsung caYca Compresores!") 
+                    logger.logSuccess("Bienvenido a caYca SAMSUNG compresores") 
                     $rootScope.$broadcast AUTH_EVENTS.loginSuccess
                     # console.log "SignIn Success!"
                     # getting Aditional Info... 
@@ -202,7 +202,7 @@ angular.module('app.account.ctrls', [])
             
             # console.log ($scope.data)
             
-            $http({ url: REST_API.hostname+"/server/ajax/Users/addUser.php", method: "POST", data: JSON.stringify($scope.data) })
+            $http({ url: REST_API.hostname+"/server/ajax/Users/addUser.php", method: "POST", data: ($scope.data) })
             .success (postResponse) ->
                 if (typeof postResponse) == "string"
                     if (postResponse.indexOf("ID") > -1)
@@ -289,7 +289,7 @@ angular.module('app.account.ctrls', [])
             # console.log ($scope.data)
             $http.defaults.headers.post["Content-Type"] = "application/json"            
             
-            $http({ url: REST_API.hostname+"/server/ajax/Users/addUser.php", method: "POST", data: JSON.stringify(JSON.stringify($scope.data)) })
+            $http({ url: REST_API.hostname+"/server/ajax/Users/addUser.php", method: "POST", data: (JSON.stringify($scope.data)) })
             .success (postResponse) ->
                 if (typeof postResponse) == "string"
                     if (postResponse.indexOf("ID") > -1)
@@ -305,7 +305,7 @@ angular.module('app.account.ctrls', [])
                     $scope.revert()
 
                     #Sending Email
-                    $http({ url: REST_API.hostname+"/server/ajax/Users/addUserConfirm.php", method: "POST", data: JSON.stringify(JSON.stringify($scope.data)) })
+                    $http({ url: REST_API.hostname+"/server/ajax/Users/addUserConfirm.php", method: "POST", data: (JSON.stringify($scope.data)) })
                     .success (postResponseB) ->
                         console.log "Roy: " + JSON.stringify(postResponseB)
                         logger.logSuccess "Se ha enviado el correo con la información de registro a: "+ $scope.data.email
@@ -323,19 +323,15 @@ angular.module('app.account.ctrls', [])
 ])
 
 .controller('listSellersCtrl', [
-    'REST_API','$scope', 'logger', '$http', '$filter', '$timeout'
-    (REST_API,$scope, logger, $http, $filter, $timeout) ->
-        # Definition of objets
-
-        # Control Data
-        
-        # xD
+    'REST_API','$scope', 'logger', '$http', '$filter', '$timeout', 'cfpLoadingBar'
+    (REST_API,$scope, logger, $http, $filter, $timeout, cfpLoadingBar) ->
         console.log 'listSellersCtrl'
 
         $scope.sellers = []
         $scope.searchKeywords = ''
         $scope.filteredSellers = []
         $scope.row = ''
+        $scope.loadStatus=0
 
         $scope.select = (page) ->
             start = (page - 1) * $scope.numPerPage
@@ -383,23 +379,20 @@ angular.module('app.account.ctrls', [])
 
         #Load companies
         getSellers = ->
+            cfpLoadingBar.start()
             $filters=
                 userTypeID: 'DV%'
                 country: $scope.currentUser.country.country
             $http({ url: REST_API.hostname+"/server/ajax/Users/listFiltered.php", method: "POST", data: JSON.stringify($filters) })
                 .success (postResponse) ->
-                    # console.log postResponse
                     $scope.sellers =postResponse
-                # Only way to make react on filter to show items on table
-                setTimeout ->
-                    $('#searchKeywords').focus()
-                    angular.element('#orderIDsellerUP').trigger('click')
-                    if $scope.filteredSellers.length==0
-                        logger.logError "No se encontraron vendedores registradas en su pais."
-                    else
-                        logger.logSuccess "Tiene "+$scope.sellers.length+" vendedores registrados."
-                , 100
-            return
+                    cfpLoadingBar.complete()
+                    $scope.loadStatus=cfpLoadingBar.status()
+                    $scope.init()
+                if $scope.sellers.length==0
+                    logger.logError "No se encontraron vendedores registrados en su pais."
+                else
+                    logger.logSuccess "Tiene "+$scope.sellers.length+" vendedores registrados."
         getSellers()
 
        

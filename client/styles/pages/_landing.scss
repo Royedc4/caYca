@@ -1,0 +1,80 @@
+.landing-header {
+	padding: 10px 0;
+	background-color: #1428A0;
+}
+
+// tetero
+
+.logo {
+	font-size: 30px;
+	font-family: futura;
+	color: white;
+}
+
+.landing-footer {
+	font-family: futura;
+	color: white;
+	background-color: #525252;
+	padding: .5em 0;
+}
+
+.landing-nav{
+	background-color: #1428A0;
+	font-family: futura;
+}
+
+
+// NavBar Others
+.navbar-default .navbar-brand{
+	color: white;	
+	font-size: 16px;
+}
+
+.navbar-default .navbar-toggle {
+	border-color: white;
+}
+
+.navbar-default .navbar-toggle .icon-bar{
+	color: white;
+}
+
+// menu Items
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+	color: #1428A0;
+	background-color: white;
+}
+
+.navbar-default .navbar-nav > li > a{
+	color: white;
+}
+
+
+// Dropdown
+.navbar-default .navbar-nav .dropdown-menu{
+	color: white;
+	background-color: #1428A0	
+}
+
+.navbar-default .navbar-nav .dropdown-menu > li > a{
+	color: white;
+}
+
+.navbar-default .navbar-nav .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus{
+	color: #1428A0;
+	background-color: white;
+}
+
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+	color: #1428A0;
+	background-color: white;
+}
+
+// Cuando esta en mobil abierto
+.navbar-default .navbar-nav .open .dropdown-menu > li > a {
+	color: white;
+}
+
+.navbar-default .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+	color: #1428A0;
+	background-color: white;
+}

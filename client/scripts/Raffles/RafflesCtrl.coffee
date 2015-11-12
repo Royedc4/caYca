@@ -15,7 +15,7 @@ angular.module('app.raffles.ctrls', [])
 
         $scope.showInformation = ->
             if $scope.canjeAutomatico
-                swal("Canje Automatico Activado!", "Los cupones que registres se canjearan automáticamente a tu cuenta, ya puedes ir a canjearlo en tu tienda de preferencia.", "success")
+                swal("Canje Automatico Activado!", "Los cupones que registres se canjearan automáticamente en su cuenta, puede ir a canjearlo en un punto de canje autorizado, para saber cuales son haga clic aquí.", "success")
             else
                 swal("Canje Automatico Desactivado!", "Los cupones que registres no se canjearan automáticamente a tu cuenta, los podras entregar a otra persona para que los aproveche.", "error")
             
@@ -137,14 +137,10 @@ angular.module('app.raffles.ctrls', [])
 ])
 
 .controller('listCouponsCtrl', [
-    'REST_API','$scope', 'logger', '$http', '$filter', '$timeout'
-    (REST_API,$scope, logger, $http, $filter, $timeout) ->
-        # Definition of objets
-
-        # Control Data
-        
-        # xD
+    'REST_API','$scope', 'logger', '$http', '$filter', '$timeout', 'cfpLoadingBar'
+    (REST_API,$scope, logger, $http, $filter, $timeout, cfpLoadingBar) ->
         console.log 'listCouponsCtrl'
+        $scope.loadStatus
 
         $scope.raffleCoupons = []
         $scope.searchKeywords = ''
@@ -204,17 +200,13 @@ angular.module('app.raffles.ctrls', [])
                 $scope.raffleCoupons=postResponse
                 for i in [0...$scope.raffleCoupons.length] by 1
                     $scope.raffleCoupons[i]['creationDate']=moment($scope.raffleCoupons[i]['creationDate']).format("DD/MM/YYYY")
-            
-                # Only way to make react on filter to show items on table
-                setTimeout ->
-                    $('#searchKeywords').focus()
-                    angular.element('#orderIDRaffleUP').trigger('click')
-                    if $scope.filteredRaffleCoupons.length==0
-                        logger.logError "No se encontraron cupones registrados en su cuenta."
-                    else
-                        logger.logSuccess "Tiene "+$scope.filteredRaffleCoupons.length+" cupones de Rifa."
-                , 100
-                
+                $scope.init()
+                $('#searchKeywords').focus()
+                $scope.loadStatus=cfpLoadingBar.status()
+                if $scope.filteredRaffleCoupons.length==0
+                    logger.logError "No se encontraron cupones registrados en su cuenta."
+                else
+                    logger.logSuccess "Tiene "+$scope.filteredRaffleCoupons.length+" cupones de Rifa."
         raffleCoupons4user()
 
 ])
@@ -229,4 +221,34 @@ angular.module('app.raffles.ctrls', [])
         # xD
         console.log 'resultsCtrl'
 
+])
+
+
+.controller('infoCtrl', [
+    'REST_API','$scope', 'logger', '$http', '$modal', '$log'
+    (REST_API,$scope, logger, $http, $modal, $log) ->
+        console.log 'infoCtrl'
+        $scope.open = ->
+            modalInstance = $modal.open(
+                templateUrl: "myModalContent.html"
+                controller: 'ModalInstanceCtrl'
+            )
+            modalInstance.result.then ((selectedItem) ->
+                console.log selectedItem
+            ), ->
+                $log.info "Modal dismissed at: " + new Date()
+])
+
+.controller('ModalInstanceCtrl', [
+    '$scope', '$modalInstance'
+    ($scope, $modalInstance) ->
+        $scope.ok = ->
+            $modalInstance.close "teterito"
+            return
+
+        $scope.cancel = ->
+            $modalInstance.dismiss "cancel"
+            return
+
+        return
 ])

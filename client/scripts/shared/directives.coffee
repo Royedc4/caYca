@@ -28,7 +28,7 @@ angular.module('app.directives', [])
                     # add certain class based on path
                     switch path
                         when '/' then $element.addClass('body-home')
-                        when '/404', '/pages/500', '/pages/signin', '/pages/signup', '/pages/forgot', '/accounts/signIn', '/accounts/signUp', '/accounts/retailerRequest' then $element.addClass('body-special')
+                        when '/404', '/pages/500', '/pages/signin', '/pages/signup', '/pages/forgot', '/accounts/signIn','/landing/uno','/landing/dos','/landing', '/accounts/signUp', '/accounts/retailerRequest' then $element.addClass('body-special')
                         when '/pages/lock-screen' then $element.addClass('body-special body-lock')
                         when '/tasks' then $element.addClass('body-tasks')
 

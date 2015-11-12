@@ -133,12 +133,9 @@ angular.module('app.redemptions.ctrls', [])
 
 
 
-
-
-
 .controller('changeStatusCtrl', [
-    'REST_API','$scope', 'logger', '$http', '$filter', '$timeout'
-    (REST_API,$scope, logger, $http, $filter, $timeout) ->
+    'REST_API','$scope', 'logger', '$http', '$filter', '$timeout', 'cfpLoadingBar'
+    (REST_API,$scope, logger, $http, $filter, $timeout, cfpLoadingBar) ->
         console.log 'changeStatusCtrl'
 
         $scope.redeems = []
@@ -209,18 +206,15 @@ angular.module('app.redemptions.ctrls', [])
         getStatus()
 
         $scope.getSellersRedeems = ->
+            cfpLoadingBar.start()
             $filters=
                 country: $scope.currentUser.country.country
             $http({ url: REST_API.hostname+"/server/ajax/redeems/lists2update.php", method: "POST", data: JSON.stringify($filters) })
             .success (postResponse) ->
                 $scope.redeems=postResponse
-                # Only way to make react on filter to show items on table
-                setTimeout ->
-                    # $('#searchKeywords').focus()
-                    angular.element('#orderIDRedeemUP').trigger('click')
-                    angular.element('#orderIDRedeemDW').trigger('click')
-                , 250
-
+                cfpLoadingBar.complete()
+                $scope.loadStatus=cfpLoadingBar.status()
+                $scope.init()
                 if $scope.redeems['0']!=null
                     for i in [0...$scope.redeems.length] by 1
                         $scope.redeems[i]['creationDate']=moment($scope.redeems[i]['creationDate']).format("DD/MM/YYYY")
@@ -250,14 +244,15 @@ angular.module('app.redemptions.ctrls', [])
 
 
 .controller('listCtrl', [
-    'REST_API','$scope', 'logger', '$http', '$filter', '$timeout'
-    (REST_API,$scope, logger, $http, $filter, $timeout) ->
+    'REST_API','$scope', 'logger', '$http', '$filter', '$timeout' , 'cfpLoadingBar'
+    (REST_API,$scope, logger, $http, $filter, $timeout, cfpLoadingBar) ->
         console.log 'listCtrl'
 
         $scope.redeemCoupons = []
         $scope.searchKeywords = ''
         $scope.filteredRedeemCoupons = []
         $scope.row = ''
+        $scope.loadStatus=0
 
         $scope.select = (page) ->
             start = (page - 1) * $scope.numPerPage
@@ -309,16 +304,14 @@ angular.module('app.redemptions.ctrls', [])
             $http({ url: REST_API.hostname+"/server/ajax/redeemCoupon/redeems-list.php", method: "POST", data: JSON.stringify($filters) })
             .success (postResponse) ->
                 $scope.redeemCoupons=postResponse
-                # Only way to make react on filter to show items on table
-                setTimeout ->
-                    $('#searchKeywords').focus()
-                    angular.element('#orderIDRedeemUP').trigger('click')
-                    if (typeof $scope.redeemCoupons['0'] == 'undefined')
-                        logger.logError "No se encontraron canjes registrados en su cuenta."
-                    else
-                        logger.logSuccess "Tiene "+$scope.redeemCoupons.length+" canjes."
-                , 100
-
+                cfpLoadingBar.complete()
+                $scope.loadStatus=cfpLoadingBar.status()
+                $scope.init()
+                if (typeof $scope.redeemCoupons['0'] == 'undefined')
+                    logger.logError "No se encontraron canjes registrados en su cuenta."
+                else
+                    logger.logSuccess "Tiene "+$scope.redeemCoupons.length+" canjes."
+                
                 if $scope.redeemCoupons['0']!=null
                     for i in [0...$scope.redeemCoupons.length] by 1
                         $scope.redeemCoupons[i]['creationDate']=moment($scope.redeemCoupons[i]['creationDate']).format("DD/MM/YYYY")
@@ -396,15 +389,21 @@ angular.module('app.redemptions.ctrls', [])
                 for i in [0...$scope.redeemCoupons.length] by 1
                     $scope.redeemCoupons[i]['creationDate']=moment($scope.redeemCoupons[i]['creationDate']).format("DD/MM/YYYY")
             
+                $('#searchKeywords').focus()
+                $scope.init()
+                if $scope.filteredRedeemCoupons.length==0
+                    logger.logError "No se encontraron cupones registrados en su cuenta."
+                else
+                    logger.logSuccess "Tiene "+$scope.filteredRedeemCoupons.length+" cupones de canje."
                 # Only way to make react on filter to show items on table
-                setTimeout ->
-                    $('#searchKeywords').focus()
-                    angular.element('#orderIDRedeemUP').trigger('click')
-                    if $scope.filteredRedeemCoupons.length==0
-                        logger.logError "No se encontraron cupones registrados en su cuenta."
-                    else
-                        logger.logSuccess "Tiene "+$scope.filteredRedeemCoupons.length+" cupones de canje."
-                , 100
+                # setTimeout ->
+                #     $('#searchKeywords').focus()
+                #     angular.element('#orderIDRedeemUP').trigger('click')
+                #     if $scope.filteredRedeemCoupons.length==0
+                #         logger.logError "No se encontraron cupones registrados en su cuenta."
+                #     else
+                #         logger.logSuccess "Tiene "+$scope.filteredRedeemCoupons.length+" cupones de canje."
+                # , 100
                 
         redeemCoupons4user()
 
