@@ -33,7 +33,7 @@ if ( $data != NULL )
 	
 	$hoy = date("Y-m-d H:i:s");
 
-	$query="INSERT INTO user VALUES (NULL, '$userTypeID','$ID', '$email', '$hashed_password', '$fullName',  '$geoID', '$companyID', '$address', '$celphone', '$phone', NULL, '$hoy', DEFAULT, NULL, NULL)";
+	$query="INSERT INTO user VALUES (NULL, '$userTypeID','$ID', '$email', '$hashed_password', '$fullName',  '$geoID', $companyID, '$address', '$celphone', '$phone', NULL, '$hoy', DEFAULT, NULL, NULL)";
 
 	$result = $mysqli->query($query) or die($mysqli->error.__LINE__);
 	$result = $mysqli->affected_rows;
