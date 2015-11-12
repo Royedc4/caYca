@@ -43,9 +43,10 @@
 								data-ng-model="user.ID"
 								data-ng-minlength=8
 								data-ng-maxlength=11
+								pattern="(CE|CC|ce|cc)[0-9]+" 
 								required>
 							</div>
-							<p ng-show="form_NewAccount.ID.$invalid && form_NewAccount.ID.$dirty" class="text-danger">Se debe arreglar la validación de la cedula (Agregar CC o CE)</p>
+							<p ng-show="form_NewAccount.ID.$invalid && form_NewAccount.ID.$dirty" class="text-danger"> Verifique su identificación, recuerde agregar CC o CE segun corresponda (EJM: CC1234567)</p>
 						</div>
 						<div class="form-group">
 							<div class="input-group input-group-lg">
@@ -82,7 +83,7 @@
 								</span>
 								<input type="tel"
 								name="phone"
-								data-ng-minlength=10
+								data-ng-minlength=8
 								data-ng-maxlength=12
 								data-ng-pattern="/^[0-9]+$/"
 								class="form-control"
@@ -90,7 +91,7 @@
 								data-ng-model="user.phone"
 								required>
 							</div>
-							<p ng-show="form_NewAccount.phone.$invalid && form_NewAccount.phone.$dirty" class="text-danger">El numero de telefono debe tener entre 10 y 12 números unicamente. Recuerdo incluir el codigo de pais.</p>
+							<p ng-show="form_NewAccount.phone.$invalid && form_NewAccount.phone.$dirty" class="text-danger">El numero de telefono debe tener entre 8 y 12 números unicamente.</p>
 						</div>
 						<div class="form-group">
 							<div class="input-group input-group-lg">
@@ -100,14 +101,14 @@
 								<input type="tel"
 								name="celphone"
 								data-ng-minlength=10
-								data-ng-maxlength=12
+								data-ng-maxlength=12	
 								data-ng-pattern="/^[0-9]+$/"
 								class="form-control"
 								placeholder="Telefono celular"
 								data-ng-model="user.celphone"
 								required>
 							</div>
-							<p ng-show="form_NewAccount.celphone.$invalid && form_NewAccount.celphone.$dirty" class="text-danger">El numero de celular debe tener entre 10 y 12 números unicamente. Recuerdo incluir el codigo de pais.</p>
+							<p ng-show="form_NewAccount.celphone.$invalid && form_NewAccount.celphone.$dirty" class="text-danger">El numero de celular debe tener entre 10 y 12 números unicamente.</p>
 						</div>
 
 
