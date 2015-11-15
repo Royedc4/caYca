@@ -545,23 +545,32 @@ angular.module('app.redemptions.ctrls', [])
                 points: $scope.redeemableStuff.pointsPerCoupon*$scope.forms.redeemedCoupons
 
 
+                    # {{forms.redeemedCoupons}} cupones esta canjeando {{redeemableStuff.moneyPerCoupon*forms.redeemedCoupons}}
         # registerRedemption
         $scope.registerRedemption = ->
-            preparingData4redemption()
-            $http({ url: REST_API.hostname+"/server/ajax/redeems/new.php", method: "POST", data: JSON.stringify($scope.data2insert) })
-            .success (postResponse) ->
-                console.log postResponse
-                if (typeof postResponse) == "object"
-                    if postResponse['results']['enoughPoints']=='1'
-                        setTimeout ->
-                            logger.logSuccess "Se ha registrado Exitosamente el canje #"+ postResponse['results']['nextAi']+" por un " + $scope.forms.redeemedArticle + " !"    
-                            $scope.forms.itemSelected=''
-                            $scope.consultID()
-                            $scope.minimito=6
-                        , 750
-                    else
-                        logger.logError "No tiene suficientes puntos para realizar este canje!"    
-
-
-                        
+            swal {
+                    title: 'Seguro que quiere procesar el canje:'
+                    text: '\nPara: ' + $scope.technicianInfo.fullName + '\nDe: ' + $scope.forms.redeemedCoupons + ' cupones\nPor: ' + $scope.redeemableStuff.moneyPerCoupon*$scope.forms.redeemedCoupons + ' ' + $scope.currentUser.country.currencyName+ '\n\nEste proceso es totalmente irreversible!'
+                    type: 'warning'
+                    showCancelButton: true
+                    confirmButtonText: "Si, Procesar!"
+                    cancelButtonText: "No, cancelar!"
+                    closeOnConfirm: false
+                    closeOnCancel: false
+                    showLoaderOnConfirm: true
+                }, ->
+                    preparingData4redemption()
+                    $http({ url: REST_API.hostname+"/server/ajax/redeems/new.php", method: "POST", data: JSON.stringify($scope.data2insert) })
+                    .success (postResponse) ->
+                        console.log postResponse
+                        if (typeof postResponse) == "object"
+                            if postResponse['results']['enoughPoints']=='1'
+                                setTimeout ->
+                                    logger.logSuccess "Se ha registrado Exitosamente el canje #"+ postResponse['results']['nextAi']+" por un " + $scope.forms.redeemedArticle + " !"    
+                                    $scope.forms.itemSelected=''
+                                    $scope.consultID()
+                                    $scope.minimito=6
+                                , 750
+                            else
+                                logger.logError "No tiene suficientes puntos para realizar este canje!"    
 ])

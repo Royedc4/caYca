@@ -95,14 +95,14 @@
 				<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Guardar </strong></div>
 				<div class="panel-body" >
 
-					<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 form-group">
+					<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
 						<button class="btn btn-default btn-block"
 						data-ng-disabled="!canRevert()"
 						data-ng-click="revert()"
 						><span class="fa fa-eraser"></span> Limpiar Formulario</button>
 					</div>
 
-					<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 form-group">					
+					<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">					
 						<button type="submit"
 						class="btn btn-success btn-block"
 						ng-click="saveBill()"
@@ -110,7 +110,7 @@
 						><span class="fa fa-database"></span> Guardar Factura</button>
 					</div>
 
-					<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 form-group">				
+					<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">				
 						<button type="submit"
 						class="btn btn-success btn-block"
 						ng-click="printInvoice()"
@@ -118,11 +118,11 @@
 						><span class="fa fa-print"></span> Imprimir Factura</button>
 					</div>
 
-					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
-						<button ng-show="currentUser.userTypeID=='ADM' || currentUser.userTypeID=='MA'" class='btn btn-danger btn-block' ng-click="roYTesting()"><span class="fa fa-user-secret"></span> Roy TesT</button>
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-show="currentUser.userTypeID=='ADM'">
+						<button class='btn btn-danger btn-block' ng-click="roYTesting()"><span class="fa fa-user-secret"></span> Roy TesT</button>
 					</div>
 
-					<div div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group callout callout-info">
+					<div div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 callout callout-info">
 						<p>Guardar Factura estará disponible cuando se ingresen y validen todos los seriales y datos del detal.</p>
 						<p>El Boton de Limpiar Formulario estara disponible cuando algun dato se haya ingresado.</p>
 					</div>

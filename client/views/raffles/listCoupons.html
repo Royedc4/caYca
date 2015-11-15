@@ -2,12 +2,12 @@
 	<section class="panel panel-default table-dynamic">
 		<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span><span data-i18n=" Listado de cupones registrados para la rifa"></span></strong></div>
 
-		<div ng-show="filteredRaffleCoupons.length==0" class="callout callout-danger">
+		<div ng-show="raffleCoupons.length==0 && loadStatus" class="callout callout-danger">
 			<h4>No se encontraron cupones</h4>
 			<p>Para ver sus cupones que estan participando en rifas debe registrarlos previamente usando la opción <a href="#/raffles/newCoupon">Nuevo cupon</a></p>
 		</div>
 
-		<div ng-show="filteredRaffleCoupons.length!=0">
+		<div ng-show="raffleCoupons.length!=0">
 
 			<div class="table-filters">
 				<div class="row">

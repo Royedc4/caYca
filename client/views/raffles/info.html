@@ -1,4 +1,4 @@
-<div class="page page-about">
+<div class="page page-about" ng-controller="infoCtrl">
     <div class="page-container">
         <div class="intro">
             <h2><strong>RIFAS</strong>2015</h2>
@@ -35,15 +35,43 @@
         <div class="row info-container">
             <div class="col-md-6">
                 <h2>Mecanica del <strong>Sorteo</strong></h2>
-                <p class="lead">El Ganador será anunciado del 8 al 15 de Septiembre de 2015 por correo electronico y por <a href="http://www.facebook.com/caycaSAMSUNGcompresores">Facebook</a>, adicionalmente se le contactará por teléfono y correo electrónico.</p>
+                <p class="lead">El Ganador será anunciado del 8 al 15 de Septiembre de 2015 por correo electronico y por <a href="http://www.facebook.com/caycaSAMSUNGcompresores">Facebook</a>, adicionalmente se le contactará por teléfono y correo electrónico. <a ng-click="open()">Haga clic aquí para mas información</a></p>
                 <p class="desc">Este sorteo esta autorizado por COLJUEGOS.</p>
             </div>
             <div class="col-md-6">
                 <h2><strong>Condiciones</strong> Generales</h2>
                 <p class="lead">Podrán participar en la actividad vendedores y tecnicos de compresores SAMSUNG  mayores de 18 años, que residan en el territorio Colombiano.</p>
                 <p class="desc">Fecha Inicio: 1 de Octubre de 2015.<br>
-                Fecha Limite para registrarse en la rifa: 30 de Septiembre de 2016.</p>
+                    Fecha Limite para registrarse en la rifa: 30 de Septiembre de 2016.</p>
+                </div>
             </div>
         </div>
+
+        <script type="text/ng-template" id="myModalContent.html">
+            <div class="modal-header">
+            <h3>Condiciones y restricciones</h3>
+            </div>
+            <div class="modal-body slimScrollDiv" data-slim-scroll data-scroll-height="200px">
+                La participación de los interesados, así como la actividad y el premio, están sujetos a las condiciones y restricciones que se indican en estos términos. Cualquier situación que no se encuentre prevista en el presente reglamento, será resuelto por los organizadores, en estricto apego a las leyes de la República de Colombia. Deberá existir total coincidencia entre los datos brindados para participar y el documento de identificación del ganador, de otro modo el premio no será entregado. La responsabilidad de Alkosto culmina con la entrega del premio. El ganador exime de toda responsabilidad a los organizadores del uso o destinación que diere al premio, más aun si se tratare de actividades ilícitas o que atenten contra la ley y/o las buenas costumbres. El ganador recibirá su premio y no se admiten cambios por dinero, valores o cualquier otro producto material. Si no acepta el premio o sus condiciones, este premio se considera renunciado y extinguido en relación al ganador y no tendrá derecho a reclamo o indemnización alguna, ni siquiera parcialmente. El ganador deberá firmar conforme el recibo de su premio.
+
+                El derecho del premio no es transferible, negociable, ni puede ser comercializado o canjeado por dinero en efectivo, ni por ningún otro premio. Este premio es entregado únicamente a la persona ganadora.
+
+                Alkosto y Ktronix son los patrocinadores del presente evento, y es el único administrador y organizador de la presente rifa. Así mismo Facebook no es el patrocinador del evento y por tanto tampoco tiene responsabilidad en esta actividad.
+
+                Alkosto y Ktronix no se hacen responsables por problemas o fallas en la conexión, o fuera de línea de la página web, fallas de sistemas, o aspectos técnicos del aplicativo del registro que inhiban el mismo registro de los participantes en la rifa.
+
+                En el evento de generarse algún impuesto (ganancia ocasional) con la realización de esta actividad conforme la legislación vigente correrá por parte de ganador.
+
+                Derechos de imagen.
+
+                Con el hecho de participar en la actividad, el ganador de manera libre, expresa, voluntaria e informada acepta y autoriza a ALKOSTO S.A. y/o a la persona natural o jurídica a quien encargue, para que incluya en cualquier soporte audiovisual que sus nombres, copys, ideas e imágenes aparezcan en los programas, publicaciones y demás medios publicitarios y en general en todo material de divulgación con los fines promocionales que ALKOSTO S.A.los organizadores deseen hacer durante el evento o una vez finalizado el mismo, sin que ello implique la obligación de remunerarlos o compensarlos adicionalmente. Así mismo, renuncia a cualquier reclamo por derechos de imagen. Por virtud de esta autorización el ganador declara que es el propietario integral de los derechos sobre el contenido audiovisual y en consecuencia garantizan que pueden otorgar la presente autorización sin limitación alguna. En todo caso responderán por cualquier reclamo que en materia de derecho de autor se pueda presentar, exonerando de cualquier responsabilidad a ALKOSTO S.A.
+                Suspensión.
+
+                En caso de haber motivos fundados en: fuerza mayor, caso fortuito, o hechos de terceros, tales como desastres naturales, guerras, huelgas o disturbios, así como también situaciones que afecten la actividad; o en caso de detectarse un fraude o intento de fraude en perjuicio de los organizadores o los participantes de la misma, Alkosto, podrá modificar en todo o en parte esta actividad, así como suspenderlo temporal o permanentemente sin asumir ninguna responsabilidad al respecto. En estos casos, el fundamento de las medidas que se adopten, así como las pruebas que demuestren la existencia de la causa invocada por los organizadores estarán a disposición de cualquier interesado.
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success" name="" g-click="ok()">De acuerdo</button>
+                <button class="btn btn-danger" ng-click="cancel()">Cancelar</button>
+            </div>
+        </script>
     </div>
-</div>

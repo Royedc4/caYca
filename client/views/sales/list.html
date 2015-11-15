@@ -2,12 +2,12 @@
 	<section class="panel panel-default table-dynamic">
 		<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> <span data-i18n="Listado de ventas"></span></strong></div>
 
-		<div ng-show="sales.length==0" class="callout callout-danger">
+		<div ng-show="sales.length==0 && loadStatus" class="callout callout-danger">
 			<h4>No se encontraron facturas de ventas</h4>
 			<p>Para ver sus facturas de ventas debe crearlas previamente usando la opción <a href="#/sales/newInvoice">Nueva Factura</a></p>
 		</div>
 
-		<div ng-show="sales.length!=0">
+		<div ng-show="sales.length>1">
 
 			<div class="table-filters">
 				<div class="row">

@@ -40,7 +40,7 @@
                             data-ng-click=" order('-token') "
                             data-ng-class="{active: row == '-token'}"></span>
                         </div></th>
-                        <th><div class="th">
+                        <th ng-show="currentUser.userTypeID!='TEC'"><div class="th">
                             Puntos
                             <span class="glyphicon glyphicon-chevron-up"
                             data-ng-click=" order('points') "
@@ -49,7 +49,7 @@
                             data-ng-click=" order('-points') "
                             data-ng-class="{active: row == '-points'}"></span>
                         </div></th>
-                        <th><div class="th">
+                        <th ng-show="currentUser.userTypeID=='TEC'"><div class="th">
                             Dinero
                             <span class="glyphicon glyphicon-chevron-up"
                             data-ng-click=" order('localCurrency') "
@@ -72,8 +72,8 @@
                 <tbody>
                     <tr data-ng-repeat="redeemCoupon in currentPageRedeemCoupons">
                         <td>{{redeemCoupon.token}}</td>
-                        <td>{{redeemCoupon.points}}</td>
-                        <td>{{redeemCoupon.localCurrency | currency:currentUser.country.currency:0}}</td>
+                        <td ng-show="currentUser.userTypeID!='TEC'">{{redeemCoupon.points}}</td>
+                        <td ng-show="currentUser.userTypeID=='TEC'">{{redeemCoupon.localCurrency | currency:currentUser.country.currency:0}}</td>
                         <td>{{redeemCoupon.creationDate}}</td>
                     </tr>
                 </tbody>

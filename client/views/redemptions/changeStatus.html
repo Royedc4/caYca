@@ -2,7 +2,7 @@
     <section class="panel panel-default table-dynamic">
         <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span><span data-i18n=" Canjes de tecnicos (Mostrando {{filteredRedeems.length}}/{{redeems.length}})"></span></strong></div>
 
-        <div ng-show="redeems.length==0" class="callout callout-danger">
+        <div ng-show="redeems.length==0 && loadStatus" class="callout callout-danger">
             <h4>No existen canjes aún... </h4>
         </div>
 
