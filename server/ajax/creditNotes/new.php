@@ -1,20 +1,28 @@
 <?php 
 require_once '../../secure/db.php'; // The mysql database connection script
-$data =  file_get_contents("php://input");
+
+$data =  ((file_get_contents("php://input")));
+$array=json_decode($data, true);
 $hoy = date("Y-m-d H:i:s");
 
-$array=json_decode($data, true);
+$queriesArray=array();
+$errorsArray=array();
+$affectedsArray=array();
 
-$query="CALL `creditNote-new`('" . $array['companyID'] . "','" . $array['createdBy_userID'] . "','" . $array['creationDate'] . "','" . $array['registryDate'] . "','" . $array['country'] . "','" . $array['comment'] . "')";
+$query="CALL `creditNote-new`('" . $array['companyID'] . "','" . $array['createdBy_userID'] . "','" . $array['creationDate'] . "','" . $array['registryDate'] . "','" . $array['country'] . "','" . $array['comment'] . "','" . $array['fileURL'] . "')";
 
 $result=$mysqli->query($query) or die($mysqli->error.__LINE__);
+if($result->num_rows > 0) {
+	while($row = $result->fetch_assoc()) {
+		$results = $row;
+	}
+}
+array_push($queriesArray, $query);
+array_push($errorsArray, $mysqli->error.__LINE__);
+array_push($affectedsArray, $mysqli->affected_rows);
 
-$queries=$query;
-$errors=$mysqli->error.__LINE__;
-$affectedRows=$mysqli->affected_rows;
+$resultObj = (object) array('arrayQueries' => $queriesArray, 'affectedsArray' => $affectedsArray, 'errorsArray' => $errorsArray, 'results' => $results, 'hoy' => $hoy);
 
-
-$resultObj = (object) array('arrayQueries' => $queries, 'affectedRows' => $affectedRows, 'errors' => $errors, 'hoy' => $hoy, 'result' => $result);
 echo $json_response = json_encode($resultObj);	
 $mysqli->close(); 
 
