@@ -1,12 +1,33 @@
 <!doctype html>
+<!--                         
+                        ,_ __   ___   __   __
+                        | '__| /   \  \ \_/ /
+                        | |    | () |  \   /
+                        |_|    \___/   /__/
+-->
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 <head>
     <meta charset="utf-8">
     <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
-    <title>SAMSUNG</title>
-    <meta name="description" content="">
+    <title>caycaSAMSUNGcompresor</title>
+    <!-- Roy: Description and keywords -->
+    <meta name="description" content="Aplicación informativa para tiendas al detal y técnicos que distribuyan y comercialicen Compresores Samsung en Colombia, Venezuela y CAYCA">
+    <meta name="keywords" content="compresores samsung, compresores reciprocantes, compresores rotativos, cayca samsung compresores">
+    <!-- webApp -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- Roy: iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="cSAMSUNGc" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-startup-image" href="/App-icon.png">
+    <link rel="apple-touch-icon" href="/App-icon.png">
+    <link rel="apple-touch-icon" href="app_icon60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="72.png">
+    <link rel="apple-touch-icon" sizes="50x50" href="50.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="114.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="144.png">
+    <link rel="apple-touch-icon" sizes="100x100" href="100.png">
+    <!-- Placing favicon.ico and apple-touch-icon.png in the root directory -->
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
     <!-- needs images, font... therefore can not be part of ui.css -->
     <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
@@ -16,8 +37,8 @@
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="bower_components/sweetalert/dist/sweetalert.css">
     <link rel="stylesheet" href="bower_components/sweetalert/themes/twitter/twitter.css">
+    <link href='bower_components/angular-loading-bar/src/loading-bar.css' rel='stylesheet' />
     
-
 </head>
 <body data-ng-app="app" id="app" data-custom-background data-off-canvas-nav>
         <!--[if lt IE 9]>
@@ -59,6 +80,7 @@
         <script src="bower_components/raphael/raphael-min.js"></script>
         <script src="bower_components/angular-morris-chart/src/angular-morris-chart.min.js"></script>
         <script src="bower_components/sweetalert/dist/sweetalert.min.js"></script>
+        <script src="bower_components/angular-scroll/angular-scroll.min.js"></script>
 
         <script src="bower_components/moment/min/moment.min.js"></script>
 
@@ -68,6 +90,8 @@
         <script src="bower_components/momentjs/min/locales.min.js"></script>
         <script src="bower_components/humanize-duration/humanize-duration.js"></script>
 
+        <!-- Roy: loading-bar -->
+        <script src="bower_components/angular-loading-bar/src/loading-bar.js"></script>
         
         <!-- endbuild -->
 
@@ -144,6 +168,9 @@
         <script src="scripts/creditNotes/creditNotesCtrl.js"></script>
         <script src="scripts/creditNotes/creditNotesService.js"></script>
         <script src="scripts/creditNotes/creditNotesDirective.js"></script>
+        <script src="scripts/landing/landingCtrl.js"></script>
+        <!-- Roy -->
+        <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
         <!-- endbuild -->
     </body>
     </html>
