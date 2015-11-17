@@ -106,18 +106,33 @@ angular.module('app.redemptions.ctrls', [])
 
         # registerRedemption
         $scope.registerRedemption = ->
-            preparingData4redemption()
-            $http({ url: REST_API.hostname+"/server/ajax/redeems/new.php", method: "POST", data: JSON.stringify($scope.data2insert) })
-            .success (postResponse) ->
-                console.log postResponse
-                if (typeof postResponse) == "object"
-                    if postResponse['results']['enoughPoints']=='1'
-                        redeemableStuff()
-                        reachableItems4user()
-                        setTimeout ->
-                            logger.logSuccess "Has registrado Exitosamente el canje #"+ postResponse['results']['nextAi']+" por un " + $scope.forms.itemSelected.name + " !"    
-                            $scope.forms.itemSelected=''
-                        , 750
+            swal {
+                    title: 'Confirmación de canje'
+                    text: '\nSeguro que quiere procesar su canje por' + '\n ' + $scope.forms.itemSelected.name + '\n\nEste proceso es totalmente irreversible!'
+                    type: 'warning'
+                    showCancelButton: true
+                    confirmButtonText: "Si, Procesar!"
+                    cancelButtonText: "No, cancelar!"
+                    closeOnConfirm: false
+                    closeOnCancel: false
+                }, (isConfirm) ->
+                        if isConfirm
+                            swal 'Operación Procesada!', 'Se ha dado teterito!', 'success'
+                        else
+                            swal 'Operación Cancelada', 'Todo bien, no se ha realizado el canje.', 'error'
+                        return
+            # preparingData4redemption()
+            # $http({ url: REST_API.hostname+"/server/ajax/redeems/new.php", method: "POST", data: JSON.stringify($scope.data2insert) })
+            # .success (postResponse) ->
+            #     console.log postResponse
+            #     if (typeof postResponse) == "object"
+            #         if postResponse['results']['enoughPoints']=='1'
+            #             redeemableStuff()
+            #             reachableItems4user()
+            #             setTimeout ->
+            #                 logger.logSuccess "Has registrado Exitosamente el canje #"+ postResponse['results']['nextAi']+" por un " + $scope.forms.itemSelected.name + " !"    
+            #                 $scope.forms.itemSelected=''
+            #             , 750
                         
                         
         # Getting reachableItems4user
@@ -549,28 +564,32 @@ angular.module('app.redemptions.ctrls', [])
         # registerRedemption
         $scope.registerRedemption = ->
             swal {
-                    title: 'Seguro que quiere procesar el canje:'
-                    text: '\nPara: ' + $scope.technicianInfo.fullName + '\nDe: ' + $scope.forms.redeemedCoupons + ' cupones\nPor: ' + $scope.redeemableStuff.moneyPerCoupon*$scope.forms.redeemedCoupons + ' ' + $scope.currentUser.country.currencyName+ '\n\nEste proceso es totalmente irreversible!'
+                    title: 'Confirmación de canje'
+                    text: '\nSeguro que quiere procesar el canje para: ' + $scope.technicianInfo.fullName + '\nDe: ' + $scope.forms.redeemedCoupons + ' cupones\nPor: ' + $scope.redeemableStuff.moneyPerCoupon*$scope.forms.redeemedCoupons + ' ' + $scope.currentUser.country.currencyName+ '\n\nEste proceso es totalmente irreversible!'
                     type: 'warning'
                     showCancelButton: true
                     confirmButtonText: "Si, Procesar!"
                     cancelButtonText: "No, cancelar!"
                     closeOnConfirm: false
                     closeOnCancel: false
-                    showLoaderOnConfirm: true
-                }, ->
-                    preparingData4redemption()
-                    $http({ url: REST_API.hostname+"/server/ajax/redeems/new.php", method: "POST", data: JSON.stringify($scope.data2insert) })
-                    .success (postResponse) ->
-                        console.log postResponse
-                        if (typeof postResponse) == "object"
-                            if postResponse['results']['enoughPoints']=='1'
-                                setTimeout ->
-                                    logger.logSuccess "Se ha registrado Exitosamente el canje #"+ postResponse['results']['nextAi']+" por un " + $scope.forms.redeemedArticle + " !"    
-                                    $scope.forms.itemSelected=''
-                                    $scope.consultID()
-                                    $scope.minimito=6
-                                , 750
-                            else
-                                logger.logError "No tiene suficientes puntos para realizar este canje!"    
+                }, (isConfirm) ->
+                        if isConfirm
+                            swal 'Operación Procesada!', 'Se ha dado teterito!', 'success'
+                        else
+                            swal 'Operación Cancelada', 'Todo bien, no se ha realizado el canje.', 'error'
+                        return
+                    # preparingData4redemption()
+                    # $http({ url: REST_API.hostname+"/server/ajax/redeems/new.php", method: "POST", data: JSON.stringify($scope.data2insert) })
+                    # .success (postResponse) ->
+                    #     console.log postResponse
+                    #     if (typeof postResponse) == "object"
+                    #         if postResponse['results']['enoughPoints']=='1'
+                    #             setTimeout ->
+                    #                 logger.logSuccess "Se ha registrado Exitosamente el canje #"+ postResponse['results']['nextAi']+" por un " + $scope.forms.redeemedArticle + " !"    
+                    #                 $scope.forms.itemSelected=''
+                    #                 $scope.consultID()
+                    #                 $scope.minimito=6
+                    #             , 750
+                    #         else
+                    #             logger.logError "No tiene suficientes puntos para realizar este canje!"    
 ])
