@@ -51,6 +51,7 @@ angular.module('app', [
     'app.redemptions.ctrls'
     'app.redemptions.directives'
     'app.redemptions.services'
+    'app.redemptions.validation'
     'app.sales.ctrls'
     'app.sales.directives'
     'app.sales.services'
