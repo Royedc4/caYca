@@ -13,7 +13,7 @@
 					<h3 class="panel-title">Canjes realizados en su tienda</h3>
 				</div>
 				<div class="panel-body">
-					Al día de hoy en {{currentUser.company.businessName}} se han hecho <strong>{{redeems['0'].canRedeems}} canjes</strong> acumulando <strong>{{redeems['0'].pointsRedeemed}} puntos</strong> por un total de <strong>{{redeems['0'].moneyRedeemed}} {{currentUSer.country.currencyName}}</strong>.
+					Al día de hoy en {{currentUser.company.businessName}} se han hecho <strong>{{redeems['0'].canRedeems}} canjes</strong> acumulando <strong>{{redeems['0'].pointsRedeemed | number:0}} puntos</strong> por un total de <strong>{{redeems['0'].moneyRedeemed | currency: currentUser.country.currency:0}} </strong>.
 				</div>
 			</div>
 

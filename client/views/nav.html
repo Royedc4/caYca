@@ -87,7 +87,7 @@
     <li ng-show="currentUser.userTypeID=='TEC' || currentUser.userTypeID=='DV' || currentUser.userTypeID=='DVC' || currentUser.userTypeID=='ADM' || currentUser.userTypeID=='MOC'">
         <a href="#/redemptions"><i class="fa fa-shopping-cart"></i><span data-i18n="Canjes"></span></a>
         <ul>
-            <li ng-hide="currentUser.userTypeID=='MOC'"><a href="#/redemptions/points"><i class="fa fa-dashboard"></i> <span data-i18n="Consultar Puntos"></span></a></li>
+            <li ng-hide="currentUser.userTypeID=='MOC'"><a href="#/redemptions/points"><i class="fa fa-dashboard"></i> <span data-i18n="Consultar Dinero"></span></a></li>
             <li ng-hide="currentUser.userTypeID=='MOC'"><a href="#/redemptions/list"><i class="fa fa-file-text"></i> <span data-i18n="Consultar Canjes"></span></a></li>
             <li ng-show="currentUser.userTypeID=='MOC'"><a href="#/redemptions/changeStatus"><i class="fa fa-shopping-cart"></i> <span data-i18n="Actualizar Status"></span></a></li>
             <li ng-hide="currentUser.userTypeID=='DV' || currentUser.userTypeID=='TEC' || currentUser.userTypeID=='MOC'"><a href="#/redemptions/technician"><i class="fa fa-shopping-cart"></i> <span data-i18n="Canje Tecnico"></span></a></li>
