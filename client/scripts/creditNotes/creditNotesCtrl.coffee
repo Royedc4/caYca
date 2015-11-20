@@ -189,7 +189,99 @@ angular.module('app.creditNotes.ctrls', [])
                         logger.logSuccess "Tiene "+$scope.creditNotes.length+" notas de credito registradas."
             return
         getCreditNotes()
+])
 
 
+.controller('listCreditNotes4retailerCtrl', [
+    'REST_API','$scope', 'logger', '$http', '$filter', '$timeout', 'cfpLoadingBar'
+    (REST_API,$scope, logger, $http, $filter, $timeout, cfpLoadingBar) ->
+        console.log 'listCreditNotes4retailerCtrl'
+        # Definition of objets
+        $scope.creditNotes = []
+        $scope.searchKeywords = ''
+        $scope.filteredCreditNotes = []
+        $scope.row = ''
+        $scope.seleccionada=null
+        $scope.selectedRow=null
+        $scope.loadStatus=0
 
+        $scope.getInfo = (index) ->
+            $scope.selectedRow = index;
+            console.log(this.creditNotes)
+            $scope.seleccionada=this.creditNotes
+
+
+        $scope.select = (page) ->
+            start = (page - 1) * $scope.numPerPage
+            end = start + $scope.numPerPage
+            $scope.currentPageCreditNotes = $scope.filteredCreditNotes.slice(start, end)
+
+        # on page change: change numPerPage, filtering string
+        $scope.onFilterChange = ->
+            $scope.select(1)
+            $scope.currentPage = 1
+            $scope.row = ''
+
+        $scope.onNumPerPageChange = ->
+            $scope.select(1)
+            $scope.currentPage = 1
+
+        $scope.onOrderChange = ->
+            $scope.select(1)
+            $scope.currentPage = 1            
+
+        $scope.search = ->
+            $scope.filteredCreditNotes = $filter('filter')($scope.creditNotes, $scope.searchKeywords)
+            $scope.onFilterChange()
+
+        # orderBy
+        $scope.order = (rowName)->
+            if $scope.row == rowName
+                return
+            $scope.row = rowName
+            $scope.filteredCreditNotes = $filter('orderBy')($scope.creditNotes, rowName)
+            $scope.onOrderChange()
+
+        # pagination
+        $scope.numPerPageOpt = [3, 5, 10, 20]
+        $scope.numPerPage = $scope.numPerPageOpt[2]
+        $scope.currentPage = 1
+        $scope.currentPageCreditNotes = []
+
+        # init
+        $scope.init = ->
+            $scope.search()
+            $scope.select($scope.currentPage)
+        $scope.init()
+
+        
+        getCreditNotes = ->
+            cfpLoadingBar.start()
+            $filters=
+                companyID: $scope.currentUser.companyID
+            $http({ url: REST_API.hostname+"/server/ajax/creditNotes/list4retailer.php", method: "POST", data: JSON.stringify($filters) })
+                .success (postResponse) ->
+                    $scope.creditNotes=postResponse
+                    cfpLoadingBar.complete()
+                    $scope.loadStatus=cfpLoadingBar.status()
+                    $scope.init()
+                    if $scope.creditNotes.length==0
+                        logger.logError "No se encontraron notas de credito registradas."
+                    else
+                        logger.logSuccess "Tiene "+$scope.creditNotes.length+" notas de credito registradas."
+            return
+        getCreditNotes()
+
+        $scope.getRetailerRedeems = ->
+            cfpLoadingBar.start()
+            $filters=
+                country: $scope.currentUser.country.country
+                companyID: $scope.currentUser.companyID
+            $http({ url: REST_API.hostname+"/server/ajax/redeems/4creditNote4retailer.php", method: "POST", data: JSON.stringify($filters) })
+            .success (postResponse) ->
+                $scope.redeems=postResponse
+                cfpLoadingBar.complete()
+                $scope.loadStatus=cfpLoadingBar.status()
+                $scope.init()
+        $scope.getRetailerRedeems()
 ])
