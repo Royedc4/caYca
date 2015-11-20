@@ -105,6 +105,14 @@
             <li><a href="#/raffles/info"><i class="fa fa-info-circle"></i> <span data-i18n="Información"></span></a></li>
         </ul>
     </li>
+
+    <!-- Retailer: Account Status -->
+    <li ng-show="currentUser.userTypeID=='DVC'">
+        <a href="#/creditNotes"><i class="fa fa-building"></i><span data-i18n="Detal"></span></a>
+        <ul>
+            <li ng-show="currentUser.userTypeID=='DVC'"><a href="#/creditNotes/list4retailer"><i class="fa fa-balance-scale"></i> <span data-i18n="Estado de cuenta"></span></a></li>
+        </ul>
+    </li>
     
 
     <!--Roy:  Warranties [Rol: Mayor] -->

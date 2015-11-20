@@ -88,7 +88,7 @@
 					<tr data-ng-repeat="redeem in currentPageRedeems" ng-click="getInfo($index)" ng-class="{'highlight':$index == selectedRow}">
 						<td>{{redeem.businessName}}</td>
 						<td>{{redeem.canRedeems}}</td>
-						<td>{{redeem.moneyRedeemed}}</td>
+						<td>{{redeem.moneyRedeemed | currency: currentUser.country.currency:0}}</td>
 						<td>{{redeem.canTokens}}</td>
 					</tr>
 				</tbody>

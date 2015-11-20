@@ -71,10 +71,10 @@
 				</thead>
 				<tbody>
 					<tr data-ng-repeat="creditNotes in currentPageCreditNotes">
-						<td><a href={{creditNotes.fileURL}} target="_blank">{{creditNotes.creditNoteID}}</a></td>
-						<td>{{creditNotes.creationDate}}</td>
+						<td><a href={{creditNotes.fileURL}} target="_blank">{{creditNotes.creditNoteID}} <i class="fa fa-file-pdf-o"></i> </a></td>
+						<td>{{creditNotes.creationDate | moment: 'DD/MM/YYYY hh:mm A'}}</td>
 						<td>{{creditNotes.businessName}}</td>
-						<td>{{creditNotes.total}}</td>
+						<td>{{creditNotes.total | currency: currentUser.country.currency:0}}</td>
 					</tr>
 				</tbody>
 			</table>

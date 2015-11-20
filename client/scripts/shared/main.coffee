@@ -26,6 +26,7 @@ angular.module('app.controllers', [])
                 '/landing/uno'
                 '/landing/dos'
                 '/landing'
+                '/roy/code'
             ], path )
 
         $scope.main =
