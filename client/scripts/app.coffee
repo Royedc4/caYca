@@ -59,7 +59,14 @@ angular.module('app', [
     'app.creditNotes.directives'
     'app.creditNotes.services'
     'app.landing.ctrls'
+    'app.roy.ctrls'
     ])
+
+# To handle on views like {{var | moment: 'format'}}
+.filter 'moment', ->
+    (dateString, format) ->
+        moment.locale 'es'
+        moment(dateString).format format
 
 .constant 'REST_API',
     # hostname:       'http://www.caycaSAMSUNGcompresores.com'
@@ -126,6 +133,12 @@ angular.module('app', [
             #     data:
             #         authorizedRoles: [USER_ROLES.public]
             #     )
+            .when(
+                '/roy/code'
+                templateUrl: 'views/roy/code.html'
+                data:
+                    authorizedRoles: [USER_ROLES.public]
+                )
             .when(
                 '/'
                 redirectTo: '/landing'
@@ -268,6 +281,15 @@ angular.module('app', [
                 data:
                     authorizedRoles: [
                         USER_ROLES.wholeSalerMOC,
+                        USER_ROLES.admin
+                    ]                
+                )
+            .when(
+                '/creditNotes/list4retailer'
+                templateUrl: 'views/creditNotes/list4retailer.html'                
+                data:
+                    authorizedRoles: [
+                        USER_ROLES.retailDVC,
                         USER_ROLES.admin
                     ]                
                 )
