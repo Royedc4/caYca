@@ -137,6 +137,24 @@ angular.module('app.controllers', [])
                 $http({ url: REST_API.hostname+"/server/ajax/Widgets/companyStock.php", method: "POST", data: JSON.stringify($filters) })
                     .success (postResponse) ->
                         postResponse.forEach (item) ->
+                            # Temp Fix 4 Gallium Disorder... 
+                            # 11/29/15 Roy.
+                            if item['compressorID']=='MSA143C-S1A'
+                                 item['stock']=parseInt(item['stock'])-1
+                            if item['compressorID']=='MD152C-L1UB'
+                                 item['stock']=parseInt(item['stock'])-2
+                            if item['compressorID']=='MSA170C-L1B'
+                                 item['stock']=parseInt(item['stock'])-1
+                            if item['compressorID']=='MK183D-L2UB'
+                                 item['stock']=parseInt(item['stock'])+1
+                            if item['compressorID']=='SK1A1C-L2WB'
+                                 item['stock']=parseInt(item['stock'])-1
+                            if item['compressorID']=='UR4B110IXBJL'
+                                 item['stock']=parseInt(item['stock'])-2
+                            if item['compressorID']=='UR8C172INCJH'
+                                 item['stock']=parseInt(item['stock'])-2
+                            if item['compressorID']=='UG8C180IUAJH'
+                                 item['stock']=parseInt(item['stock'])+3
                             $scope.companyStock.push({ label:item['compressorID'], value: parseInt(item['stock'])})
                             $scope.donutData = $scope.companyStock
             getCompanyStock()

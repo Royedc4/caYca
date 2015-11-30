@@ -2,6 +2,8 @@
 require_once '../../secure/db.php'; // The mysql database connection script
 
 $postdata = file_get_contents("php://input");
+$hoy = date("Y-m-d H:i:s");
+
 
 if ( ($data =  $postdata)  != NULL )
 {
@@ -22,6 +24,9 @@ if ( ($data =  $postdata)  != NULL )
 }
 else
 {
-	echo array('error' => 'DATABASE ERROR!');
+	$resultObj = (object) array('$data' => $data, '$postdata' => $postdata, 'hoy' => $hoy);
+	echo $json_response = json_encode($resultObj);	
 }
+
+	
 ?>

@@ -12,7 +12,7 @@ angular.module('app.raffles.ctrls', [])
         $scope.canjeAutomatico = false
         $scope.oneAtATime = true
         $scope.raffleCoupons = []
-
+        
         $scope.showInformation = ->
             $scope.canjeAutomatico=!$scope.canjeAutomatico
             if $scope.canjeAutomatico
@@ -102,47 +102,47 @@ angular.module('app.raffles.ctrls', [])
                 }, (isConfirm) ->
                         if isConfirm
                             swal 'Operación Procesada!', 'Se inscribieron exitosamente '+$scope.quantity+' cupones!', 'success'
-                            # preparingData()
-                            # $http({ url: REST_API.hostname+"/server/ajax/raffleCoupon/new.php", method: "POST", data: JSON.stringify($scope.data2insert) })
-                            # .success (postResponse) ->
-                            #     console.log postResponse
-                            #     if (typeof postResponse) == "object"
-                            #         for i in [1...postResponse['errorsArray'].length] by 1
-                            #             if (postResponse['errorsArray'][i].indexOf("raffleID")!=-1)
-                            #                 logger.logError "No se encuentran tokens disponibles para su país."
-                            #             if (postResponse['errorsArray'][i].indexOf("fk_raffleCoupons_labeledSerials1")!=-1)
-                            #                 logger.logError "Ingresaste cupones invalidos. Intenta de nuevo!"
-                            #             if (postResponse['errorsArray'][i].indexOf("token_UNIQUE")!=-1)
-                            #                 logger.logError "Ingresaste un token ya registrado!"
-                            #             if (postResponse['errorsArray'][i].indexOf("vendido")!=-1)
-                            #                 logger.logError "El token #: "+i+" ("+postResponse['arrayQueries'][i].substring(26, 40)+"), no ha sido vendido por ningun detal."
-                            #             if postResponse['zGlobalResult']
-                            #                 logger.logSuccess "Has registrado Exitosamente " + ((postResponse['arrayQueries'].length)-1).toString() + " Tokens en tu cuenta!"
-                            # if $scope.canjeAutomatico
-                            #     setTimeout ->
-                            #         console.log "Tambien se canjeara el cupon."
-                            #         # registerToken4redeem
-                            #         $http({ url: REST_API.hostname+"/server/ajax/redeemCoupon/new.php", method: "POST", data: JSON.stringify($scope.data2insert) })
-                            #         .success (postResponse) ->
-                            #             console.log postResponse
-                            #             if (typeof postResponse) == "object"
-                            #                 for i in [1...postResponse['errorsArray'].length] by 1
-                            #                     if (postResponse['errorsArray'][i].indexOf("redeemID")!=-1)
-                            #                         logger.logError "No se encuentran tokens disponibles para su país."
-                            #                     if (postResponse['errorsArray'][i].indexOf("fk_redeemCoupons_labeledSerials1")!=-1)
-                            #                         logger.logError "Ingresaste cupones invalidos. Intenta de nuevo!"
-                            #                     if (postResponse['errorsArray'][i].indexOf("token_UNIQUE")!=-1)
-                            #                         logger.logError "Ingresaste un token ya registrado!"
-                            #                     if postResponse['zGlobalResult']
-                            #                         logger.logSuccess "Tambien registraste " + ((postResponse['arrayQueries'].length)-1).toString() + " Tokens para canjes!"
-                            #     , 1000
-                            # $scope.revert()
-                            # setTimeout (->
-                            #     $scope.$apply ->
-                            #         raffleCoupons4user()
-                            #         return
-                            #     return
-                            # ), 500
+                            preparingData()
+                            $http({ url: REST_API.hostname+"/server/ajax/raffleCoupon/new.php", method: "POST", data: JSON.stringify($scope.data2insert) })
+                            .success (postResponse) ->
+                                console.log postResponse
+                                if (typeof postResponse) == "object"
+                                    for i in [1...postResponse['errorsArray'].length] by 1
+                                        if (postResponse['errorsArray'][i].indexOf("raffleID")!=-1)
+                                            logger.logError "No se encuentran tokens disponibles para su país."
+                                        if (postResponse['errorsArray'][i].indexOf("fk_raffleCoupons_labeledSerials1")!=-1)
+                                            logger.logError "Ingresaste cupones invalidos. Intenta de nuevo!"
+                                        if (postResponse['errorsArray'][i].indexOf("token_UNIQUE")!=-1)
+                                            logger.logError "Ingresaste un token ya registrado!"
+                                        if (postResponse['errorsArray'][i].indexOf("vendido")!=-1)
+                                            logger.logError "El token #: "+i+" ("+postResponse['arrayQueries'][i].substring(26, 40)+"), no ha sido vendido por ningun detal."
+                                        if postResponse['zGlobalResult']
+                                            logger.logSuccess "Has registrado Exitosamente " + ((postResponse['arrayQueries'].length)-1).toString() + " Tokens en tu cuenta!"
+                            if $scope.canjeAutomatico
+                                setTimeout ->
+                                    console.log "Tambien se canjeara el cupon."
+                                    # registerToken4redeem
+                                    $http({ url: REST_API.hostname+"/server/ajax/redeemCoupon/new.php", method: "POST", data: JSON.stringify($scope.data2insert) })
+                                    .success (postResponse) ->
+                                        console.log postResponse
+                                        if (typeof postResponse) == "object"
+                                            for i in [1...postResponse['errorsArray'].length] by 1
+                                                if (postResponse['errorsArray'][i].indexOf("redeemID")!=-1)
+                                                    logger.logError "No se encuentran tokens disponibles para su país."
+                                                if (postResponse['errorsArray'][i].indexOf("fk_redeemCoupons_labeledSerials1")!=-1)
+                                                    logger.logError "Ingresaste cupones invalidos. Intenta de nuevo!"
+                                                if (postResponse['errorsArray'][i].indexOf("token_UNIQUE")!=-1)
+                                                    logger.logError "Ingresaste un token ya registrado!"
+                                                if postResponse['zGlobalResult']
+                                                    logger.logSuccess "Tambien registraste " + ((postResponse['arrayQueries'].length)-1).toString() + " Tokens para canjes!"
+                                , 1000
+                            $scope.revert()
+                            setTimeout (->
+                                $scope.$apply ->
+                                    raffleCoupons4user()
+                                    return
+                                return
+                            ), 500
                         else
                             swal 'Operación Cancelada', 'Todo bien, no se han inscrito tus cupones!', 'error'
                         return

@@ -206,7 +206,7 @@ angular.module('app.redemptions.ctrls', [])
         $scope.search = ->
             $scope.filteredRedeems = $filter('filter')($scope.redeems, $scope.searchKeywords)
             $scope.onFilterChange()
-
+             
         # orderBy
         $scope.order = (rowName)->
             if $scope.row == rowName
@@ -300,20 +300,16 @@ angular.module('app.redemptions.ctrls', [])
 
         $scope.onOrderChange = ->
             $scope.select(1)
-            $scope.currentPage = 1            
-
-        $scope.search = ->
-            $scope.filteredRedeemCoupons = $filter('filter')($scope.redeemCoupons, $scope.searchKeywords)
-            $scope.onFilterChange()
-
-        # orderBy
+            $scope.currentPage = 1
         $scope.order = (rowName)->
             if $scope.row == rowName
                 return
             $scope.row = rowName
             $scope.filteredRedeemCoupons = $filter('orderBy')($scope.redeemCoupons, rowName)
             $scope.onOrderChange()
-
+        $scope.search = ->
+            $scope.filteredRedeemCoupons = $filter('filter')($scope.redeemCoupons, $scope.searchKeywords)
+            $scope.onFilterChange()
         # pagination
         $scope.numPerPageOpt = [3, 5, 10, 20]
         $scope.numPerPage = $scope.numPerPageOpt[2]
