@@ -3,7 +3,6 @@ angular.module('app.landing.ctrls', [])
 .controller('landingCtrl', [
     'REST_API','$scope', 'logger', '$http', '$window', '$document', '$animate'
     (REST_API,$scope, logger, $http, $window, $document, $animate) ->
-        logger.log("Bienvenido estamos en nuestro mes de inauguración!") 
         # Getting rotCompressors
         rotCompressors = ->
             $http({ url: REST_API.hostname+"/server/ajax/Compressors/rotInfo.php", method: "POST"})
@@ -17,7 +16,7 @@ angular.module('app.landing.ctrls', [])
             .success (postResponse) ->
                 $scope.recCompressors=postResponse
         recCompressors()
-        
+
 
 
         # window.addEventListener 'hashchange', ->
@@ -28,7 +27,7 @@ angular.module('app.landing.ctrls', [])
         #     console.log "3"
         #     section3 = angular.element(document.getElementById('bot'))
         #     document.scrollToElementAnimated section3
-            
+
         # $(document).ready ->
         #     $('a[href^="#"]').on 'click', (e) ->
         #         e.preventDefault()

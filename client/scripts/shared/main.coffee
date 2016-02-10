@@ -69,7 +69,7 @@ angular.module('app.controllers', [])
         console.log "On DashboardCtrl"
 
         if ($scope.currentUser.userTypeID=='TEC' || $scope.currentUser.userTypeID=='DV' || $scope.currentUser.userTypeID=='DVC')
-            console.log('widgets4tecsAndSellers') 
+            console.log('widgets4tecsAndSellers')
             # Loading user-redeemableMoney
             redeemableMoney = ->
                 $filters=
@@ -101,11 +101,11 @@ angular.module('app.controllers', [])
                         $scope.raffleCoupons = postResponse['0'].coupons
             raffleCoupons()
         if ($scope.currentUser.userTypeID=='MOC')
-            console.log('widgets4moc') 
+            console.log('widgets4moc')
         else
-            console.log('widgets4companiesUsers') 
+            console.log('widgets4companiesUsers')
             # Widgets Data
-            $scope.salesProgressPieChart = 
+            $scope.salesProgressPieChart =
                 percent: 1
                 options:
                     animate:
@@ -115,8 +115,8 @@ angular.module('app.controllers', [])
                     lineCap: 'round'
                     size: 180
                     lineWidth: 10
-            
-            $scope.labelingProgressPieChart = 
+
+            $scope.labelingProgressPieChart =
                 percent: 1
                 options:
                     animate:
@@ -127,17 +127,20 @@ angular.module('app.controllers', [])
                     size: 180
                     lineWidth: 12
 
-            $scope.donutData = null
-            
-            $scope.companyStock=[]
+            $scope.donutDataRec = null
+            $scope.donutDataRot = null
+
+            $scope.companyStockrec=[]
+            $scope.companyStockrot=[]
             # Load companyStock
             getCompanyStock = ->
                 $filters=
                     companyID: $scope.currentUser.companyID
+                    idFamily: 1
                 $http({ url: REST_API.hostname+"/server/ajax/Widgets/companyStock.php", method: "POST", data: JSON.stringify($filters) })
                     .success (postResponse) ->
                         postResponse.forEach (item) ->
-                            # Temp Fix 4 Gallium Disorder... 
+                            # Temp Fix 4 Gallium Disorder...
                             # 11/29/15 Roy.
                             if item['compressorID']=='MSA143C-S1A'
                                  item['stock']=parseInt(item['stock'])-1
@@ -149,15 +152,27 @@ angular.module('app.controllers', [])
                                  item['stock']=parseInt(item['stock'])+1
                             if item['compressorID']=='SK1A1C-L2WB'
                                  item['stock']=parseInt(item['stock'])-1
+                            $scope.companyStockrec.push({ label:item['compressorID'], value: parseInt(item['stock'])})
+                            $scope.donutDataRec = $scope.companyStockrec
+                # Another Chart
+                $filters=
+                    companyID: $scope.currentUser.companyID
+                    idFamily: 2
+                $http({ url: REST_API.hostname+"/server/ajax/Widgets/companyStock.php", method: "POST", data: JSON.stringify($filters) })
+                    .success (postResponse) ->
+                        postResponse.forEach (item) ->
+                            # Temp Fix 4 Gallium Disorder...
+                            # 11/29/15 Roy.
                             if item['compressorID']=='UR4B110IXBJL'
                                  item['stock']=parseInt(item['stock'])-2
                             if item['compressorID']=='UR8C172INCJH'
                                  item['stock']=parseInt(item['stock'])-2
                             if item['compressorID']=='UG8C180IUAJH'
                                  item['stock']=parseInt(item['stock'])+3
-                            $scope.companyStock.push({ label:item['compressorID'], value: parseInt(item['stock'])})
-                            $scope.donutData = $scope.companyStock
+                            $scope.companyStockrot.push({ label:item['compressorID'], value: parseInt(item['stock'])})
+                            $scope.donutDataRot = $scope.companyStockrot
             getCompanyStock()
+
             # Load companyStock
             getCompanySales = ->
                 $filters=
@@ -173,9 +188,9 @@ angular.module('app.controllers', [])
                     companyID: $scope.currentUser.companyID
                 $http({ url: REST_API.hostname+"/server/ajax/Widgets/labelingProgress.php", method: "POST", data: JSON.stringify($filters) })
                     .success (postResponse) ->
-                        $scope.labelingProgressPieChart = 
+                        $scope.labelingProgressPieChart =
                             percent: postResponse[0].porcentaje
-                                
+
             getLabelingProgress()
             # Load companyStock
             getSalesProgress = ->
@@ -183,7 +198,7 @@ angular.module('app.controllers', [])
                     companyID: $scope.currentUser.companyID
                 $http({ url: REST_API.hostname+"/server/ajax/Widgets/salesProgress.php", method: "POST", data: JSON.stringify($filters) })
                     .success (postResponse) ->
-                        $scope.salesProgressPieChart = 
+                        $scope.salesProgressPieChart =
                             percent: postResponse[0].porcentaje
             getSalesProgress()
 ])

@@ -9,8 +9,9 @@ if ( ($data =  $postdata)  != NULL )
 {
 	$array=json_decode($data, true);
 	$companyID = $array['companyID'];
+	$idFamily = $array['idFamily'];
 
-	$outerQuery="CALL `w-companyStock` ('$companyID')";
+	$outerQuery="CALL `w-companyStock` ('$companyID', '$idFamily')";
 	
 	$outerResult=$mysqli->query($outerQuery) or die($mysqli->error.__LINE__);
 	$arr = array();
