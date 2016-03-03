@@ -13,6 +13,7 @@ angular.module('app.controllers', [])
                 '/pages/500'
                 '/pages/login'
                 '/pages/signin'
+                '/accounts/password-reset'
                 '/pages/signin1'
                 '/pages/signin2'
                 '/accounts/signIn'

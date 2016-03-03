@@ -69,11 +69,11 @@ angular.module('app', [
         moment(dateString).format format
 
 .constant 'REST_API',
-    hostname:       'http://www.caycaSAMSUNGcompresores.com'
+    # hostname:       'http://www.caycaSAMSUNGcompresores.com'
     # hostname:       'http://cayca.192.168.7.241.xip.io:8888'
     # hostname:       'http://cayca.192.168.3.91.xip.io:8888'
     # hostname:       'http://192.168.3.91:8888'
-    # hostname:       'http://cayca:8888'
+    hostname:       'http://cayca:8888'
     
 .constant 'AUTH_EVENTS',
     loginSuccess:       'auth-login-success'
@@ -197,6 +197,12 @@ angular.module('app', [
                         USER_ROLES.wholeSalerMGC,
                         USER_ROLES.admin
                     ]
+                )
+            .when(
+                '/accounts/password-reset'
+                templateUrl: 'views/accounts/password-reset.html'
+                data:
+                    authorizedRoles: [USER_ROLES.public]
                 )
             .when(
                 '/accounts/signIn'
