@@ -61,7 +61,7 @@ angular.module('app.account.ctrls', [])
                     getUserType4user(user)
                     getCity4user(user)
                     $scope.setCurrentUser user
-                    $location.path('/dashboard') 
+                    $location.path('/dashboard')
                 else
                     console.log "SingIn Error."
                     $rootScope.$broadcast AUTH_EVENTS.loginFailed
@@ -401,8 +401,8 @@ angular.module('app.account.ctrls', [])
 
 
 .controller('retailerRequestCtrl', [
-    'REST_API','$scope', 'logger', '$http'
-    (REST_API,$scope, logger, $http ) ->
+    'REST_API','$scope', 'logger', '$http', '$location'
+    (REST_API,$scope, logger, $http, $location) ->
         console.log "@retailerRequestCtrl 4 every1 :)"
         # ng-model 4 user
         $scope.company = 
@@ -441,7 +441,7 @@ angular.module('app.account.ctrls', [])
              $scope.showInfoOnSubmit = true
              # $scope.revert()     
 
-        # Create New Account
+        # Request Contact
         $scope.requestContact = ->
             $scope.data = 
                 businessName: $scope.company.businessName
@@ -452,38 +452,18 @@ angular.module('app.account.ctrls', [])
                 phone: $scope.company.phone
                 celphone: $scope.company.celphone
                 geoID: $scope.company.citySelected.geoID
+                geoName: $scope.company.citySelected.name
             
             console.log ($scope.data)
-            # $http.defaults.headers.post["Content-Type"] = "application/json"            
+            $http.defaults.headers.post["Content-Type"] = "application/json"            
             
-            # $http({ url: REST_API.hostname+"/server/ajax/Users/addUser.php", method: "POST", data: (JSON.stringify($scope.data)) })
-            # .success (postResponse) ->
-            #     if (typeof postResponse) == "string"
-            #         if (postResponse.indexOf("ID") > -1)
-            #             console.log "Roy: " + JSON.stringify(postResponse)
-            #             logger.logError "El usuario con cedula de idenficicación: " + $scope.data.ID + " ya está en la base de datos."
-            #         if (postResponse.indexOf("email") > -1)
-            #             console.log "Roy: " + JSON.stringify(postResponse)
-            #             logger.logError "El usuario con ese EMAIL: " + $scope.data.email + " ya está en la base de datos."
-            #     else
-            #         console.log "Roy: " + JSON.stringify(postResponse)
-            #         logger.logSuccess "Se ha creado exitosamente el usuario: "+$scope.data.fullName
-            #         # logger.logWarning "Espere unos momentos se esta enviando el correo..."
-            #         $scope.revert()
+            $http({ url: REST_API.hostname+"/server/ajax/Company/retailerRequestMail.php", method: "POST", data: JSON.stringify(JSON.stringify($scope.data)) })
+            .success (postResponse) ->
+                console.log postResponse
+                logger.logSuccess('Gracias por su interes, será contactado proximamente.')
+                $location.path('/accounts/confirmContact')
+            .error (postResponse) ->
+                console.log "error"                
+                logger.logError "error"
 
-            #         #Sending Email
-            #         $http({ url: REST_API.hostname+"/server/ajax/Users/addUserConfirm.php", method: "POST", data: (JSON.stringify($scope.data)) })
-            #         .success (postResponseB) ->
-            #             console.log "Roy: " + JSON.stringify(postResponseB)
-            #             logger.logSuccess "Se ha enviado el correo con la información de registro a: "+ $scope.data.email
-            #         .error (postResponseB) ->
-            #             console.log "error enviando el correo"
-            #             logger.logError "Ha ocurrido un error enviando el correo. Por favor contacte al Administrador"
-
-            # .error (postResponse) ->
-            #     console.log "error"                
-
-                # logger.logSuccess('Se ha creado exitosamente la cuenta.')
-            return
-        return        
 ])
