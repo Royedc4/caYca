@@ -22,7 +22,7 @@ if ( $data != NULL )
  	// Create a message
 	$message = Swift_Message::newInstance('cayca SAMSUNG compresores :: Solicitud Nuevo Detal')
 	->setFrom(array('tecnologia@caycaSAMSUNGcompresores.com' => 'cayca SAMSUNG compresores'))
-	->setBcc('tecnologia@caycaSAMSUNGcompresores.com');
+	->setBcc(array('tecnologia@caycaSAMSUNGcompresores.com', 'galliumdecolombia@gmail.com', 'galliumgerenciacomercial@gmail.com'));
 
 	
 	$message->setTo(array($email => $businessName));
