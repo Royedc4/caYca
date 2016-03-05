@@ -69,11 +69,11 @@ angular.module('app', [
         moment(dateString).format format
 
 .constant 'REST_API',
-    hostname:       'http://www.caycaSAMSUNGcompresores.com'
+    # hostname:       'http://www.caycaSAMSUNGcompresores.com'
     # hostname:       'http://cayca.192.168.7.241.xip.io:8888'
     # hostname:       'http://cayca.192.168.3.91.xip.io:8888'
     # hostname:       'http://192.168.3.91:8888'
-    # hostname:       'http://cayca:8888'
+    hostname:       'http://cayca:8888'
     
 .constant 'AUTH_EVENTS',
     loginSuccess:       'auth-login-success'
@@ -180,6 +180,12 @@ angular.module('app', [
                         ]
                 )
             #Accounts
+            .when(
+                '/accounts/confirmContact'
+                templateUrl: 'views/accounts/confirmContact.html'
+                data:
+                    authorizedRoles: [USER_ROLES.public]
+                )
             .when(
                 '/accounts/new'
                 templateUrl: 'views/accounts/new.html'                
