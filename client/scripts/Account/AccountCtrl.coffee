@@ -440,4 +440,50 @@ angular.module('app.account.ctrls', [])
         $scope.submitForm = ->
              $scope.showInfoOnSubmit = true
              # $scope.revert()     
+
+        # Create New Account
+        $scope.requestContact = ->
+            $scope.data = 
+                businessName: $scope.company.businessName
+                owner: $scope.company.owner
+                contactName: $scope.company.contactName
+                NIT: $scope.company.NIT
+                email: $scope.company.email
+                phone: $scope.company.phone
+                celphone: $scope.company.celphone
+                geoID: $scope.company.citySelected.geoID
+            
+            console.log ($scope.data)
+            # $http.defaults.headers.post["Content-Type"] = "application/json"            
+            
+            # $http({ url: REST_API.hostname+"/server/ajax/Users/addUser.php", method: "POST", data: (JSON.stringify($scope.data)) })
+            # .success (postResponse) ->
+            #     if (typeof postResponse) == "string"
+            #         if (postResponse.indexOf("ID") > -1)
+            #             console.log "Roy: " + JSON.stringify(postResponse)
+            #             logger.logError "El usuario con cedula de idenficicación: " + $scope.data.ID + " ya está en la base de datos."
+            #         if (postResponse.indexOf("email") > -1)
+            #             console.log "Roy: " + JSON.stringify(postResponse)
+            #             logger.logError "El usuario con ese EMAIL: " + $scope.data.email + " ya está en la base de datos."
+            #     else
+            #         console.log "Roy: " + JSON.stringify(postResponse)
+            #         logger.logSuccess "Se ha creado exitosamente el usuario: "+$scope.data.fullName
+            #         # logger.logWarning "Espere unos momentos se esta enviando el correo..."
+            #         $scope.revert()
+
+            #         #Sending Email
+            #         $http({ url: REST_API.hostname+"/server/ajax/Users/addUserConfirm.php", method: "POST", data: (JSON.stringify($scope.data)) })
+            #         .success (postResponseB) ->
+            #             console.log "Roy: " + JSON.stringify(postResponseB)
+            #             logger.logSuccess "Se ha enviado el correo con la información de registro a: "+ $scope.data.email
+            #         .error (postResponseB) ->
+            #             console.log "error enviando el correo"
+            #             logger.logError "Ha ocurrido un error enviando el correo. Por favor contacte al Administrador"
+
+            # .error (postResponse) ->
+            #     console.log "error"                
+
+                # logger.logSuccess('Se ha creado exitosamente la cuenta.')
+            return
+        return        
 ])
