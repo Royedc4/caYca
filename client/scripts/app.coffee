@@ -31,7 +31,6 @@ angular.module('app', [
     'app.ui.form.directives'
     'app.tables'
     'app.compressors'
-    'app.map'
     'app.task'
     'app.localization'
     'app.chart.ctrls'
@@ -72,8 +71,8 @@ angular.module('app', [
     # hostname:       'http://www.caycaSAMSUNGcompresores.com'
     # hostname:       'http://cayca.192.168.7.241.xip.io:8888'
     # hostname:       'http://cayca.192.168.3.91.xip.io:8888'
-    # hostname:       'http://192.168.3.91:8888'
-    hostname:       'http://cayca:8888'
+    hostname:       'http://192.168.3.91:8888'
+    # hostname:       'http://cayca:8888'
     
 .constant 'AUTH_EVENTS',
     loginSuccess:       'auth-login-success'
@@ -591,10 +590,6 @@ angular.module('app', [
             # .when(
             #     '/maps/gmap'
             #     templateUrl: 'views/maps/gmap.html'
-            #     )
-            # .when(
-            #     '/maps/jqvmap'
-            #     templateUrl: 'views/maps/jqvmap.html'
             #     )
 
             # # Tables
