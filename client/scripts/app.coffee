@@ -181,6 +181,12 @@ angular.module('app', [
                 )
             #Accounts
             .when(
+                '/accounts/confirmContact'
+                templateUrl: 'views/accounts/confirmContact.html'
+                data:
+                    authorizedRoles: [USER_ROLES.public]
+                )
+            .when(
                 '/accounts/new'
                 templateUrl: 'views/accounts/new.html'                
                 data:

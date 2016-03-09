@@ -38,9 +38,9 @@
 							</span>
 							<input  type="text"
 							class="form-control"
-							placeholder="Nombre Completo"
-							data-ng-model="company.owner"
-							popover="Su nombre debe ser completo."
+							placeholder="Persona de contacto"
+							data-ng-model="company.contactName"
+							popover="El nombre debe ser completo."
 							popover-trigger="focus"
 							required
 							data-ng-minlength="7"
@@ -83,7 +83,7 @@
 							<span class="input-group-addon">
 								<span class="glyphicon glyphicon-phone-alt"></span>
 							</span>
-							<input type="tel"
+								<input type="tel"
 							name="phone"
 							data-ng-minlength=10
 							data-ng-maxlength=12
@@ -94,6 +94,23 @@
 							required>
 						</div>
 						<p ng-show="form_retailerRequest.phone.$invalid && form_retailerRequest.phone.$dirty" class="text-danger">El numero de telefono debe tener entre 10 y 12 números unicamente. Recuerdo incluir el codigo de pais.</p>
+					</div>
+					<div class="form-group">
+						<div class="input-group input-group-lg">
+							<span class="input-group-addon">
+								<span class="glyphicon glyphicon-phone-alt"></span>
+							</span>
+							<input type="tel"
+							name="celphone"
+							data-ng-minlength=10
+							data-ng-maxlength=12
+							data-ng-pattern="/^[0-9]+$/"
+							class="form-control"
+							placeholder="Telefono Celular"
+							data-ng-model="company.celphone"
+							required>
+						</div>
+						<p ng-show="form_retailerRequest.celphone.$invalid && form_retailerRequest.celphone.$dirty" class="text-danger">El numero de telefono debe tener entre 10 y 12 números unicamente. Recuerdo incluir el codigo de pais.</p>
 					</div>
 
 					<!-- city Select -->
@@ -110,9 +127,9 @@
 
 
 					<div class="text-center form-group">
-						<p class="text-muted text-small">Haciendo click en <strong>Contactar</strong> se enviaran tus datos a un vendedor SAMSUNG</p>
+						<p class="text-muted text-small">Haciendo click en <strong>Contactar</strong> se enviaran tus datos a un vendedor SAMSUNG que contactara a tu empresa proximamente.</p>
 						<div class="divider"></div>
-						<a ng-click="createNewAccount()" class="btn btn-primary btn-block btn-lg" data-ng-disabled="!canSubmit()">Contactar</a>
+						<a ng-click="requestContact()" class="btn btn-primary btn-block btn-lg" data-ng-disabled="!canSubmit()">Contactar</a>
 					</div>
 
 				</form>

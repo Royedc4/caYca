@@ -61,7 +61,7 @@ angular.module('app.account.ctrls', [])
                     getUserType4user(user)
                     getCity4user(user)
                     $scope.setCurrentUser user
-                    $location.path('/dashboard') 
+                    $location.path('/dashboard')
                 else
                     console.log "SingIn Error."
                     $rootScope.$broadcast AUTH_EVENTS.loginFailed
@@ -401,8 +401,8 @@ angular.module('app.account.ctrls', [])
 
 
 .controller('retailerRequestCtrl', [
-    'REST_API','$scope', 'logger', '$http'
-    (REST_API,$scope, logger, $http ) ->
+    'REST_API','$scope', 'logger', '$http', '$location'
+    (REST_API,$scope, logger, $http, $location) ->
         console.log "@retailerRequestCtrl 4 every1 :)"
         # ng-model 4 user
         $scope.company = 
@@ -440,4 +440,30 @@ angular.module('app.account.ctrls', [])
         $scope.submitForm = ->
              $scope.showInfoOnSubmit = true
              # $scope.revert()     
+
+        # Request Contact
+        $scope.requestContact = ->
+            $scope.data = 
+                businessName: $scope.company.businessName
+                owner: $scope.company.owner
+                contactName: $scope.company.contactName
+                NIT: $scope.company.NIT
+                email: $scope.company.email
+                phone: $scope.company.phone
+                celphone: $scope.company.celphone
+                geoID: $scope.company.citySelected.geoID
+                geoName: $scope.company.citySelected.name
+            
+            console.log ($scope.data)
+            $http.defaults.headers.post["Content-Type"] = "application/json"            
+            
+            $http({ url: REST_API.hostname+"/server/ajax/Company/retailerRequestMail.php", method: "POST", data: JSON.stringify(JSON.stringify($scope.data)) })
+            .success (postResponse) ->
+                console.log postResponse
+                logger.logSuccess('Gracias por su interes, será contactado proximamente.')
+                $location.path('/accounts/confirmContact')
+            .error (postResponse) ->
+                console.log "error"                
+                logger.logError "error"
+
 ])

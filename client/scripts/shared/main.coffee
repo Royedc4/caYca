@@ -28,6 +28,7 @@ angular.module('app.controllers', [])
                 '/landing/dos'
                 '/landing'
                 '/roy/code'
+                '/accounts/confirmContact'
             ], path )
 
         $scope.main =
