@@ -31,7 +31,6 @@ angular.module('app', [
     'app.ui.form.directives'
     'app.tables'
     'app.compressors'
-    'app.map'
     'app.task'
     'app.localization'
     'app.chart.ctrls'
@@ -72,8 +71,10 @@ angular.module('app', [
     # hostname:       'http://www.caycaSAMSUNGcompresores.com'
     # hostname:       'http://cayca.192.168.7.241.xip.io:8888'
     # hostname:       'http://cayca.192.168.3.91.xip.io:8888'
+    hostname:       'http://cayca.192.168.3.90.xip.io:8888'
+    # hostname:       'http://cayca:8888'
     # hostname:       'http://192.168.3.91:8888'
-    hostname:       'http://cayca:8888'
+    # hostname:       'http://cayca:8888'
     
 .constant 'AUTH_EVENTS',
     loginSuccess:       'auth-login-success'
@@ -203,6 +204,18 @@ angular.module('app', [
                         USER_ROLES.wholeSalerMGC,
                         USER_ROLES.admin
                     ]
+                )
+            .when(
+                '/accounts/password-reset'
+                templateUrl: 'views/accounts/password-reset.html'
+                data:
+                    authorizedRoles: [USER_ROLES.public]
+                )
+            .when(
+                '/pages/forgot'
+                templateUrl: 'views/pages/forgot-password.html'
+                data:
+                    authorizedRoles: [USER_ROLES.public]
                 )
             .when(
                 '/accounts/signIn'
@@ -490,10 +503,6 @@ angular.module('app', [
                 templateUrl: 'views/pages/signup.html'
                 )
             .when(
-                '/pages/forgot'
-                templateUrl: 'views/pages/forgot-password.html'
-                )
-            .when(
                 '/pages/lock-screen'
                 templateUrl: 'views/pages/lock-screen.html'
                 )
@@ -585,10 +594,6 @@ angular.module('app', [
             # .when(
             #     '/maps/gmap'
             #     templateUrl: 'views/maps/gmap.html'
-            #     )
-            # .when(
-            #     '/maps/jqvmap'
-            #     templateUrl: 'views/maps/jqvmap.html'
             #     )
 
             # # Tables
