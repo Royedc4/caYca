@@ -2,6 +2,81 @@
 
 angular.module('app.account.ctrls', [])
 
+.controller('forgotPassRequestCtrl', [
+    'REST_API', '$scope', 'logger', '$http', '$location', '$routeParams', 'cfpLoadingBar'
+    (REST_API, $scope, logger, $http, $location, $routeParams, cfpLoadingBar) ->
+        $scope.requestReset = ->
+            $filters=
+                email: $scope.email
+            $http({ url: REST_API.hostname+"/server/ajax/Users/f1Validation.php", method: "POST", data: JSON.stringify($filters) })
+                .success (postResponse) ->
+                    $scope.emailValid=postResponse.emailAuthenticity
+                    # console.log $scope.emailValid
+                    if $scope.emailValid=='1'
+                        console.log "::V::"
+                        newToken=generatePassword(150, false)
+                        #create password and insert into passwordchange... 
+                        forgotRequestCreation = ->
+                            $filters=
+                                email: $scope.email
+                                pToken: newToken
+                            # console.log $filters
+                            $http({ url: REST_API.hostname+"/server/ajax/Users/f2Creation.php", method: "POST", data: JSON.stringify($filters) })
+                                .success (postResponse) ->
+                                    # console.log postResponse
+                                    if postResponse.operationResult=='1'
+                                        #Send Email
+                                        $data4email=
+                                            fullName: postResponse.fullName
+                                            email : $scope.email
+                                            pToken: newToken
+                                        # console.log $data4email
+                                        $http({ url: REST_API.hostname+"/server/ajax/Users/mailPasswordForgot.php", method: "POST", data: JSON.stringify($data4email) })
+                                        .success (postResponseB) ->
+                                            logger.logSuccess "Se ha enviado el correo con la información para obtener su nueva clave a:\n"+ $scope.email
+                                            $location.path('/landing')
+                                        .error (postResponseB) ->
+                                            # console.log "error enviando el correo"
+                                            logger.logError "Ha ocurrido un error enviando el correo. Por favor contacte al Administrador"
+                        forgotRequestCreation()
+                    else
+                        console.log "::I::"
+                        document.getElementById('email').select()
+                        logger.logError("Error. Verifique la direccion de correo.") 
+                        
+                    
+])
+
+.controller('forgotPassChangeCtrl', [
+    'REST_API', '$scope', 'logger', '$http', '$location', '$routeParams', 'cfpLoadingBar'
+    (REST_API, $scope, logger, $http, $location, $routeParams, cfpLoadingBar) ->
+        $scope.tokenAuthenticity=''
+
+        checkPasswordToken = ->
+            $filters=
+                pToken: $routeParams.pToken
+            $http({ url: REST_API.hostname+"/server/ajax/Users/f3TokenVal.php", method: "POST", data: JSON.stringify($filters) })
+                .success (postResponse) ->
+                    $scope.tokenAuthenticity=postResponse.tokenAuthenticity
+        checkPasswordToken()
+
+        $scope.canSubmit = ->
+            return $scope.form_Login.$valid
+        $scope.changePassword = ->
+            $filters=
+                pToken: $routeParams.pToken
+                password: $scope.credentials.password
+            $http({ url: REST_API.hostname+"/server/ajax/Users/f4changePass.php", method: "POST", data: JSON.stringify($filters) })
+                .success (postResponse) ->
+                    console.log postResponse
+                    if postResponse.operationResult=='passwordUpdated'
+                        logger.logSuccess("Ha cambiado exitosamente su clave, sera redirigido al inicio de sesion.")
+                        $location.path('/accounts/signIn')
+                    else
+                        logger.logSuccess("No se ha logrado cambiar su clave, sera redirigido a olvido de contraseña.")
+                        $location.path('/pages/forgot')
+])
+
 .controller('LoginCtrl', [
     'REST_API','AUTH_EVENTS','$scope', '$http', 'LoginService', 'logger', '$rootScope', '$location'
     (REST_API,AUTH_EVENTS, $scope, $http, LoginService, logger, $rootScope, $location) ->
@@ -185,7 +260,7 @@ angular.module('app.account.ctrls', [])
             
             $scope.data = 
                 userID : $scope.user.userID
-                ID: $scope.user.ID
+                ID: $scope.user.IDtoUpperCase()
                 email: $scope.user.email
                 fullName: $scope.user.fullName
                 password: $scope.user.password

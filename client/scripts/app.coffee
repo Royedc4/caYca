@@ -71,7 +71,9 @@ angular.module('app', [
     # hostname:       'http://www.caycaSAMSUNGcompresores.com'
     # hostname:       'http://cayca.192.168.7.241.xip.io:8888'
     # hostname:       'http://cayca.192.168.3.91.xip.io:8888'
-    hostname:       'http://192.168.3.91:8888'
+    hostname:       'http://cayca.192.168.3.90.xip.io:8888'
+    # hostname:       'http://cayca:8888'
+    # hostname:       'http://192.168.3.91:8888'
     # hostname:       'http://cayca:8888'
     
 .constant 'AUTH_EVENTS',
@@ -206,6 +208,12 @@ angular.module('app', [
             .when(
                 '/accounts/password-reset'
                 templateUrl: 'views/accounts/password-reset.html'
+                data:
+                    authorizedRoles: [USER_ROLES.public]
+                )
+            .when(
+                '/pages/forgot'
+                templateUrl: 'views/pages/forgot-password.html'
                 data:
                     authorizedRoles: [USER_ROLES.public]
                 )
@@ -493,10 +501,6 @@ angular.module('app', [
             .when(
                 '/pages/signup'
                 templateUrl: 'views/pages/signup.html'
-                )
-            .when(
-                '/pages/forgot'
-                templateUrl: 'views/pages/forgot-password.html'
                 )
             .when(
                 '/pages/lock-screen'
