@@ -141,6 +141,7 @@ angular.module('app.controllers', [])
                     idFamily: 1
                 $http({ url: REST_API.hostname+"/server/ajax/Widgets/companyStock.php", method: "POST", data: JSON.stringify($filters) })
                     .success (postResponse) ->
+                        $scope.totalRec=0
                         postResponse.forEach (item) ->
                             # Temp Fix 4 Gallium Disorder...
                             # 11/29/15 Roy.
@@ -155,6 +156,7 @@ angular.module('app.controllers', [])
                             if item['compressorID']=='SK1A1C-L2WB'
                                  item['stock']=parseInt(item['stock'])-1
                             $scope.companyStockrec.push({ label:item['compressorID'], value: parseInt(item['stock'])})
+                            $scope.totalRec+=parseInt(item['stock'])
                             $scope.donutDataRec = $scope.companyStockrec
                 # Another Chart
                 $filters=
@@ -162,6 +164,7 @@ angular.module('app.controllers', [])
                     idFamily: 2
                 $http({ url: REST_API.hostname+"/server/ajax/Widgets/companyStock.php", method: "POST", data: JSON.stringify($filters) })
                     .success (postResponse) ->
+                        $scope.totalRot=0
                         postResponse.forEach (item) ->
                             # Temp Fix 4 Gallium Disorder...
                             # 11/29/15 Roy.
@@ -172,6 +175,7 @@ angular.module('app.controllers', [])
                             if item['compressorID']=='UG8C180IUAJH'
                                  item['stock']=parseInt(item['stock'])+3
                             $scope.companyStockrot.push({ label:item['compressorID'], value: parseInt(item['stock'])})
+                            $scope.totalRot+=parseInt(item['stock'])
                             $scope.donutDataRot = $scope.companyStockrot
             getCompanyStock()
 

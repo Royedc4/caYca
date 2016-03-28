@@ -8,7 +8,7 @@
 				<h4>Aún no se han registrado notas de credito a su favor.</h4>
 			</div>
 
-			<div class="panel panel-primary">
+			<div ng-show="creditNotes.length!=0 && loadStatus" class="panel panel-primary">
 				<div class="panel-heading">
 					<h3 class="panel-title">Canjes realizados en su tienda</h3>
 				</div>
