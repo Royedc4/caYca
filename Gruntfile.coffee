@@ -228,10 +228,20 @@ module.exports = (grunt) ->
                     src: [
                         "favicon.ico"
                         # bower components that has image, font dependencies
-                        "bower_components/font-awesome/css/*"
+                        "bower_components/font-awesome/css/font-awesome.min.css"
                         "bower_components/font-awesome/fonts/*"
                         "bower_components/weather-icons/css/*"
                         "bower_components/weather-icons/font/*"
+                        # Roy: sweet-alert, angular-loading-bar
+                        "bower_components/sweetalert/dist/sweetalert.css"
+                        "bower_components/sweetalert/themes/twitter/twitter.css"
+                        "bower_components/angular-loading-bar/build/loading-bar.min.css"
+                        # Landing
+                        "scripts/vendors/slider/swiper.min.css"
+                        "scripts/vendors/slider/swiper.min.js"
+                        # Server
+                        # Landing
+                        "server/**/*"
 
                         "fonts/**/*"
                         "i18n/**/*"
