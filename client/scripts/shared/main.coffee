@@ -102,7 +102,7 @@ angular.module('app.controllers', [])
                     .success (postResponse) ->
                         $scope.raffleCoupons = postResponse['0'].coupons
             raffleCoupons()
-        if ($scope.currentUser.userTypeID=='MOC')
+        else if ($scope.currentUser.userTypeID=='MOC')
             console.log('widgets4moc')
         else
             console.log('widgets4companiesUsers')

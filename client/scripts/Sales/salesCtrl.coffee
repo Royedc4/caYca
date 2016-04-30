@@ -212,7 +212,7 @@ angular.module('app.sales.ctrls', [])
             cfpLoadingBar.start()
             $filters=
                 companyID: $scope.currentUser.company.companyID
-            $http({ url: REST_API.hostname+"/server/ajax/company/getMA4company.php", method: "POST", data: JSON.stringify($filters) })
+            $http({ url: REST_API.hostname+"/server/ajax/Company/getMA4company.php", method: "POST", data: JSON.stringify($filters) })
                 .success (postResponse) ->
                     # console.log postResponse['0']['@ma4company']
                     $filters=

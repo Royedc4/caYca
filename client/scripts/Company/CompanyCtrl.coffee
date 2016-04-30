@@ -96,19 +96,15 @@ angular.module('app.company.ctrls', [])
 
 
 .controller('listCompaniesCtrl', [
-    'REST_API','$scope', 'logger', '$http', '$filter', '$timeout'
-    (REST_API,$scope, logger, $http, $filter, $timeout) ->
+    'REST_API','$scope', 'logger', '$http', '$filter', '$timeout', 'cfpLoadingBar', '$rootScope'
+    (REST_API,$scope, logger, $http, $filter, $timeout, cfpLoadingBar, $rootScope) ->
         # Definition of objets
-
-        # Control Data
-        
-        # xD
-        console.log 'listCompaniesCtrl'
-
         $scope.retailers = []
         $scope.searchKeywords = ''
         $scope.filteredRetailers = []
         $scope.row = ''
+
+        console.log 'listCompaniesCtrl'
 
         $scope.select = (page) ->
             start = (page - 1) * $scope.numPerPage
@@ -161,17 +157,24 @@ angular.module('app.company.ctrls', [])
                 country: $scope.currentUser.country.country
             $http({ url: REST_API.hostname+"/server/ajax/Company/listFiltered.php", method: "POST", data: JSON.stringify($filters) })
                 .success (postResponse) ->
-                    # console.log postResponse
                     $scope.retailers =postResponse
-                # Only way to make react on filter to show items on table
-                setTimeout ->
-                    $('#searchKeywords').focus()
-                    angular.element('#orderIDretailerUP').trigger('click')
+                    cfpLoadingBar.complete()
+                    $scope.loadStatus=cfpLoadingBar.status()
+                    $scope.init()
                     if $scope.filteredRetailers.length==0
                         logger.logError "No se encontraron empresas registradas en su pais."
                     else
-                        logger.logSuccess "Tiene "+$scope.filteredRetailers.length+" empresas registradas."
-                , 100
+                        logger.logSuccess "Tiene "+$scope.retailers.length+" empresas registradas."
+                    return
+                # Only way to make react on filter to show items on table
+                # setTimeout ->
+                #     $('#searchKeywords').focus()
+                #     angular.element('#orderIDretailerUP').trigger('click')
+                #     if $scope.filteredRetailers.length==0
+                #         logger.logError "No se encontraron empresas registradas en su pais."
+                #     else
+                #         logger.logSuccess "Tiene "+$scope.filteredRetailers.length+" empresas registradas."
+                # , 100
             return
         getRetailerCompanies()
 
@@ -197,4 +200,85 @@ angular.module('app.company.ctrls', [])
                 
         # retailers4country()
 
+])
+
+
+
+.controller('listDynamicCtrl', [
+    'REST_API','$scope', 'logger', '$http', '$filter', '$timeout', 'cfpLoadingBar', '$rootScope'
+    (REST_API,$scope, logger, $http, $filter, $timeout, cfpLoadingBar, $rootScope) ->
+        # Definition of objets
+        $scope.records = []
+        $scope.searchKeywords = ''
+        $scope.filteredRecords = []
+        $scope.row = ''
+        $scope.loadStatus=0
+
+        console.log 'listDynamicCtrl cfpLoadingBar'
+
+        $scope.select = (page) ->
+            start = (page - 1) * $scope.numPerPage
+            end = start + $scope.numPerPage
+            $scope.currentPageSales = $scope.filteredRecords.slice(start, end)
+
+        $scope.search = ->
+            $scope.filteredRecords = $filter('filter')($scope.records, $scope.searchKeywords)
+            $scope.onFilterChange()
+
+        # orderBy
+        $scope.order = (rowName)->
+            if $scope.row == rowName
+                return
+            $scope.row = rowName
+            $scope.filteredRecords = $filter('orderBy')($scope.records, rowName)
+            $scope.onOrderChange()
+
+        # on page change: change numPerPage, filtering string
+        $scope.onFilterChange = ->
+            $scope.select(1)
+            $scope.currentPage = 1
+            $scope.row = ''
+
+        $scope.onNumPerPageChange = ->
+            $scope.select(1)
+            $scope.currentPage = 1
+
+        $scope.onOrderChange = ->
+            $scope.select(1)
+            $scope.currentPage = 1            
+
+        # pagination
+        $scope.numPerPageOpt = [3, 5, 10, 20]
+        $scope.numPerPage = $scope.numPerPageOpt[2]
+        $scope.currentPage = 1
+        $scope.currentPageSales = []
+
+        # init
+        $scope.init = ->
+            $scope.search()
+            $scope.select($scope.currentPage)
+        $scope.init()
+
+        #Load companies
+        getRecords = ->
+            cfpLoadingBar.start()
+            $filters=
+                companyID: $scope.currentUser.company.companyID
+            $http({ url: REST_API.hostname+"/server/ajax/Company/getMA4company.php", method: "POST", data: JSON.stringify($filters) })
+                .success (postResponse) ->
+                    $filters=
+                        seller_userID: postResponse['0']['@ma4company']
+                    $http({ url: REST_API.hostname+"/server/ajax/Bill/listFiltered.php", method: "POST", data: JSON.stringify($filters) })
+                        .success (postResponse) ->
+                            $scope.records=postResponse
+                            cfpLoadingBar.complete()
+                            $scope.loadStatus=cfpLoadingBar.status()
+                            $scope.init()
+                            if $scope.filteredRecords.length==0
+                                logger.logError "No se encontraron ventas registradas en su empresa."
+                            else
+                                logger.logSuccess "Tiene "+$scope.records.length+" ventas registradas."
+                    return
+            return
+        getRecords()
 ])
