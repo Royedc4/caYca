@@ -4,54 +4,50 @@
                         | '__| /   \  \ \_/ /
                         | |    | () |  \   /
                         |_|    \___/   /__/
--->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
-    <title>caycaSAMSUNGcompresor</title>
-    <!-- Roy: Description and keywords -->
-    <meta name="description" content="Aplicación informativa para tiendas al detal y técnicos que distribuyan y comercialicen Compresores Samsung en Colombia, Venezuela y CAYCA">
-    <meta name="keywords" content="compresores samsung, compresores reciprocantes, compresores rotativos, cayca samsung compresores">
-    <!-- webApp -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <!-- Roy: iOS -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-title" content="cSAMSUNGc" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="apple-touch-startup-image" href="/App-icon.png">
-    <link rel="apple-touch-icon" href="/App-icon.png">
-    <link rel="apple-touch-icon" href="app_icon60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="72.png">
-    <link rel="apple-touch-icon" sizes="50x50" href="50.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="114.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="144.png">
-    <link rel="apple-touch-icon" sizes="100x100" href="100.png">
-    <!-- Placing favicon.ico and apple-touch-icon.png in the root directory -->
-    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
-    <!-- needs images, font... therefore can not be part of ui.css -->
-    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="bower_components/weather-icons/css/weather-icons.min.css">
-    <!-- end needs images -->
-
-    <link rel="stylesheet" href="styles/main.css">
-    <link rel="stylesheet" href="bower_components/sweetalert/dist/sweetalert.css">
-    <link rel="stylesheet" href="bower_components/sweetalert/themes/twitter/twitter.css">
-    <link href='bower_components/angular-loading-bar/src/loading-bar.css' rel='stylesheet' />
-    
-</head>
-<body data-ng-app="app" id="app" data-custom-background data-off-canvas-nav>
+                    -->
+                    <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+                    <head>
+                        <meta charset="utf-8">
+                        <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+                        <title>caycaSAMSUNGcompresor</title>
+                        <!-- Roy: Description and keywords -->
+                        <meta name="description" content="Aplicación informativa para tiendas al detal y técnicos que distribuyan y comercialicen Compresores Samsung en Colombia, Venezuela y CAYCA">
+                        <meta name="keywords" content="compresores samsung, compresores reciprocantes, compresores rotativos, cayca samsung compresores">
+                        <!-- webApp -->
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+                        <!-- Roy: iOS -->
+                        <meta name="apple-mobile-web-app-capable" content="yes">
+                        <meta name="apple-mobile-web-app-title" content="cSAMSUNGc" />
+                        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+                        <link rel="apple-touch-startup-image" href="/App-icon.png">
+                        <link rel="apple-touch-icon" href="/App-icon.png">
+                        <link rel="apple-touch-icon" href="app_icon60.png">
+                        <link rel="apple-touch-icon" sizes="72x72" href="72.png">
+                        <link rel="apple-touch-icon" sizes="50x50" href="50.png">
+                        <link rel="apple-touch-icon" sizes="114x114" href="114.png">
+                        <link rel="apple-touch-icon" sizes="144x144" href="144.png">
+                        <link rel="apple-touch-icon" sizes="100x100" href="100.png">
+                        <!-- Placing favicon.ico and apple-touch-icon.png in the root directory -->
+                        <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
+                        <!-- needs images, font... therefore can not be part of ui.css -->
+                        <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+                        <link rel="stylesheet" href="bower_components/weather-icons/css/weather-icons.min.css">
+                        <!-- end needs images -->
+                        <link rel="stylesheet" href="styles/main.css">
+                        <link rel="stylesheet" href="bower_components/sweetalert/dist/sweetalert.css">
+                        <link rel="stylesheet" href="bower_components/sweetalert/themes/twitter/twitter.css">
+                        <link href='bower_components/angular-loading-bar/build/loading-bar.min.css' rel='stylesheet' />
+                    </head>
+                    <body data-ng-app="app" id="app" data-custom-background data-off-canvas-nav>
         <!--[if lt IE 9]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
             <![endif]-->
-
             <div data-ng-controller="AppCtrl">
                 <div data-ng-hide="isSpecificPage()"
                 data-ng-cloak
                 class="no-print">
                 <section data-ng-include=" 'views/header.html' "
                 id="header" class="top-header"></section>
-
                 <aside data-ng-include=" 'views/nav.html' "
                 id="nav-container"></aside>
             </div>
@@ -60,11 +56,11 @@
                 <section data-ng-view id="content" class="animate-fade-up"></section>
             </div>
         </div>
-
-
-        <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+        <!-- ROY: MAPS -->
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCF_Jff6qzjfmlb44MjqKpfnMzFJZC8lg8&signed_in=true&libraries=places"></script>
         <!-- build:js scripts/vendor.js -->
         <script src="bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
         <script src="bower_components/angular/angular.min.js"></script>
         <script src="bower_components/angular-route/angular-route.min.js"></script>
         <script src="bower_components/angular-animate/angular-animate.min.js"></script>
@@ -72,8 +68,8 @@
         <!-- Roy -->
         <script src="bower_components/js-xlsx/dist/xlsx.core.min.js"></script>
         <script src="bower_components/jsBarcode/jsBarcode.js"></script>
-        <script src="bower_components/jsBarcode/EAN_UPC.js"></script>
-        <script src="bower_components/jsBarcode/CODE128.js"></script>
+        <script src="bower_components/jsBarcode/barcodes/EAN_UPC.js"></script>
+        <script src="bower_components/jsBarcode/barcodes/CODE128.js"></script>
         <script src="bower_components/angular-ui-utils/ui-utils.js"></script>
         <script src="scripts/vendors/password-generator.min.js"></script>
         <script src="bower_components/morris.js/morris.min.js"></script>
@@ -81,18 +77,14 @@
         <script src="bower_components/angular-morris-chart/src/angular-morris-chart.min.js"></script>
         <script src="bower_components/sweetalert/dist/sweetalert.min.js"></script>
         <script src="bower_components/angular-scroll/angular-scroll.min.js"></script>
-
         <script src="bower_components/moment/min/moment.min.js"></script>
-
         <!-- Roy: angular-timer  -->
         <script src="bower_components/angular-timer/dist/angular-timer.min.js"></script>
         <script src="bower_components/momentjs/min/moment.min.js"></script>
         <script src="bower_components/momentjs/min/locales.min.js"></script>
         <script src="bower_components/humanize-duration/humanize-duration.js"></script>
-
         <!-- Roy: loading-bar -->
-        <script src="bower_components/angular-loading-bar/src/loading-bar.js"></script>
-        
+        <script src="bower_components/angular-loading-bar/build/loading-bar.min.js"></script>
         <!-- endbuild -->
 
         <!-- build:js scripts/ui.js -->
@@ -122,11 +114,7 @@
         <script src="bower_components/textAngular/src/textAngular.js"></script>
         <script src="scripts/vendors/skycons.js"></script>
         <script src="bower_components/angular-ui-tree/dist/angular-ui-tree.min.js"></script>
-        <script src="bower_components/angularjs-google-maps/dist/ng-map.min.js"></script>
-        <script src="bower_components/jqvmap/jqvmap/jquery.vmap.min.js"></script>
-        <script src="bower_components/jqvmap/jqvmap/maps/jquery.vmap.world.js"></script>
-        <script src="bower_components/jqvmap/jqvmap/maps/jquery.vmap.usa.js"></script>
-        <script src="bower_components/jqvmap/jqvmap/maps/jquery.vmap.europe.js"></script>
+        <script src="bower_components/ngmap/build/scripts/ng-map.min.js"></script>
         <script src="bower_components/ng-tags-input/ng-tags-input.min.js"></script>
         <!-- endbuild -->
 
@@ -143,7 +131,6 @@
         <script src="scripts/Form/FormValidation.js"></script>
         <script src="scripts/Table/TableCtrl.js"></script>
         <script src="scripts/Compressors/CompressorsCtrl.js"></script>
-        <script src="scripts/Map/Map.js"></script>
         <script src="scripts/Task/Task.js"></script>
         <script src="scripts/Chart/ChartCtrl.js"></script>
         <script src="scripts/Chart/ChartDirective.js"></script>
@@ -157,11 +144,12 @@
         <script src="scripts/Admin/AdminDirective.js"></script>
         <script src="scripts/labels/LabelsCtrl.js"></script>
         <script src="scripts/labels/LabelsValidation.js"></script>
-        <script src="scripts/raffles/rafflesCtrl.js"></script>
-        <script src="scripts/raffles/rafflesValidation.js"></script>
-        <script src="scripts/redemptions/redeemCtrl.js"></script>
-        <script src="scripts/redemptions/redeemService.js"></script>
-        <script src="scripts/redemptions/redeemDirective.js"></script>
+        <script src="scripts/raffles/RafflesCtrl.js"></script>
+        <script src="scripts/raffles/RafflesValidation.js"></script>
+        <script src="scripts/redemptions/RedeemCtrl.js"></script>
+        <script src="scripts/redemptions/RedeemService.js"></script>
+        <script src="scripts/redemptions/RedeemDirective.js"></script>
+        <script src="scripts/redemptions/RedeemValidation.js"></script>
         <script src="scripts/sales/salesCtrl.js"></script>
         <script src="scripts/sales/salesService.js"></script>
         <script src="scripts/sales/salesDirective.js"></script>
@@ -169,8 +157,7 @@
         <script src="scripts/creditNotes/creditNotesService.js"></script>
         <script src="scripts/creditNotes/creditNotesDirective.js"></script>
         <script src="scripts/landing/landingCtrl.js"></script>
-        <!-- Roy -->
-        <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="scripts/roy/royCtrl.js"></script>
         <!-- endbuild -->
     </body>
     </html>

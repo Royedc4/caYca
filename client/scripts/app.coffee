@@ -31,7 +31,6 @@ angular.module('app', [
     'app.ui.form.directives'
     'app.tables'
     'app.compressors'
-    'app.map'
     'app.task'
     'app.localization'
     'app.chart.ctrls'
@@ -51,6 +50,7 @@ angular.module('app', [
     'app.redemptions.ctrls'
     'app.redemptions.directives'
     'app.redemptions.services'
+    'app.redemptions.validation'
     'app.sales.ctrls'
     'app.sales.directives'
     'app.sales.services'
@@ -58,17 +58,32 @@ angular.module('app', [
     'app.creditNotes.directives'
     'app.creditNotes.services'
     'app.landing.ctrls'
+    'app.roy.ctrls'
     ])
 
+# To handle on views like {{var | moment: 'format'}}
+.filter 'moment', ->
+    (dateString, format) ->
+        moment.locale 'es'
+        moment(dateString).format format
+
 .constant 'REST_API',
-    # hostname:       'http://www.caycaSAMSUNGcompresores.com'
-    # hostname:       'http://www.samsungcayca.com'
+    hostname:       'http://www.caycaSAMSUNGcompresores.com'
     # hostname:       'http://cayca.192.168.7.241.xip.io:8888'
     # hostname:       'http://cayca.192.168.3.91.xip.io:8888'
-    hostname:       'http://cayca:8888'
+    # hostname:       'http://cayca.192.168.3.90.xip.io:8888'
+    # hostname:       'http://cayca:8888'
     # hostname:       'http://192.168.3.91:8888'
-    
-    
+    # hostname:       'http://cayca:8888'
+
+.constant 'MAPS_API',
+    Ki:             '&key=AIzaSyCF_Jff6qzjfmlb44MjqKpfnMzFJZC8lg8'
+    refroncaID:     'ChIJb5YwAHhFZo4Rv7TDoZTSz0Q'
+    TRSID:          'ChIJRc7kzXwVaI4Rns26OPrZ7lk'
+    details:        'https://maps.googleapis.com/maps/api/place/details/json?placeid='
+    geocode:        'https://maps.googleapis.com/maps/api/geocode/json?place_id='
+
+
 .constant 'AUTH_EVENTS',
     loginSuccess:       'auth-login-success'
     loginFailed:        'auth-login-failed'
@@ -77,7 +92,7 @@ angular.module('app', [
     notAuthenticated:   'auth-not-authenticated'
     notAuthorized:      'auth-not-authorized'
 
-.constant 'USER_ROLES', 
+.constant 'USER_ROLES',
     public:         'ALL'
     admin:          'ADM'
     technician:     'TEC'
@@ -126,6 +141,12 @@ angular.module('app', [
             #         authorizedRoles: [USER_ROLES.public]
             #     )
             .when(
+                '/roy/code'
+                templateUrl: 'views/roy/code.html'
+                data:
+                    authorizedRoles: [USER_ROLES.public]
+                )
+            .when(
                 '/'
                 redirectTo: '/landing'
                 data:
@@ -156,7 +177,7 @@ angular.module('app', [
                     authorizedRoles: [
                         USER_ROLES.admin,
                         USER_ROLES.technician,
-                        USER_ROLES.caYcaALM, 
+                        USER_ROLES.caYcaALM,
                         USER_ROLES.caYcaCGG,
                         USER_ROLES.retailDV,
                         USER_ROLES.retailDVC,
@@ -169,8 +190,14 @@ angular.module('app', [
                 )
             #Accounts
             .when(
+                '/accounts/confirmContact'
+                templateUrl: 'views/accounts/confirmContact.html'
+                data:
+                    authorizedRoles: [USER_ROLES.public]
+                )
+            .when(
                 '/accounts/new'
-                templateUrl: 'views/accounts/new.html'                
+                templateUrl: 'views/accounts/new.html'
                 data:
                     authorizedRoles: [
                         USER_ROLES.wholeSalerMGC,
@@ -178,13 +205,36 @@ angular.module('app', [
                     ]
                 )
             .when(
-                '/accounts/list'
-                templateUrl: 'views/accounts/list.html'                
+                '/accounts/listSellers'
+                templateUrl: 'views/accounts/listSellers.html'
                 data:
                     authorizedRoles: [
                         USER_ROLES.wholeSalerMGC,
+                        USER_ROLES.wholeSalerMG,
                         USER_ROLES.admin
                     ]
+                )
+            .when(
+                '/accounts/listTechnicians'
+                templateUrl: 'views/accounts/listTechnicians.html'
+                data:
+                    authorizedRoles: [
+                        USER_ROLES.wholeSalerMGC,
+                        USER_ROLES.wholeSalerMG,
+                        USER_ROLES.admin
+                    ]
+                )
+            .when(
+                '/accounts/password-reset'
+                templateUrl: 'views/accounts/password-reset.html'
+                data:
+                    authorizedRoles: [USER_ROLES.public]
+                )
+            .when(
+                '/pages/forgot'
+                templateUrl: 'views/pages/forgot-password.html'
+                data:
+                    authorizedRoles: [USER_ROLES.public]
                 )
             .when(
                 '/accounts/signIn'
@@ -194,20 +244,20 @@ angular.module('app', [
                 )
             .when(
                 '/accounts/signUp'
-                templateUrl: 'views/accounts/signUp.html'                
+                templateUrl: 'views/accounts/signUp.html'
                 data:
                     authorizedRoles: [USER_ROLES.public]
                 )
             .when(
                 '/accounts/retailerRequest'
-                templateUrl: 'views/accounts/retailerRequest.html'                
+                templateUrl: 'views/accounts/retailerRequest.html'
                 data:
                     authorizedRoles: [USER_ROLES.public]
                 )
             #Companies
             .when(
                 '/companies/new'
-                templateUrl: 'views/companies/new.html'                
+                templateUrl: 'views/companies/new.html'
                 data:
                     authorizedRoles: [
                         USER_ROLES.wholeSalerMGC,
@@ -216,17 +266,18 @@ angular.module('app', [
                 )
             .when(
                 '/companies/list'
-                templateUrl: 'views/companies/list.html'                
+                templateUrl: 'views/companies/list.html'
                 data:
                     authorizedRoles: [
                         USER_ROLES.wholeSalerMGC,
+                        USER_ROLES.wholeSalerMG,
                         USER_ROLES.admin
                     ]
                 )
             #Admin
             .when(
                 '/admin/databaseJobs'
-                templateUrl: 'views/admin/databaseJobs.html'                
+                templateUrl: 'views/admin/databaseJobs.html'
                 data:
                     authorizedRoles: [
                         USER_ROLES.admin
@@ -235,7 +286,7 @@ angular.module('app', [
             #Compressors
             .when(
                 '/compressors/newImportation'
-                templateUrl: 'views/compressors/newImportation.html'                
+                templateUrl: 'views/compressors/newImportation.html'
                 data:
                     authorizedRoles: [
                         USER_ROLES.caYcaCGG,
@@ -244,7 +295,7 @@ angular.module('app', [
                 )
             .when(
                 '/compressors/tokens'
-                templateUrl: 'views/compressors/tokens.html'                
+                templateUrl: 'views/compressors/tokens.html'
                 data:
                     authorizedRoles: [
                         USER_ROLES.caYcaCGG,
@@ -254,69 +305,79 @@ angular.module('app', [
             # creditNotes
             .when(
                 '/creditNotes/new'
-                templateUrl: 'views/creditNotes/new.html'                
+                templateUrl: 'views/creditNotes/new.html'
                 data:
                     authorizedRoles: [
                         USER_ROLES.wholeSalerMOC,
                         USER_ROLES.admin
-                    ]                
+                    ]
                 )
             .when(
                 '/creditNotes/list'
-                templateUrl: 'views/creditNotes/list.html'                
+                templateUrl: 'views/creditNotes/list.html'
                 data:
                     authorizedRoles: [
                         USER_ROLES.wholeSalerMOC,
                         USER_ROLES.admin
-                    ]                
+                    ]
+                )
+            .when(
+                '/creditNotes/list4retailer'
+                templateUrl: 'views/creditNotes/list4retailer.html'
+                data:
+                    authorizedRoles: [
+                        USER_ROLES.retailDVC,
+                        USER_ROLES.admin
+                    ]
                 )
             # Sales
             .when(
                 '/sales/newInvoice'
-                templateUrl: 'views/sales/newInvoice.html'                
+                templateUrl: 'views/sales/newInvoice.html'
                 data:
                     authorizedRoles: [
                         USER_ROLES.wholeSalerMA,
                         USER_ROLES.admin
-                    ]                
+                    ]
                 )
             .when(
                 '/sales/list'
-                templateUrl: 'views/sales/list.html'                
+                templateUrl: 'views/sales/list.html'
                 data:
                     authorizedRoles: [
                         USER_ROLES.wholeSalerMA,
                         USER_ROLES.wholeSalerMGC,
+                        USER_ROLES.wholeSalerMG,
                         USER_ROLES.admin
-                    ]                
+                    ]
                 )
             .when(
                 '/sales/print'
-                templateUrl: 'views/sales/print.html'                
+                templateUrl: 'views/sales/print.html'
                 data:
                     authorizedRoles: [
                         USER_ROLES.wholeSalerMA,
                         USER_ROLES.admin
-                    ]                
+                    ]
                 )
             .when(
                 '/sales/erase'
-                templateUrl: 'views/sales/erase.html'                
+                templateUrl: 'views/sales/erase.html'
                 data:
                     authorizedRoles: [
                         USER_ROLES.wholeSalerMA,
                         USER_ROLES.admin
-                    ]                
+                    ]
                 )
             # Labels
             .when(
                 '/labels/production'
-                templateUrl: 'views/labels/production.html'                
+                templateUrl: 'views/labels/production.html'
                 data:
                     authorizedRoles: [
                         USER_ROLES.wholeSalerMA,
                         USER_ROLES.admin
-                    ]                
+                    ]
                 )
             # Redemptions
             .when(
@@ -368,8 +429,8 @@ angular.module('app', [
                         USER_ROLES.retailDV,
                         USER_ROLES.retailDVC
                         ]
-                )  
-            # Raffles                         
+                )
+            # Raffles
             .when(
                 '/raffles/listCoupons'
                 templateUrl: 'views/raffles/listCoupons.html'
@@ -403,12 +464,13 @@ angular.module('app', [
                         USER_ROLES.retailDV,
                         USER_ROLES.retailDVC,
                         USER_ROLES.wholeSalerMGC,
+                        USER_ROLES.wholeSalerMG,
                         ]
                 )
             # Get Raffle Coupon
             .when(
-                '/raffles/newCoupon'
-                templateUrl: 'views/raffles/newCoupon.html'
+                '/newCoupon'
+                templateUrl: 'views/newCoupon.html'
                 data:
                     authorizedRoles: [
                         USER_ROLES.admin,
@@ -434,14 +496,15 @@ angular.module('app', [
                     authorizedRoles: [
                         USER_ROLES.admin,
                         USER_ROLES.technician,
-                        USER_ROLES.caYcaALM, 
+                        USER_ROLES.caYcaALM,
                         USER_ROLES.caYcaCGG,
                         USER_ROLES.retailDV,
                         USER_ROLES.retailDVC,
                         USER_ROLES.wholeSalerMA,
                         USER_ROLES.wholeSalerMAC,
                         USER_ROLES.wholeSalerMG,
-                        USER_ROLES.wholeSalerMGC
+                        USER_ROLES.wholeSalerMGC,
+                        USER_ROLES.wholeSalerMOC
                         ]
                 )
             .when(
@@ -452,7 +515,7 @@ angular.module('app', [
                 )
             .when(
                 '/pages/signin'
-                templateUrl: 'views/pages/signin.html'                
+                templateUrl: 'views/pages/signin.html'
                 )
             .when(
                 '/pages/features'
@@ -461,10 +524,6 @@ angular.module('app', [
             .when(
                 '/pages/signup'
                 templateUrl: 'views/pages/signup.html'
-                )
-            .when(
-                '/pages/forgot'
-                templateUrl: 'views/pages/forgot-password.html'
                 )
             .when(
                 '/pages/lock-screen'
@@ -558,10 +617,6 @@ angular.module('app', [
             # .when(
             #     '/maps/gmap'
             #     templateUrl: 'views/maps/gmap.html'
-            #     )
-            # .when(
-            #     '/maps/jqvmap'
-            #     templateUrl: 'views/maps/jqvmap.html'
             #     )
 
             # # Tables

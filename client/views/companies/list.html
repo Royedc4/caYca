@@ -2,12 +2,12 @@
 	<section class="panel panel-default table-dynamic">
 		<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> <span data-i18n="Listado de empresas"></span></strong></div>
 
-		<div ng-show="retailers.length==0" class="callout callout-danger">
+		<div ng-show="retailers.length==0 && loadStatus" class="callout callout-danger">
 			<h4>No se encontraron empresas</h4>
 			<p>Recuerde que debe registrar las empresas previamente usando la opción <a href="#/companies/new">Nueva Empresa</a></p>
 		</div>
 
-		<div ng-show="retailers.length!=0">
+		<div ng-show="retailers.length>1">
 
 			<div class="table-filters">
 				<div class="row">

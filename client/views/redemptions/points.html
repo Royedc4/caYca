@@ -3,7 +3,8 @@
         <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span><span data-i18n=" Listado de cupones disponibles para canjear"></span></strong></div>
 
         <div ng-show="redeemCoupons.length==0" class="callout callout-danger">
-            <h4>No dispone de cupones en este momento...</h4>
+            <h4>No dispone de cupones para canjear en este momento...</h4>
+            <p>Si no ha resgistrado su cupon, puede hacerlo usando la opción: <a href="#/newCoupon">Nuevo cupon</a></p>
         </div>
 
         <div ng-show="redeemCoupons.length!=0">
@@ -23,7 +24,7 @@
                     <div class="col-sm-3 col-xs-6 filter-result-info">
                         <span>
                             Mostrando {{filteredRedeemCoupons.length}}/{{redeemCoupons.length}} registros
-                        </span>              
+                        </span>
                     </div>
                 </div>
             </div>
@@ -83,11 +84,11 @@
                 <div class="row">
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 page-num-info">
                         <span>
-                            Mostrar 
+                            Mostrar
                             <select id="selectNumPerPage" data-ng-model="numPerPage"
                             data-ng-options="num for num in numPerPageOpt"
                             data-ng-change="onNumPerPageChange()">
-                        </select> 
+                        </select>
                         registros por pagina
                     </span>
                 </div>

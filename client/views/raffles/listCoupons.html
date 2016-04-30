@@ -2,9 +2,9 @@
 	<section class="panel panel-default table-dynamic">
 		<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span><span data-i18n=" Listado de cupones registrados para la rifa"></span></strong></div>
 
-		<div ng-show="raffleCoupons.length==0 && loadStatus" class="callout callout-danger">
+		<div ng-show="raffleCoupons.length==0" class="callout callout-danger">
 			<h4>No se encontraron cupones</h4>
-			<p>Para ver sus cupones que estan participando en rifas debe registrarlos previamente usando la opción <a href="#/raffles/newCoupon">Nuevo cupon</a></p>
+			<p>Para ver sus cupones que estan participando en rifas debe registrarlos previamente usando la opción <a href="#/newCoupon">Nuevo cupon</a></p>
 		</div>
 
 		<div ng-show="raffleCoupons.length!=0">
@@ -24,7 +24,7 @@
 					<div class="col-sm-3 col-xs-6 filter-result-info">
 						<span>
 							Mostrando {{filteredRaffleCoupons.length}}/{{raffleCoupons.length}} registros
-						</span>              
+						</span>
 					</div>
 				</div>
 			</div>
@@ -85,11 +85,11 @@
 				<div class="row">
 					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 page-num-info">
 						<span>
-							Mostrar 
+							Mostrar
 							<select id="selectNumPerPage" data-ng-model="numPerPage"
 							data-ng-options="num for num in numPerPageOpt"
 							data-ng-change="onNumPerPageChange()">
-						</select> 
+						</select>
 						registros por pagina
 					</span>
 				</div>

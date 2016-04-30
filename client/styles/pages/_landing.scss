@@ -7,12 +7,12 @@
 
 .logo {
 	font-size: 30px;
-	font-family: futura;
+	font-family: tahoma;
 	color: white;
 }
 
 .landing-footer {
-	font-family: futura;
+	font-family: tahoma;
 	color: white;
 	background-color: #525252;
 	padding: .5em 0;
@@ -20,7 +20,7 @@
 
 .landing-nav{
 	background-color: #1428A0;
-	font-family: futura;
+	font-family: tahoma;
 }
 
 
@@ -77,4 +77,47 @@
 .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
 	color: #1428A0;
 	background-color: white;
+}
+
+.page-canje {
+
+	.canje-info-container {
+		margin: 0 -15px 50px;
+		background-color: $reverse;
+		@include box-shadow( 0 0 5px rgba(0,0,0,.1) );
+
+		>ul {
+			display: block;
+			margin: 0;
+			padding: 0;
+			list-style: none;
+			font-size: 14px;
+			text-align: center;
+
+			li {
+				display: block;
+				border-top: 1px solid $state-default-border;
+				padding: 20px;
+				@media (min-width: $screen-md) {
+					display: inline-block;
+                    // float: left;
+                    padding: 30px 20px;
+                    border-top: 0;
+                    border-right: 1px solid $state-default-border;   
+                    &:first-child {
+                    	border-left: 1px solid $state-default-border;
+                    }                 
+                }
+
+                > i {
+                	margin-right: 10px;
+                	font-size: 18px;
+                }
+
+                a {
+                	color: $text-color;
+                }
+            }
+        }
+    }
 }

@@ -19,25 +19,28 @@
 			<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Cantidad de tokens a registrar</strong></div>
 
 			<div class="panel-body text-center">
-				<div class="col-xs-3 col-sm-3 col-md-2 col-lg-1 form-group">
+				<div class="col-xs-4 col-sm-2 col-md-2 col-lg-1 form-group">
 					<input type="number" id="quantity" class="form-control" data-min=0 ng-minlenght=0 ng-maxlenght=30 ng-model="quantity" placeholder="Cantidad">
 				</div>
 
-				<div class="col-xs-7 col-sm-6 col-md-3 col-lg-3 form-group">
+				<div class="col-xs-8 col-sm-4 col-md-4 col-lg-2 form-group">
 					<button ng-click="loadInputs()" class="btn btn-primary btn-block"><span class="fa fa-file-o"></span> Preparar Formulario</button>
 				</div>
 
-				<div class="col-xs-2 col-sm-3 col-md-1 col-lg-2 form-group">
-					<label class="switch switch-success"><input type="checkbox" ng-model="canjeAutomatico" ng-click="showInformation()"><i></i></label>
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 form-group">
+					<label class="col-xs-4 col-sm-2 col-md-2 col-lg-2 switch switch-success"><input type="checkbox" ng-model="canjeAutomatico" popover-trigger="mouseenter" popover="Canje Automatico!" ng-click="showInformation()"><i></i></label>
+					<label class="col-xs-8 col-sm-10 col-md-10 col-lg-10" ng-show="canjeAutomatico">Auto-Canje Activado</label>
+					<label class="col-xs-8 col-sm-10 col-md-10 col-lg-10" ng-show="!canjeAutomatico">Auto-Canje Desactivado</label>
 				</div>
-				<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 form-group">
+
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-2 form-group">
 					<button class="btn btn-default btn-block"
 					data-ng-disabled="!canRevert()"
 					data-ng-click="revert()"
 					><span class="fa fa-eraser"></span> Borrar Tokens</button>
 				</div>
 
-				<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 form-group">					
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 form-group">					
 					<button type="submit"
 					id="registerToken4rafffleButton"
 					class="btn btn-success btn-block"
@@ -52,7 +55,7 @@
 		<section class="panel panel-default" ng-show="quantity>0">
 			<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Formulario de Tokens </strong></div>
 			<div class="panel-body" >
-				<div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 form-group" ng-repeat="inp in inputs">
+				<div class="col-xs-12 col-sm-4 col-md-3 col-lg-2 form-group" ng-repeat="inp in inputs">
 					<input 
 					type="text"
 					required

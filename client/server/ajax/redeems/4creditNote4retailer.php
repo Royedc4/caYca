@@ -2,14 +2,14 @@
 require_once '../../secure/db.php'; // The mysql database connection script
 
 $postdata = file_get_contents("php://input");
-
 if ( ($data =  $postdata)  != NULL )
 {
 	$array=json_decode($data, true);
+	$country = $array['country'];
 	$companyID = $array['companyID'];
 
-	$outerQuery="CALL `w-companyStock` ('$companyID')";
-	
+	$outerQuery="CALL `redeems-4creditNote4retailer`('$companyID', '$country')";
+
 	$outerResult=$mysqli->query($outerQuery) or die($mysqli->error.__LINE__);
 	$arr = array();
 	if($outerResult->num_rows > 0) {

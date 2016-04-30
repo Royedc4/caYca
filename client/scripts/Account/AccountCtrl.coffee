@@ -2,6 +2,81 @@
 
 angular.module('app.account.ctrls', [])
 
+.controller('forgotPassRequestCtrl', [
+    'REST_API', '$scope', 'logger', '$http', '$location', '$routeParams', 'cfpLoadingBar'
+    (REST_API, $scope, logger, $http, $location, $routeParams, cfpLoadingBar) ->
+        $scope.requestReset = ->
+            $filters=
+                email: $scope.email
+            $http({ url: REST_API.hostname+"/server/ajax/Users/f1Validation.php", method: "POST", data: JSON.stringify($filters) })
+                .success (postResponse) ->
+                    $scope.emailValid=postResponse.emailAuthenticity
+                    # console.log $scope.emailValid
+                    if $scope.emailValid=='1'
+                        console.log "::V::"
+                        newToken=generatePassword(150, false)
+                        #create password and insert into passwordchange... 
+                        forgotRequestCreation = ->
+                            $filters=
+                                email: $scope.email
+                                pToken: newToken
+                            # console.log $filters
+                            $http({ url: REST_API.hostname+"/server/ajax/Users/f2Creation.php", method: "POST", data: JSON.stringify($filters) })
+                                .success (postResponse) ->
+                                    # console.log postResponse
+                                    if postResponse.operationResult=='1'
+                                        #Send Email
+                                        $data4email=
+                                            fullName: postResponse.fullName
+                                            email : $scope.email
+                                            pToken: newToken
+                                        # console.log $data4email
+                                        $http({ url: REST_API.hostname+"/server/ajax/Users/mailPasswordForgot.php", method: "POST", data: JSON.stringify($data4email) })
+                                        .success (postResponseB) ->
+                                            logger.logSuccess "Se ha enviado el correo con la información para obtener su nueva clave a:\n"+ $scope.email
+                                            $location.path('/landing')
+                                        .error (postResponseB) ->
+                                            # console.log "error enviando el correo"
+                                            logger.logError "Ha ocurrido un error enviando el correo. Por favor contacte al Administrador"
+                        forgotRequestCreation()
+                    else
+                        console.log "::I::"
+                        document.getElementById('email').select()
+                        logger.logError("Error. Verifique la direccion de correo.") 
+                        
+                    
+])
+
+.controller('forgotPassChangeCtrl', [
+    'REST_API', '$scope', 'logger', '$http', '$location', '$routeParams', 'cfpLoadingBar'
+    (REST_API, $scope, logger, $http, $location, $routeParams, cfpLoadingBar) ->
+        $scope.tokenAuthenticity=''
+
+        checkPasswordToken = ->
+            $filters=
+                pToken: $routeParams.pToken
+            $http({ url: REST_API.hostname+"/server/ajax/Users/f3TokenVal.php", method: "POST", data: JSON.stringify($filters) })
+                .success (postResponse) ->
+                    $scope.tokenAuthenticity=postResponse.tokenAuthenticity
+        checkPasswordToken()
+
+        $scope.canSubmit = ->
+            return $scope.form_Login.$valid
+        $scope.changePassword = ->
+            $filters=
+                pToken: $routeParams.pToken
+                password: $scope.credentials.password
+            $http({ url: REST_API.hostname+"/server/ajax/Users/f4changePass.php", method: "POST", data: JSON.stringify($filters) })
+                .success (postResponse) ->
+                    # console.log postResponse
+                    if postResponse.operationResult=='passwordUpdated'
+                        logger.logSuccess("Ha cambiado exitosamente su clave, sera redirigido al inicio de sesion.")
+                        $location.path('/accounts/signIn')
+                    else
+                        logger.logSuccess("No se ha logrado cambiar su clave, sera redirigido a olvido de contraseña.")
+                        $location.path('/pages/forgot')
+])
+
 .controller('LoginCtrl', [
     'REST_API','AUTH_EVENTS','$scope', '$http', 'LoginService', 'logger', '$rootScope', '$location'
     (REST_API,AUTH_EVENTS, $scope, $http, LoginService, logger, $rootScope, $location) ->
@@ -61,7 +136,7 @@ angular.module('app.account.ctrls', [])
                     getUserType4user(user)
                     getCity4user(user)
                     $scope.setCurrentUser user
-                    $location.path('/dashboard') 
+                    $location.path('/dashboard')
                 else
                     console.log "SingIn Error."
                     $rootScope.$broadcast AUTH_EVENTS.loginFailed
@@ -185,7 +260,7 @@ angular.module('app.account.ctrls', [])
             
             $scope.data = 
                 userID : $scope.user.userID
-                ID: $scope.user.ID
+                ID: $scope.user.ID.toUpperCase()
                 email: $scope.user.email
                 fullName: $scope.user.fullName
                 password: $scope.user.password
@@ -277,7 +352,7 @@ angular.module('app.account.ctrls', [])
             
             $scope.data = 
                 email: $scope.user.email
-                ID: $scope.user.ID
+                ID: $scope.user.ID.toUpperCase()
                 fullName: $scope.user.fullName
                 password: $scope.user.password
                 address: $scope.user.address
@@ -322,6 +397,80 @@ angular.module('app.account.ctrls', [])
         
 ])
 
+.controller('listTechniciansCtrl', [
+    'REST_API','$scope', 'logger', '$http', '$filter', '$timeout', 'cfpLoadingBar'
+    (REST_API,$scope, logger, $http, $filter, $timeout, cfpLoadingBar) ->
+        console.log 'listTechniciansCtrl'
+
+        $scope.technicians = []
+        $scope.searchKeywords = ''
+        $scope.filteredTechnicians = []
+        $scope.row = ''
+        $scope.loadStatus=0
+
+        $scope.select = (page) ->
+            start = (page - 1) * $scope.numPerPage
+            end = start + $scope.numPerPage
+            $scope.currentPageTechnicians = $scope.filteredTechnicians.slice(start, end)
+
+        # on page change: change numPerPage, filtering string
+        $scope.onFilterChange = ->
+            $scope.select(1)
+            $scope.currentPage = 1
+            $scope.row = ''
+
+        $scope.onNumPerPageChange = ->
+            $scope.select(1)
+            $scope.currentPage = 1
+
+        $scope.onOrderChange = ->
+            $scope.select(1)
+            $scope.currentPage = 1            
+
+
+        $scope.search = ->
+            $scope.filteredTechnicians = $filter('filter')($scope.technicians, $scope.searchKeywords)
+            $scope.onFilterChange()
+
+        # orderBy
+        $scope.order = (rowName)->
+            if $scope.row == rowName
+                return
+            $scope.row = rowName
+            $scope.filteredTechnicians = $filter('orderBy')($scope.technicians, rowName)
+            $scope.onOrderChange()
+
+        # pagination
+        $scope.numPerPageOpt = [3, 5, 10, 20]
+        $scope.numPerPage = $scope.numPerPageOpt[2]
+        $scope.currentPage = 1
+        $scope.currentPageTechnicians = []
+
+        # init
+        $scope.init = ->
+            $scope.search()
+            $scope.select($scope.currentPage)
+        $scope.init()
+
+        #Load companies
+        getTechnicians = ->
+            cfpLoadingBar.start()
+            $filters=
+                userTypeID: 'TEC'
+                country: $scope.currentUser.country.country
+            $http({ url: REST_API.hostname+"/server/ajax/Users/listFiltered.php", method: "POST", data: JSON.stringify($filters) })
+                .success (postResponse) ->
+                    $scope.technicians =postResponse
+                    cfpLoadingBar.complete()
+                    $scope.loadStatus=cfpLoadingBar.status()
+                    $scope.init()
+                    if $scope.technicians.length==0
+                        logger.logError "No se encontraron tecnicos registrados en su pais."
+                    else
+                        logger.logSuccess "Tiene "+$scope.technicians.length+" tecnicos registrados."
+        getTechnicians()
+])
+
 .controller('listSellersCtrl', [
     'REST_API','$scope', 'logger', '$http', '$filter', '$timeout', 'cfpLoadingBar'
     (REST_API,$scope, logger, $http, $filter, $timeout, cfpLoadingBar) ->
@@ -331,7 +480,7 @@ angular.module('app.account.ctrls', [])
         $scope.searchKeywords = ''
         $scope.filteredSellers = []
         $scope.row = ''
-        $scope.loadStatus=0
+        $scope.loadSellersStatus=0
 
         $scope.select = (page) ->
             start = (page - 1) * $scope.numPerPage
@@ -387,22 +536,19 @@ angular.module('app.account.ctrls', [])
                 .success (postResponse) ->
                     $scope.sellers =postResponse
                     cfpLoadingBar.complete()
-                    $scope.loadStatus=cfpLoadingBar.status()
+                    $scope.loadSellersStatus=cfpLoadingBar.status()
                     $scope.init()
-                if $scope.sellers.length==0
-                    logger.logError "No se encontraron vendedores registrados en su pais."
-                else
-                    logger.logSuccess "Tiene "+$scope.sellers.length+" vendedores registrados."
+                    if $scope.sellers.length==0
+                        logger.logError "No se encontraron vendedores registrados en su pais."
+                    else
+                        logger.logSuccess "Tiene "+$scope.sellers.length+" vendedores registrados."
         getSellers()
-
-       
-
 ])
 
 
 .controller('retailerRequestCtrl', [
-    'REST_API','$scope', 'logger', '$http'
-    (REST_API,$scope, logger, $http ) ->
+    'REST_API','$scope', 'logger', '$http', '$location'
+    (REST_API,$scope, logger, $http, $location) ->
         console.log "@retailerRequestCtrl 4 every1 :)"
         # ng-model 4 user
         $scope.company = 
@@ -440,4 +586,30 @@ angular.module('app.account.ctrls', [])
         $scope.submitForm = ->
              $scope.showInfoOnSubmit = true
              # $scope.revert()     
+
+        # Request Contact
+        $scope.requestContact = ->
+            $scope.data = 
+                businessName: $scope.company.businessName
+                owner: $scope.company.owner
+                contactName: $scope.company.contactName
+                NIT: $scope.company.NIT
+                email: $scope.company.email
+                phone: $scope.company.phone
+                celphone: $scope.company.celphone
+                geoID: $scope.company.citySelected.geoID
+                geoName: $scope.company.citySelected.name
+            
+            console.log ($scope.data)
+            $http.defaults.headers.post["Content-Type"] = "application/json"            
+            
+            $http({ url: REST_API.hostname+"/server/ajax/Company/retailerRequestMail.php", method: "POST", data: JSON.stringify(JSON.stringify($scope.data)) })
+            .success (postResponse) ->
+                console.log postResponse
+                logger.logSuccess('Gracias por su interes, será contactado proximamente.')
+                $location.path('/accounts/confirmContact')
+            .error (postResponse) ->
+                console.log "error"                
+                logger.logError "error"
+
 ])

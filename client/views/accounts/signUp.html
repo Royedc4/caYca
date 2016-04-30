@@ -43,10 +43,10 @@
 								data-ng-model="user.ID"
 								data-ng-minlength=8
 								data-ng-maxlength=11
-								pattern="(CE|CC|ce|cc)[0-9]+" 
+								pattern="(NIT|nit|CE|CC|ce|cc)[0-9]+" 
 								required>
 							</div>
-							<p ng-show="form_NewAccount.ID.$invalid && form_NewAccount.ID.$dirty" class="text-danger"> Verifique su identificación, recuerde agregar CC o CE segun corresponda (EJM: CC1234567)</p>
+							<p ng-show="form_NewAccount.ID.$invalid && form_NewAccount.ID.$dirty" class="text-danger"> Verifique su identificación, recuerde agregar NIT, CC o CE segun corresponda (EJM: CC1234567)</p>
 						</div>
 						<div class="form-group">
 							<div class="input-group input-group-lg">

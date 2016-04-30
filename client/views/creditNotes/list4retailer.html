@@ -1,0 +1,111 @@
+<div class="page" data-ng-controller="listCreditNotes4retailerCtrl">
+	<section class="panel panel-default table-dynamic">
+		<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> <span data-i18n="Estado de cuenta con proveedor"></span></strong></div>
+
+		<div class="panel-body text-center">
+
+			<div ng-show="creditNotes.length==0 && loadStatus" class="callout callout-danger">
+				<h4>Aún no se han registrado notas de credito a su favor.</h4>
+			</div>
+
+			<div ng-show="creditNotes.length!=0 && loadStatus" class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">Canjes realizados en su tienda</h3>
+				</div>
+				<div class="panel-body">
+					Al día de hoy en {{currentUser.company.businessName}} se han hecho <strong>{{redeems['0'].canRedeems}} canjes</strong> acumulando <strong>{{redeems['0'].pointsRedeemed | number:0}} puntos</strong> por un total de <strong>{{redeems['0'].moneyRedeemed | currency: currentUser.country.currency:0}} </strong>.
+				</div>
+			</div>
+
+			<div ng-show="creditNotes.length!=0">
+
+				<div class="table-filters">
+					<div class="row">
+						<div class="col-sm-4 col-xs-6">
+							<form>
+								<input type="text"
+								placeholder="buscar"
+								id="searchKeywords"
+								class="form-control"
+								data-ng-model="searchKeywords"
+								data-ng-keyup="search()" />
+							</form>
+						</div>
+						<div class="col-sm-3 col-xs-6 filter-result-info">
+							<span>
+								Mostrando {{filteredCreditNotes.length}}/{{creditNotes.length}} registros
+							</span>              
+						</div>
+					</div>
+				</div>
+
+				<table ng-table="creditNotesTable" class="table table-bordered table-responsive">
+					<thead>
+						<tr>
+							<th><div class="th">
+								#Factura
+								<span id="creditNoteIDUP" class="glyphicon glyphicon-chevron-up"
+								data-ng-click=" order('creditNoteID') "
+								data-ng-class="{active: row == 'creditNoteID'}"></span>
+								<span class="glyphicon glyphicon-chevron-down"
+								data-ng-click=" order('-creditNoteID') "
+								data-ng-class="{active: row == '-creditNoteID'}"></span>
+							</div></th>
+							<th><div class="th">
+								Fecha
+								<span class="glyphicon glyphicon-chevron-up"
+								data-ng-click=" order('creationDate') "
+								data-ng-class="{active: row == 'creationDate'}"></span>
+								<span class="glyphicon glyphicon-chevron-down"
+								data-ng-click=" order('-creationDate') "
+								data-ng-class="{active: row == '-creationDate'}"></span>
+							</div></th>
+							<th><div class="th">
+								Monto
+								<span class="glyphicon glyphicon-chevron-up"
+								data-ng-click=" order('total') "
+								data-ng-class="{active: row == 'total'}"></span>
+								<span class="glyphicon glyphicon-chevron-down"
+								data-ng-click=" order('-total') "
+								data-ng-class="{active: row == '-total'}"></span>
+							</div></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr data-ng-repeat="creditNotes in currentPageCreditNotes">
+							<td><a href={{creditNotes.fileURL}} target="_blank">{{creditNotes.creditNoteID}} <i class="fa fa-file-pdf-o"></i> </a></td>
+							<td>{{creditNotes.creationDate | moment: 'DD/MM/YYYY hh:mm A'}}</td>
+							<td>{{creditNotes.total | currency: currentUser.country.currency:0}}</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<footer class="table-footer">
+					<div class="row">
+						<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 page-num-info">
+							<span>
+								Mostrar 
+								<select id="selectNumPerPage" data-ng-model="numPerPage"
+								data-ng-options="num for num in numPerPageOpt"
+								data-ng-change="onNumPerPageChange()">
+							</select> 
+							registros por pagina
+						</span>
+					</div>
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-right pagination-container">
+						<pagination class="pagination-sm"
+						page="currentPage"
+						total-items="filteredCreditNotes.length"
+						max-size="4"
+						on-select-page="select(page)"
+						items-per-page="numPerPage"
+						rotate="false"
+						boundary-links="true"></pagination>
+					</div>
+				</div>
+
+			</footer>
+		</div>
+	</div>
+</section>
+</div>
