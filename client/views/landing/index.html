@@ -46,6 +46,10 @@
         width: 100%;
         height: 100%;
     }
+    .compressorPic {
+        height: auto;
+        width: 40%;
+    }
 </style>
 
 <!-- Swiper -->
@@ -53,7 +57,6 @@
     <div class="swiper-wrapper">
         <div class="swiper-slide"><img src="/images/l/s/1.jpg"></div>
         <div class="swiper-slide"><img src="/images/l/s/2.jpg"></div>
-        <div class="swiper-slide"><img src="/images/l/s/3.jpg"></div>
     </div>
     <!-- Add Pagination -->
     <div class="swiper-pagination"></div>
@@ -67,7 +70,7 @@
       <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-mobile" aria-expanded="false">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -77,12 +80,14 @@
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <div class="collapse navbar-collapse" id="navbar-mobile">
         <ul class="nav navbar-nav navbar-right text-white">
             <li><a href="#/landing#products">PRODUCTOS</a></li>
-            <li><a class="page-scroll" href="#/landing#sellers">DISTRIBUIDORES</a></li>
+            <li><a href="#/landing#redemptions">CANJES</a></li>
+            <li><a href="#/landing#retailers">TIENDAS</a></li>
+            <li><a class="page-scroll" href="#/landing#suppliers">PROVEEDORES</a></li>
             <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-lock"></i> MI CUENTA <span class="caret"></span></a>
+                <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-lock"></i> MI CUENTA <span class="caret"></span></a>
                 <ul class="dropdown-menu">
                     <li><a href="#/accounts/signIn">INICIAR SESION</a></li>
                     <li class="divider"></li>
@@ -102,43 +107,115 @@
         </section>
     </div>
 </div>
-<div style="padding-top: 70px;" class="text-center text-thin">
+<div style="padding-top: 30px;" class="text-center text-thin">
     <div class="panel-body text-center">
-        <hr>
         <h4 class="lead">Creado especialmente para tiendas al detal y técnicos que distribuyan y comercialicen Compresores Samsung en Centro América y el Caribe</h4>
-        <hr>
-        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-            <h2>
-                Si usted es distribuidor al detal
-            </h2>
-            <hr>
-            <img src="/images/l/compresor-gratis.png">
-            <p>
-                Por la compra de 20 Compresores SAMSUNG, le obsequiamos otra unidad adicional para respaldar cualquier eventualidad de garantía.
-            </p>
-            <img src="/images/l/smartwatch.jpg">
-            <p>
-                Además su equipo de ventas puede ganar cupones que podrán canjear por smarphones, tablets y mucho más!
-            </p>
-        </div>
-
-        <!-- Promo  -->
-        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-            <h2>
-                Si usted es técnico
-            </h2>
-            <hr>
-            <img src="/images/l/tecnico.png">
-            <p>
-                Por la compra de un Compresor SAMSUNG,estará acumulando puntos que podrá canjear por productos que venda su tienda de refrigeracion de preferencia como centro de canje de esta promoción.
-            </p>
-            <p>
-                Además, estará participando en el sorteo de una espectacular moto!
-            </p>
+        <div class="row text-center">
+            <div class="col-sm-6">
+                <div class="thumbnail">
+                    <img alt="" src="/images/l/promo-tecnico.png">
+                    <h2>SÍ USTED ES TECNICO</h2>
+                    <p>Por la compra de un Compresor SAMSUNG, acumula puntos que canjeará en su tienda de preferencia centro de canje. Además, estarás participando en la rifa de una espectacular moto!</p>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="thumbnail">
+                    <img alt="" src="/images/l/promo-vendedor.png">
+                    <hr>
+                    <h2>SÍ USTED ES VENDEDOR</h2>
+                    <p>Por la venta de un Compresor SAMSUNG, estará acumulando puntos que podrá canjear por productos especiales. Además, estarás participando en la rifa de una espectacular moto!</p>
+                </div>    
+            </div>
         </div>
     </div>
 </div>
 
+<hr>
+
+<div id="redemptions" class="landing-header">
+    <div class="container text-center">
+        <section class="logo">
+            SÍ USTED ES TÉCNICO PUEDE CANJEAR SUS PUNTOS EN
+        </section>
+    </div>
+</div>
+
+<div class="page page-canje">
+    <div id="map"></div>
+    <ng-map zoom="10" center="[{{userGPS.latitude}},{{userGPS.longitude}}]" scrollwheel="false" style="height:90%">
+    <directions 
+    draggable="true"
+    panel="directions-panel"
+    travel-mode="DRIVING"
+    origin="[{{userGPS.latitude}},{{userGPS.longitude}}]"
+    destination="{{storeSelected.geometry.location}}">
+</directions>
+</ng-map>
+<div class="canje-info-container">
+    <ul >
+        <span class="ui-select">
+            <select ng-model="storeSelected" ng-options="t.address_components[3].short_name for t in tiendas" required>
+                <option value=""> Seleccione su ciudad </option>
+            </select>
+        </span> 
+        <li ng-show="storeSelected!=null"><i class="fa fa-building"></i><span>{{storeSelected.name}}</span></li>
+        <li ng-show="storeSelected!=null"><i class="fa fa-map-marker"></i><span>{{storeSelected.vicinity}}</span></li>
+        <li ng-show="storeSelected!=null"><i class="fa fa-phone"></i><span><a href="tel:{{storeSelected.international_phone_number}}">{{storeSelected.international_phone_number}}</a></span></li>
+        <li ng-show="storeSelected!=null"><i class="fa fa-external-link"></i><span><a href="{{storeSelected.website}}">{{storeSelected.website.slice(7)}}</a></span></li>
+    </ul>
+</div>
+</div>
+
+<div id="retailers" class="landing-header">
+    <div class="container text-center">
+        <section class="logo">
+            SI DESEA ADQUIRIR COMPRESORES SAMSUNG AL DELTAL PUEDE IR A 
+        </section>
+    </div>
+</div>
+<div style="padding-top: 50px;">
+
+    <div class="page page-table" data-ng-controller="landingRetailers">
+        <section class="panel panel-default table-dynamic">
+            <table class="table table-bordered table-striped table-responsive">
+                <thead>
+                    <tr>
+                        <th><div class="th">
+                            <i class="fa fa-building" /> Empresa
+                        </div></th>
+                        <th><div class="th">
+                            <i class="fa fa-map-o" /> Ubicación
+                        </div></th>
+                        <th><div class="th">
+                            <i class="fa fa-phone" /> Telefóno
+                        </div></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="cc in filteredRetailers">
+                        <td>{{cc.businessName}}</td>
+                        <td>{{cc.city}} - {{cc.address}}</td>
+                        <td><a href="tel:{{cc.phone}}">{{cc.phone}}</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <div class="page-contact page">
+            <div class="contact-info-container clearfix">
+                <ul>
+                    Mostrando {{filteredRetailers.length}} tiendas en 
+                    <span class="ui-select">
+                        <select ng-model="stateSelected" ng-change="updateFilter()" ng-options="s for s in retailerStates" required>
+                            <option value=""> Seleccione su estado </option>
+                        </select>
+                    </span> 
+                    De {{retailers.length}} en todo el país
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
 
 <hr>
 <div class="landing-header">
@@ -148,15 +225,17 @@
         </section>
     </div>
 </div>
-<div id="products" style="padding-top: 50px;">
+<div id="products" style="padding-top: 20px;">
     <div class="panel-body text-center">
         <h1 class="text-thin">Reciprocante</h1>
         <h5 class="lead text-center">Con un rendimiento de clase mundial, amigables con el medio ambiente vienen con gran poder y menos ruido.</h5>
         <br>
         <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" ng-repeat="rec in recCompressors">
-            <img src="/images/l/compresor-reciprocante.png">
-            <div class="text-title">{{rec.compressorID}}</div><span>{{rec.tittle}}</span><span>{{rec.subtitle}}</span>
-            <br><a href="{{rec.url}}" target="_blank"><i class="fa fa-cloud-download"> Ficha Técnica</i></a>
+            <a href="{{rec.url}}" target="_blank">
+                <img class="compressorPic" src="/images/l/reciprocante.png">
+                <div class="text-title">{{rec.compressorID}}</div><span>{{rec.tittle}}</span><span>{{rec.subtitle}}</span>
+                <br><i class="fa fa-cloud-download"> Ficha Técnica</i>
+            </a>
         </div>
     </div>
     <div class="panel-body text-center">
@@ -164,9 +243,11 @@
         <h5 class="lead text-center">Proporciona características fiables y respetuosas con el medio ambiente para todas sus necesidades de refrigeración.</h5>
         <br>
         <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 text-center" ng-repeat="rot in rotCompressors">
-            <img src="/images/l/compresor-rotativo.png">
-            <div class="text-title">{{rot.compressorID}}</div><span>{{rot.tittle}}</span><span>{{rot.subtitle}}</span>
-            <br><a href="{{rot.url}}" target="_blank"><i class="fa fa-cloud-download"> Ficha Técnica</i></a>
+            <a href="{{rot.url}}" target="_blank">
+                <img class="compressorPic" src="/images/l/rotativo.png">
+                <div class="text-title">{{rot.compressorID}}</div><span>{{rot.tittle}}</span><span>{{rot.subtitle}}</span>
+                <br><i class="fa fa-cloud-download"> Ficha Técnica</i>
+            </a>
         </div>
     </div>
 </div>
@@ -182,9 +263,9 @@
 </div>
 <div id="whoWeAre" style="padding-top: 50px;">
     <div class="lead text-center">
-            <p> <strong>Cayca Samsung Compresores </strong>es una plataforma dirigida a distribuidores, técnicos y grupos de interés que brinda información y soporte técnico de Compresores Samsung disponibles en Colombia, Venezuela y Centro America y el Caribe (CAYCA). </p>
-            <p>Es una aplicación informativa que asiste una promoción de canjes y rifas creada especialmente para tiendas al detal y técnicos que distribuyan y comercialicen Compresores Samsung en Colombia.</p>
-            <p> <strong>Cayca Samsung Compresores </strong>no es un tienda online, ni proporciona información de precios de venta de Compresores Samsung. Su principal objetivo, es servir como una herramienta informativa y de apoyo a eventos, promociones o aspectos de interés general relacionados a los Compresores Samsung que se comercializan y distribuyen en Colombia, Venezuela y CAYCA.</p> 
+        <p> <strong>Cayca Samsung Compresores </strong>es una plataforma dirigida a distribuidores, técnicos y grupos de interés que brinda información y soporte técnico de Compresores Samsung disponibles en Colombia, Venezuela y Centro America y el Caribe (CAYCA). </p>
+        <p>Es una aplicación informativa que asiste una promoción de canjes y rifas creada especialmente para tiendas al detal y técnicos que distribuyan y comercialicen Compresores Samsung en Colombia.</p>
+        <p> <strong>Cayca Samsung Compresores </strong>no es un tienda online, ni proporciona información de precios de venta de Compresores Samsung. Su principal objetivo, es servir como una herramienta informativa y de apoyo a eventos, promociones o aspectos de interés general relacionados a los Compresores Samsung que se comercializan y distribuyen en Colombia, Venezuela y CAYCA.</p> 
     </div>
 </div>
 
@@ -192,11 +273,11 @@
 <div class="landing-header">
     <div class="container text-center">
         <section class="logo">
-            DISTRIBUIDORES EXCLUSIVOS
+            PROVEEDORES EXCLUSIVOS
         </section>
     </div>
 </div>
-<div id="sellers" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center" style="padding-top: 50px;">
+<div id="suppliers" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center" style="padding-top: 50px;">
     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-muted"> 
         <h4>Colombia & Centro America y el Caribe</h4>
         <p class="lead text-center"><a href="http://galliumdecolombia.com" target="_blank"> 🇨🇴 <i class="fa fa-external-link"> Gallium de Colombia S.A.S.</i></a></p><br>
