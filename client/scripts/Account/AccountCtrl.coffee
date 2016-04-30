@@ -68,7 +68,7 @@ angular.module('app.account.ctrls', [])
                 password: $scope.credentials.password
             $http({ url: REST_API.hostname+"/server/ajax/Users/f4changePass.php", method: "POST", data: JSON.stringify($filters) })
                 .success (postResponse) ->
-                    console.log postResponse
+                    # console.log postResponse
                     if postResponse.operationResult=='passwordUpdated'
                         logger.logSuccess("Ha cambiado exitosamente su clave, sera redirigido al inicio de sesion.")
                         $location.path('/accounts/signIn')
@@ -260,7 +260,7 @@ angular.module('app.account.ctrls', [])
             
             $scope.data = 
                 userID : $scope.user.userID
-                ID: $scope.user.IDtoUpperCase()
+                ID: $scope.user.ID.toUpperCase()
                 email: $scope.user.email
                 fullName: $scope.user.fullName
                 password: $scope.user.password
@@ -352,7 +352,7 @@ angular.module('app.account.ctrls', [])
             
             $scope.data = 
                 email: $scope.user.email
-                ID: $scope.user.ID
+                ID: $scope.user.ID.toUpperCase()
                 fullName: $scope.user.fullName
                 password: $scope.user.password
                 address: $scope.user.address
@@ -397,6 +397,80 @@ angular.module('app.account.ctrls', [])
         
 ])
 
+.controller('listTechniciansCtrl', [
+    'REST_API','$scope', 'logger', '$http', '$filter', '$timeout', 'cfpLoadingBar'
+    (REST_API,$scope, logger, $http, $filter, $timeout, cfpLoadingBar) ->
+        console.log 'listTechniciansCtrl'
+
+        $scope.technicians = []
+        $scope.searchKeywords = ''
+        $scope.filteredTechnicians = []
+        $scope.row = ''
+        $scope.loadStatus=0
+
+        $scope.select = (page) ->
+            start = (page - 1) * $scope.numPerPage
+            end = start + $scope.numPerPage
+            $scope.currentPageTechnicians = $scope.filteredTechnicians.slice(start, end)
+
+        # on page change: change numPerPage, filtering string
+        $scope.onFilterChange = ->
+            $scope.select(1)
+            $scope.currentPage = 1
+            $scope.row = ''
+
+        $scope.onNumPerPageChange = ->
+            $scope.select(1)
+            $scope.currentPage = 1
+
+        $scope.onOrderChange = ->
+            $scope.select(1)
+            $scope.currentPage = 1            
+
+
+        $scope.search = ->
+            $scope.filteredTechnicians = $filter('filter')($scope.technicians, $scope.searchKeywords)
+            $scope.onFilterChange()
+
+        # orderBy
+        $scope.order = (rowName)->
+            if $scope.row == rowName
+                return
+            $scope.row = rowName
+            $scope.filteredTechnicians = $filter('orderBy')($scope.technicians, rowName)
+            $scope.onOrderChange()
+
+        # pagination
+        $scope.numPerPageOpt = [3, 5, 10, 20]
+        $scope.numPerPage = $scope.numPerPageOpt[2]
+        $scope.currentPage = 1
+        $scope.currentPageTechnicians = []
+
+        # init
+        $scope.init = ->
+            $scope.search()
+            $scope.select($scope.currentPage)
+        $scope.init()
+
+        #Load companies
+        getTechnicians = ->
+            cfpLoadingBar.start()
+            $filters=
+                userTypeID: 'TEC'
+                country: $scope.currentUser.country.country
+            $http({ url: REST_API.hostname+"/server/ajax/Users/listFiltered.php", method: "POST", data: JSON.stringify($filters) })
+                .success (postResponse) ->
+                    $scope.technicians =postResponse
+                    cfpLoadingBar.complete()
+                    $scope.loadStatus=cfpLoadingBar.status()
+                    $scope.init()
+                    if $scope.technicians.length==0
+                        logger.logError "No se encontraron tecnicos registrados en su pais."
+                    else
+                        logger.logSuccess "Tiene "+$scope.technicians.length+" tecnicos registrados."
+        getTechnicians()
+])
+
 .controller('listSellersCtrl', [
     'REST_API','$scope', 'logger', '$http', '$filter', '$timeout', 'cfpLoadingBar'
     (REST_API,$scope, logger, $http, $filter, $timeout, cfpLoadingBar) ->
@@ -406,7 +480,7 @@ angular.module('app.account.ctrls', [])
         $scope.searchKeywords = ''
         $scope.filteredSellers = []
         $scope.row = ''
-        $scope.loadStatus=0
+        $scope.loadSellersStatus=0
 
         $scope.select = (page) ->
             start = (page - 1) * $scope.numPerPage
@@ -462,16 +536,13 @@ angular.module('app.account.ctrls', [])
                 .success (postResponse) ->
                     $scope.sellers =postResponse
                     cfpLoadingBar.complete()
-                    $scope.loadStatus=cfpLoadingBar.status()
+                    $scope.loadSellersStatus=cfpLoadingBar.status()
                     $scope.init()
-                if $scope.sellers.length==0
-                    logger.logError "No se encontraron vendedores registrados en su pais."
-                else
-                    logger.logSuccess "Tiene "+$scope.sellers.length+" vendedores registrados."
+                    if $scope.sellers.length==0
+                        logger.logError "No se encontraron vendedores registrados en su pais."
+                    else
+                        logger.logSuccess "Tiene "+$scope.sellers.length+" vendedores registrados."
         getSellers()
-
-       
-
 ])
 
 
