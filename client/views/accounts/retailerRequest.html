@@ -11,6 +11,10 @@
 	<div class="signin-body" >
 		<div class="container">
 			<div class="form-container" data-ng-controller="retailerRequestCtrl">
+
+				<div class="text-center form-group">
+					Los datos requeridos a continuación son los de la empresa.</p>
+				</div>
 				
 				<form name="form_retailerRequest" novalidate class="form-horizontal form-validation" data-ng-submit="submitForm()">
 
@@ -21,7 +25,7 @@
 							</span>
 							<input  type="text"
 							class="form-control"
-							placeholder="Nombre comercial"
+							placeholder="Nombre de empresa"
 							data-ng-model="company.businessName"
 							popover="Nombre de la empresa."
 							popover-trigger="focus"
@@ -38,7 +42,7 @@
 							</span>
 							<input  type="text"
 							class="form-control"
-							placeholder="Persona de contacto"
+							placeholder="Nombre de encargado"
 							data-ng-model="company.contactName"
 							popover="El nombre debe ser completo."
 							popover-trigger="focus"
@@ -83,7 +87,7 @@
 							<span class="input-group-addon">
 								<span class="glyphicon glyphicon-phone-alt"></span>
 							</span>
-								<input type="tel"
+							<input type="tel"
 							name="phone"
 							data-ng-minlength=10
 							data-ng-maxlength=12
@@ -127,7 +131,7 @@
 
 
 					<div class="text-center form-group">
-						<p class="text-muted text-small">Haciendo click en <strong>Contactar</strong> se enviaran tus datos a un vendedor SAMSUNG que contactara a tu empresa proximamente.</p>
+						<p class="text-muted text-small">Haciendo click en <strong>Contactar</strong> se enviaran tus datos a un vendedor SAMSUNG que contactará a tu empresa proximamente.</p>
 						<div class="divider"></div>
 						<a ng-click="requestContact()" class="btn btn-primary btn-block btn-lg" data-ng-disabled="!canSubmit()">Contactar</a>
 					</div>

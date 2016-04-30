@@ -75,13 +75,13 @@
                                 name="ID"
                                 placeholder="Documento de identidad"
                                 required
-                                data-ng-minlength=7
+                                data-ng-minlength=8
                                 data-ng-maxlength=12
-                                data-ng-pattern="/^[a-zA-Z]{1,2}[0-9]+$/"
+                                pattern="(NIT|nit|CE|CC|ce|cc)[0-9]+"
                                 data-ng-model="user.ID"
                                 >
                             </div>
-                            <p ng-show="form_NewAccount.ID.$invalid && form_NewAccount.ID.$dirty" class="text-danger">Se debe agregar el tipo de documento (CC o CE) segun corresponda.</p>      
+                            <p ng-show="form_NewAccount.ID.$invalid && form_NewAccount.ID.$dirty" class="text-danger">Verifique la identificación, recuerde agregar NIT, CC o CE segun corresponda (EJM: CC1234567)</p>      
                         </div>
                         <div class="form-group">
                             <div class="input-group input-group-lg">
