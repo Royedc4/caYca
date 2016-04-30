@@ -124,8 +124,8 @@
 
 
     
-    <div class="panel panel-default" ng-show="(currentUser.userTypeID=='MA' || currentUser.userTypeID=='ADM' ||  currentUser.userTypeID=='MGC')">
-        <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Stock de Compresores</strong></div>
+    <div class="panel panel-default" ng-show="(currentUser.userTypeID=='MA' || currentUser.userTypeID=='MG' || currentUser.userTypeID=='ADM' ||  currentUser.userTypeID=='MGC')">
+        <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Stock de Compresores(DIVIDIDO)</strong></div>
         <div class="panel-body">
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                 <div
@@ -151,10 +151,10 @@
     </div>
     
 
-    <div ng-show="currentUser.userTypeID=='MA' || currentUser.userTypeID=='ADM' ||  currentUser.userTypeID=='MGC'" class="row">
+    <div ng-show="currentUser.userTypeID=='MA' || currentUser.userTypeID=='MG' || currentUser.userTypeID=='ADM' ||  currentUser.userTypeID=='MGC'" class="row">
         <div class="col-sm-6">
             <div class="panel panel-default">
-                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Progreso de Etiquetado</strong></div>
+                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Progreso de Etiquetado(TOTAL)</strong></div>
                 <div class="panel-body text-center">
                     <div easypiechart options="labelingProgressPieChart.options" percent="labelingProgressPieChart.percent" class="easypiechart">
                         <span class="pie-percent" ng-bind="labelingProgressPieChart.percent"></span>
@@ -165,7 +165,7 @@
 
         <div class="col-sm-6">
             <div class="panel panel-default">
-                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Progreso de ventas</strong></div>
+                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Progreso de ventas(TOTAL)</strong></div>
                 <div class="panel-body text-center">
                     <div easypiechart options="salesProgressPieChart.options" percent="salesProgressPieChart.percent" class="easypiechart">
                         <span class="pie-percent" ng-bind="salesProgressPieChart.percent"></span>
