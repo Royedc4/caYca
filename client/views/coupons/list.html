@@ -1,0 +1,131 @@
+<div class="page" data-ng-controller="listAllInfoCtrl">
+	<section class="panel panel-default table-dynamic">
+		<div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span><span data-i18n=" Listado de cupones registrados"></span></strong></div>
+
+		<div ng-show="raffleCoupons.length==0" class="callout callout-danger">
+			<h4>No se encontraron cupones</h4>
+			<p>Para ver sus cupones debe registrarlos previamente usando la opción <a href="#/newCoupon">Nuevo cupon</a></p>
+		</div>
+
+		<div ng-show="raffleCoupons.length!=0">
+
+			<div class="table-filters">
+				<div class="row">
+					<div class="col-sm-4 col-xs-6">
+						<form>
+							<input type="text"
+							placeholder="buscar"
+							id="searchKeywords"
+							class="form-control"
+							data-ng-model="searchKeywords"
+							data-ng-keyup="search()" />
+						</form>
+					</div>
+					<div class="col-sm-3 col-xs-6 filter-result-info">
+						<span>
+							Mostrando {{filteredRaffleCoupons.length}}/{{raffleCoupons.length}} registros
+						</span>
+					</div>
+				</div>
+			</div>
+
+			<table ng-table="raffleTable" class="table table-bordered table-striped table-responsive">
+				<thead>
+					<tr>
+						<th><div class="th">
+							#
+							<span id="orderIDRaffleUP" class="glyphicon glyphicon-chevron-up"
+							data-ng-click=" order('raffleCouponID') "
+							data-ng-class="{active: row == 'raffleCouponID'}"></span>
+							<span class="glyphicon glyphicon-chevron-down"
+							data-ng-click=" order('-raffleCouponID') "
+							data-ng-class="{active: row == '-raffleCouponID'}"></span>
+						</div></th>
+						<th><div class="th">
+							Token
+							<span class="glyphicon glyphicon-chevron-up"
+							data-ng-click=" order('token') "
+							data-ng-class="{active: row == 'token'}"></span>
+							<span class="glyphicon glyphicon-chevron-down"
+							data-ng-click=" order('-token') "
+							data-ng-class="{active: row == '-token'}"></span>
+						</div></th>
+						<th ng-show="currentUser.userTypeID!='TEC'"><div class="th">
+                            Puntos
+                            <span class="glyphicon glyphicon-chevron-up"
+                            data-ng-click=" order('points') "
+                            data-ng-class="{active: row == 'points'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                            data-ng-click=" order('-points') "
+                            data-ng-class="{active: row == '-points'}"></span>
+                        </div></th>
+                        <th ng-show="currentUser.userTypeID=='TEC'"><div class="th">
+                            Dinero
+                            <span class="glyphicon glyphicon-chevron-up"
+                            data-ng-click=" order('localCurrency') "
+                            data-ng-class="{active: row == 'localCurrency'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                            data-ng-click=" order('-localCurrency') "
+                            data-ng-class="{active: row == '-localCurrency'}"></span>
+                        </div></th>
+						<th><div class="th">
+							Fecha
+							<span class="glyphicon glyphicon-chevron-up"
+							data-ng-click=" order('creationDate') "
+							data-ng-class="{active: row == 'creationDate'}"></span>
+							<span class="glyphicon glyphicon-chevron-down"
+							data-ng-click=" order('-creationDate') "
+							data-ng-class="{active: row == '-creationDate'}"></span>
+						</div></th>
+						<th><div class="th">
+							Rifa
+							<span class="glyphicon glyphicon-chevron-up"
+							data-ng-click=" order('description') "
+							data-ng-class="{active: row == 'description'}"></span>
+							<span class="glyphicon glyphicon-chevron-down"
+							data-ng-click=" order('-description') "
+							data-ng-class="{active: row == '-description'}"></span>
+						</div></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr data-ng-repeat="raffleCoupon in currentPageRaffleCoupons">
+						<td>{{raffleCoupon.raffleCouponID}}</td>
+						<td>{{raffleCoupon.token}}</td>
+						<td ng-show="currentUser.userTypeID!='TEC'">{{raffleCoupon.points}}</td>
+                        <td ng-show="currentUser.userTypeID=='TEC'">{{raffleCoupon.localCurrency | currency:currentUser.country.currency:0}}</td>
+						<td>{{raffleCoupon.creationDate}}</td>
+						<!-- <td>{{raffleCoupon.creationDate | date:'dd/MM/yyyy' }}</td> -->
+						<td>{{raffleCoupon.description}}</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<footer class="table-footer">
+				<div class="row">
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 page-num-info">
+						<span>
+							Mostrar
+							<select id="selectNumPerPage" data-ng-model="numPerPage"
+							data-ng-options="num for num in numPerPageOpt"
+							data-ng-change="onNumPerPageChange()">
+						</select>
+						registros por pagina
+					</span>
+				</div>
+				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-right pagination-container">
+					<pagination class="pagination-sm"
+					page="currentPage"
+					total-items="filteredRaffleCoupons.length"
+					max-size="4"
+					on-select-page="select(page)"
+					items-per-page="numPerPage"
+					rotate="false"
+					boundary-links="true"></pagination>
+				</div>
+			</div>
+
+		</footer>
+	</div>
+</section>
+</div>

@@ -68,13 +68,11 @@ angular.module('app', [
         moment(dateString).format format
 
 .constant 'REST_API',
-    hostname:       'http://www.caycaSAMSUNGcompresores.com'
+    # hostname:       'http://www.caycaSAMSUNGcompresores.com'
     # hostname:       'http://cayca.192.168.7.241.xip.io:8888'
     # hostname:       'http://cayca.192.168.3.91.xip.io:8888'
     # hostname:       'http://cayca.192.168.3.90.xip.io:8888'
-    # hostname:       'http://cayca:8888'
-    # hostname:       'http://192.168.3.91:8888'
-    # hostname:       'http://cayca:8888'
+    hostname:       'http://cayca:8888'
 
 .constant 'MAPS_API',
     Ki:             '&key=AIzaSyCF_Jff6qzjfmlb44MjqKpfnMzFJZC8lg8'
@@ -140,6 +138,30 @@ angular.module('app', [
             #     data:
             #         authorizedRoles: [USER_ROLES.public]
             #     )
+            #Coupons
+            .when(
+                '/coupons/list'
+                templateUrl: 'views/coupons/list.html'
+                data:
+                    authorizedRoles: [
+                        USER_ROLES.admin,
+                        USER_ROLES.technician,
+                        USER_ROLES.retailDV,
+                        USER_ROLES.retailDVC
+                        ]
+                )
+            .when(
+                '/coupons/new'
+                templateUrl: 'views/coupons/new.html'
+                data:
+                    authorizedRoles: [
+                        USER_ROLES.admin,
+                        USER_ROLES.technician,
+                        USER_ROLES.retailDV,
+                        USER_ROLES.retailDVC
+                        ]
+                )
+            #Others
             .when(
                 '/roy/code'
                 templateUrl: 'views/roy/code.html'
