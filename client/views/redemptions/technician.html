@@ -34,7 +34,7 @@
 		<accordion close-others="true" class="ui-accordion">
 			<accordion-group heading="Inscripcion de Tokens">
 
-			<form name="forms.tokensRedeemForm" class="form-validation" novalidate>	
+			<form name="forms.tokensRedeemForm" class="form-validation" novalidate>
 
 				<div class="col-xs-12 col-sm-6 col-md-5 col-lg-5 form-group">
 					<input type="number" id="quantity" class="form-control" data-min=0 ng-minlenght=0 ng-maxlenght=30 ng-model="forms.quantity" placeholder="Cantidad de Tokens">
@@ -61,9 +61,9 @@
 					data-ng-disabled="!canSubmit()"
 					><span class="fa fa-database"></span> Registrar </button>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-4 col-md-3 col-lg-2 form-group" ng-show="forms.quantity>0" ng-repeat="inp in inputs">
-					<input 
+					<input
 					type="text"
 					required
 					ng-maxlength=14
@@ -73,38 +73,36 @@
 					class="form-control input-warning initialism"
 					name="input{{$index+1}}" id="input{{$index+1}}">
 				</div>
-				
+
 
 			</form>
 		</accordion-group>
 
 
 		<accordion-group heading="Canje de articulos" is-open="true">
-		<form name="forms.redeemForm" class="form-validation text-center" novalidate>	
+		<form name="form_redeem" class="form-validation text-center" novalidate>
 			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 form-group">
-				<input type="text" ng-minlength="5" class="form-control" ng-model="forms.redeemedArticle" placeholder="Articulo Adquirido" required="true">
+				<input type="text" name="redeemedArticle" ng-minlength="5" class="form-control" ng-model="forms.redeemedArticle" placeholder="Articulo Adquirido" required="true">
 			</div>
 			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 form-group">
-				<input type="number" ng-minlenght=1 data-min={{minimito}} data-max="{{maximito}}" class="form-control" ng-model="forms.redeemedCoupons" placeholder="Cantidad de cupones a canjear" required="true">
+				<input type="number" name="redeemedCoupons" ng-minlenght="1" data-min={{minimito}} data-max="{{maximito}}" class="form-control" id="redeemedCoupons" ng-model="forms.redeemedCoupons" placeholder="Cantidad de cupones a canjear" required="true">
 			</div>
 			<br>
-			
-			<div class="callout callout-info" ng-show="typeof(redeemableStuff.moneyPerCoupon*forms.redeemedCoupons)=='number'">
-				Con {{forms.redeemedCoupons}} cupones esta canjeando {{redeemableStuff.moneyPerCoupon*forms.redeemedCoupons}}$
-			</div>
 
-			<div class="callout callout-info" ng-show="forms.redeemForm.$valid">
-				Con {{forms.redeemedCoupons}} cupones esta canjeando {{redeemableStuff.moneyPerCoupon*forms.redeemedCoupons}}$
-			</div>
+            <div class="callout callout-info" ng-show="form_redeem.redeemedCoupons.$valid && form_redeem.redeemedCoupons.$dirty">
+                Con {{forms.redeemedCoupons}} cupones esta canjeando {{redeemableStuff.moneyPerCoupon*forms.redeemedCoupons}}$
+            </div>
 
-			
+            <div class="callout callout-danger" ng-show="form_redeem.redeemedCoupons.$invalid && form_redeem.redeemedCoupons.$dirty">
+                El canjeo minimo es de 6
+            </div>
 
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
 				<button type="submit"
 				id="registerRedemptionButton"
 				class="btn btn-success btn-block"
 				ng-click="registerRedemption()"
-				data-ng-disabled="forms.redeemForm.$invalid"
+				data-ng-disabled="form_redeem.$invalid"
 				><span class="fa fa-database"></span> Registrar Canje</button>
 			</div>
 
