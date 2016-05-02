@@ -93,7 +93,7 @@
 						<td>{{raffleCoupon.raffleCouponID}}</td>
 						<td>{{raffleCoupon.token}}</td>
 						<td ng-show="currentUser.userTypeID!='TEC'">{{raffleCoupon.points}}</td>
-                        <td ng-show="currentUser.userTypeID=='TEC'">{{raffleCoupon.localCurrency | currency:currentUser.country.currency:0}}</td>
+                        <td ng-show="currentUser.userTypeID=='TEC'"><span ng-show="raffleCoupon.redeemed!='1'">{{raffleCoupon.localCurrency | currency:currentUser.country.currency:0}} </span> <span ng-show="raffleCoupon.redeemed=='1'"> Canjeado <i class="fa fa-shopping-cart"> {{raffleCoupon.redemptionID}}</i></span></td>
 						<td>{{raffleCoupon.creationDate}}</td>
 						<!-- <td>{{raffleCoupon.creationDate | date:'dd/MM/yyyy' }}</td> -->
 						<td>{{raffleCoupon.description}}</td>
