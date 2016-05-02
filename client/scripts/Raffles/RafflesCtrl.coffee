@@ -49,7 +49,7 @@ angular.module('app.raffles.ctrls', [])
             $scope.onOrderChange()
 
         # pagination
-        $scope.numPerPageOpt = [3, 5, 10, 20]
+        $scope.numPerPageOpt = [3, 5, 10, 20, 50]
         $scope.numPerPage = $scope.numPerPageOpt[2]
         $scope.currentPage = 1
         $scope.currentPageRaffleCoupons = []
@@ -183,7 +183,7 @@ angular.module('app.raffles.ctrls', [])
                             conBien=0
                             $http({ url: REST_API.hostname+"/server/ajax/coupon/new.php", method: "POST", data: JSON.stringify($scope.data2insert) })
                             .success (postResponse) ->
-                                console.log postResponse
+#                                console.log postResponse
                                 if (typeof postResponse) == "object"
                                     for i in [0...postResponse['errorsArray'].length] by 1
                                         if (postResponse['errorsArray'][i].indexOf("raffleID")!=-1)
