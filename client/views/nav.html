@@ -1,20 +1,26 @@
 <div id="nav-wrapper">
     <ul id="nav"
-        data-ng-controller="NavCtrl"
-        data-slim-scroll
-        data-collapse-nav
-        data-highlight-active>
+    data-ng-controller="NavCtrl"
+    data-slim-scroll
+    data-collapse-nav
+    data-highlight-active>
 
-        <li>
-            <a href="#/dashboard"> <i class="fa fa-dashboard"></i><span data-i18n="Panel Inicial"></span></a>
-        </li>
+    <li>
+        <a href="#/dashboard"> <i class="fa fa-dashboard"></i><span data-i18n="Panel Inicial"></span></a>
+    </li>
+    <li ng-show="currentUser.userTypeID=='TEC' || currentUser.userTypeID=='DV' || currentUser.userTypeID=='DVC'"><a
+        href="#/coupons/new"><i class="fa fa-plus"></i> <span data-i18n="Nuevo Cupon"></span></a>
+    </li>
+    <li ng-show="currentUser.userTypeID=='TEC' || currentUser.userTypeID=='DV' || currentUser.userTypeID=='DVC'"><a
+        href="#/coupons/list"><i class="fa fa-list-ol"></i> <span data-i18n="Mis Cupones"></span></a>
+    </li>
 
-        <!-- Roy: ADMIN [Rol: caYca Admin ] -->
-        <li ng-show="currentUser.userTypeID=='ADM'">
-            <a href="#/admin"><i class="fa fa-user-secret"></i><span data-i18n="Admin"></span></a>
-            <ul>
-                <li><a href="#/admin/databaseJobs"><i class="fa fa-database"></i> <span
-                    data-i18n="Database Jobs"></span></a></li>
+    <!-- Roy: ADMIN [Rol: caYca Admin ] -->
+    <li ng-show="currentUser.userTypeID=='ADM'">
+        <a href="#/admin"><i class="fa fa-user-secret"></i><span data-i18n="Admin"></span></a>
+        <ul>
+            <li><a href="#/admin/databaseJobs"><i class="fa fa-database"></i> <span
+                data-i18n="Database Jobs"></span></a></li>
             </ul>
         </li>
 
@@ -24,105 +30,105 @@
             <ul>
                 <li><a href="#/compressors/newImportation"><i class="fa fa-barcode"></i> <span
                     data-i18n="Carga de Seriales"></span></a></li>
-            </ul>
-            <ul>
-                <li><a href="#/compressors/tokens"><i class="fa fa-lock"></i> <span
-                    data-i18n="Carga de Pines"></span></a></li>
-            </ul>
-        </li>
-
-
-        <!-- Roy: New Accounts And Companies -->
-        <li ng-show="currentUser.userTypeID=='MGC' || currentUser.userTypeID=='ADM' || currentUser.userTypeID=='MG'">
-            <a href="#/accounts"><i class="fa fa-users"></i><span data-i18n="Cuentas"></span></a>
-            <ul>
-                <li><a href="#/accounts/new"><i class="fa fa-user"></i> <span data-i18n="Crear Nueva Cuenta"></span></a>
+                </ul>
+                <ul>
+                    <li><a href="#/compressors/tokens"><i class="fa fa-lock"></i> <span
+                        data-i18n="Carga de Pines"></span></a></li>
+                    </ul>
                 </li>
-                <li><a href="#/accounts/listSellers"><i class="fa fa-users"></i> <span
-                    data-i18n="Vendedores"></span></a></li>
-                <li><a href="#/accounts/listTechnicians"><i class="fa fa-users"></i> <span data-i18n="Tecnicos"></span></a>
-                </li>
-            </ul>
-        </li>
-        <li ng-show="currentUser.userTypeID=='MGC' || currentUser.userTypeID=='ADM' || currentUser.userTypeID=='MG'">
-            <a href="#/companies"><i class="fa fa-building"></i><span data-i18n="Empresas"></span></a>
-            <ul>
-                <li><a href="#/companies/new"><i class="fa fa-suitcase"></i> <span
-                    data-i18n="Crear nueva empresa"></span></a></li>
-                <li><a href="#/companies/list"><i class="fa fa-briefcase"></i> <span data-i18n="Empresas"></span></a>
-                </li>
-            </ul>
-        </li>
-
-        <!-- Roy: Reports -->
-        <li ng-show="currentUser.userTypeID=='ADM'">
-            <a href="#/reports"><i class="fa fa-list-ol"></i><span data-i18n="Reportes"></span></a>
-            <ul>
-                <li><a href="#/reports/statistics"> <i class="fa fa-dashboard"></i> <span
-                    data-i18n="Estadisticas"></span> </a></li>
-            </ul>
-        </li>
-
-        <!-- MOC: creditNotes -->
-        <li ng-show="currentUser.userTypeID=='MOC'">
-            <a href="#/creditNotes"><i class="fa fa-list-ol"></i><span data-i18n="Notas credito"></span></a>
-            <ul>
-                <li><a href="#/creditNotes/new"> <i class="fa fa-file"></i> <span data-i18n="Nueva Nota"></span> </a>
-                </li>
-                <li><a href="#/creditNotes/list"> <i class="fa fa-list"></i> <span data-i18n="Notas"></span> </a></li>
-            </ul>
-        </li>
-
-        <!--Roy: Ventas  [Rol: Mayor Almacenista] -->
-        <li ng-show="currentUser.userTypeID=='MA' || currentUser.userTypeID=='ADM' || currentUser.userTypeID=='MGC' || currentUser.userTypeID=='MG'">
-            <a href="#/sales"><i class="fa fa-cart-plus"></i><span data-i18n="Ventas"></span></a>
-            <ul>
-                <li><a href="#/sales/newInvoice"><i class="fa fa-file"></i> <span data-i18n="Nueva Factura"></span></a>
-                </li>
-                <li><a href="#/sales/list"><i class="fa fa-list"></i> <span data-i18n="Facturas"></span></a></li>
-                <li><a href="#/sales/erase"><i class="fa fa-times"></i> <span data-i18n="Eliminar Factura"></span></a>
-                </li>
-                <!-- <li><a href="#/sales/print"><i class="fa fa-print"></i> <span data-i18n="Imprimir Factura"></span></a></li> -->
-            </ul>
-        </li>
-
-        <!--Roy: Labels  [[Rol: Mayor Almacenista] -->
-        <li ng-show="currentUser.userTypeID=='MA' || currentUser.userTypeID=='ADM'">
-            <a href="#/labels"><i class="fa fa-tags"></i><span data-i18n="Etiquetas"></span></a>
-            <ul>
-                <li><a href="#/labels/production"><i class="fa fa-tag"></i> <span data-i18n="Producción"></span></a>
-                </li>
-            </ul>
-        </li>
 
 
-        <!--Roy: Redemptions [Rol: Technician/Seller Redemptioner/Seller] -->
-        <li ng-show="currentUser.userTypeID=='TEC' || currentUser.userTypeID=='DV' || currentUser.userTypeID=='DVC' || currentUser.userTypeID=='ADM' || currentUser.userTypeID=='MOC'">
-            <a href="#/redemptions"><i class="fa fa-shopping-cart"></i><span data-i18n="Canjes"></span></a>
-            <ul>
-                <li ng-hide="currentUser.userTypeID=='MOC'"><a href="#/redemptions/points"><i
-                    class="fa fa-dashboard"></i> <span data-i18n="Consultar Dinero"></span></a></li>
+                <!-- Roy: New Accounts And Companies -->
+                <li ng-show="currentUser.userTypeID=='MGC' || currentUser.userTypeID=='ADM' || currentUser.userTypeID=='MG'">
+                    <a href="#/accounts"><i class="fa fa-users"></i><span data-i18n="Cuentas"></span></a>
+                    <ul>
+                        <li><a href="#/accounts/new"><i class="fa fa-user"></i> <span data-i18n="Crear Nueva Cuenta"></span></a>
+                        </li>
+                        <li><a href="#/accounts/listSellers"><i class="fa fa-users"></i> <span
+                            data-i18n="Vendedores"></span></a></li>
+                            <li><a href="#/accounts/listTechnicians"><i class="fa fa-users"></i> <span data-i18n="Tecnicos"></span></a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li ng-show="currentUser.userTypeID=='MGC' || currentUser.userTypeID=='ADM' || currentUser.userTypeID=='MG'">
+                        <a href="#/companies"><i class="fa fa-building"></i><span data-i18n="Empresas"></span></a>
+                        <ul>
+                            <li><a href="#/companies/new"><i class="fa fa-suitcase"></i> <span
+                                data-i18n="Crear nueva empresa"></span></a></li>
+                                <li><a href="#/companies/list"><i class="fa fa-briefcase"></i> <span data-i18n="Empresas"></span></a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- Roy: Reports -->
+                        <li ng-show="currentUser.userTypeID=='ADM'">
+                            <a href="#/reports"><i class="fa fa-list-ol"></i><span data-i18n="Reportes"></span></a>
+                            <ul>
+                                <li><a href="#/reports/statistics"> <i class="fa fa-dashboard"></i> <span
+                                    data-i18n="Estadisticas"></span> </a></li>
+                                </ul>
+                            </li>
+
+                            <!-- MOC: creditNotes -->
+                            <li ng-show="currentUser.userTypeID=='MOC'">
+                                <a href="#/creditNotes"><i class="fa fa-list-ol"></i><span data-i18n="Notas credito"></span></a>
+                                <ul>
+                                    <li><a href="#/creditNotes/new"> <i class="fa fa-file"></i> <span data-i18n="Nueva Nota"></span> </a>
+                                    </li>
+                                    <li><a href="#/creditNotes/list"> <i class="fa fa-list"></i> <span data-i18n="Notas"></span> </a></li>
+                                </ul>
+                            </li>
+
+                            <!--Roy: Ventas  [Rol: Mayor Almacenista] -->
+                            <li ng-show="currentUser.userTypeID=='MA' || currentUser.userTypeID=='ADM' || currentUser.userTypeID=='MGC' || currentUser.userTypeID=='MG'">
+                                <a href="#/sales"><i class="fa fa-cart-plus"></i><span data-i18n="Ventas"></span></a>
+                                <ul>
+                                    <li><a href="#/sales/newInvoice"><i class="fa fa-file"></i> <span data-i18n="Nueva Factura"></span></a>
+                                    </li>
+                                    <li><a href="#/sales/list"><i class="fa fa-list"></i> <span data-i18n="Facturas"></span></a></li>
+                                    <li><a href="#/sales/erase"><i class="fa fa-times"></i> <span data-i18n="Eliminar Factura"></span></a>
+                                    </li>
+                                    <!-- <li><a href="#/sales/print"><i class="fa fa-print"></i> <span data-i18n="Imprimir Factura"></span></a></li> -->
+                                </ul>
+                            </li>
+
+                            <!--Roy: Labels  [[Rol: Mayor Almacenista] -->
+                            <li ng-show="currentUser.userTypeID=='MA' || currentUser.userTypeID=='ADM'">
+                                <a href="#/labels"><i class="fa fa-tags"></i><span data-i18n="Etiquetas"></span></a>
+                                <ul>
+                                    <li><a href="#/labels/production"><i class="fa fa-tag"></i> <span data-i18n="Producción"></span></a>
+                                    </li>
+                                </ul>
+                            </li>
+
+
+                            <!--Roy: Redemptions [Rol: Technician/Seller Redemptioner/Seller] -->
+                            <li ng-show="currentUser.userTypeID=='TEC' || currentUser.userTypeID=='DV' || currentUser.userTypeID=='DVC' || currentUser.userTypeID=='ADM' || currentUser.userTypeID=='MOC'">
+                                <a href="#/redemptions"><i class="fa fa-shopping-cart"></i><span data-i18n="Canjes"></span></a>
+                                <ul>
+                <!-- <li ng-hide="currentUser.userTypeID=='MOC'"><a href="#/redemptions/points"><i
+                class="fa fa-dashboard"></i> <span data-i18n="Consultar Dinero"></span></a></li> -->
                 <li ng-hide="currentUser.userTypeID=='MOC'"><a href="#/redemptions/list"><i class="fa fa-file-text"></i>
                     <span data-i18n="Consultar Canjes"></span></a></li>
-                <li ng-show="currentUser.userTypeID=='MOC'"><a href="#/redemptions/changeStatus"><i
-                    class="fa fa-shopping-cart"></i> <span data-i18n="Actualizar Status"></span></a></li>
-                <li ng-hide="currentUser.userTypeID=='DV' || currentUser.userTypeID=='TEC' || currentUser.userTypeID=='MOC'">
-                    <a href="#/redemptions/technician"><i class="fa fa-shopping-cart"></i> <span
-                        data-i18n="Canje Tecnico"></span></a></li>
-                <li ng-hide="currentUser.userTypeID=='TEC' || currentUser.userTypeID=='MOC'"><a
-                    href="#/redemptions/seller"><i class="fa fa-shopping-cart"></i> <span
-                    data-i18n="Canje Vendedor"></span></a></li>
-            </ul>
-        </li>
+                    <li ng-show="currentUser.userTypeID=='MOC'"><a href="#/redemptions/changeStatus"><i
+                        class="fa fa-shopping-cart"></i> <span data-i18n="Actualizar Status"></span></a></li>
+                        <li ng-hide="currentUser.userTypeID=='DV' || currentUser.userTypeID=='TEC' || currentUser.userTypeID=='MOC'">
+                            <a href="#/redemptions/technician"><i class="fa fa-shopping-cart"></i> <span
+                                data-i18n="Canje Tecnico"></span></a></li>
+                                <li ng-hide="currentUser.userTypeID=='TEC' || currentUser.userTypeID=='MOC'"><a
+                                    href="#/redemptions/seller"><i class="fa fa-shopping-cart"></i> <span
+                                    data-i18n="Canje Vendedor"></span></a></li>
+                                </ul>
+                            </li>
 
-        <!--Roy: Raffles [Rol: Technician/Seller] -->
-        <li ng-show="currentUser.userTypeID=='TEC' || currentUser.userTypeID=='DV' || currentUser.userTypeID=='DVC' || currentUser.userTypeID=='ADM' || currentUser.userTypeID=='MGC' || currentUser.userTypeID=='MG'">
-            <a href="#/raffles"><i class="fa fa-trophy"></i><span data-i18n="Rifas"></span></a>
-            <ul>
-                <li><a href="#/raffles/listCoupons"><i class="fa fa-list-ol"></i> <span data-i18n="Mis Cupones"></span></a>
-                </li>
-                <li ng-show="currentUser.userTypeID=='ADM'"><a href="#/raffles/results"><i class="fa fa-trophy"></i>
-                    <span data-i18n="Resultados"></span></a></li>
+                            <!--Roy: Raffles [Rol: Technician/Seller] -->
+                            <li ng-show="currentUser.userTypeID=='TEC' || currentUser.userTypeID=='DV' || currentUser.userTypeID=='DVC' || currentUser.userTypeID=='ADM' || currentUser.userTypeID=='MGC' || currentUser.userTypeID=='MG'">
+                                <a href="#/raffles"><i class="fa fa-trophy"></i><span data-i18n="Rifas"></span></a>
+                                <ul>
+                <!-- <li><a href="#/raffles/listCoupons"><i class="fa fa-list-ol"></i> <span data-i18n="Mis Cupones"></span></a>
+            </li> -->
+            <li ng-show="currentUser.userTypeID=='ADM'"><a href="#/raffles/results"><i class="fa fa-trophy"></i>
+                <span data-i18n="Resultados"></span></a></li>
                 <li><a href="#/raffles/info"><i class="fa fa-info-circle"></i> <span data-i18n="Información"></span></a>
                 </li>
             </ul>
@@ -134,12 +140,8 @@
             <ul>
                 <li ng-show="currentUser.userTypeID=='DVC'"><a href="#/creditNotes/list4retailer"><i
                     class="fa fa-balance-scale"></i> <span data-i18n="Estado de cuenta"></span></a></li>
-            </ul>
-        </li>
+                </ul>
+            </li>
 
-        <li ng-show="currentUser.userTypeID=='TEC' || currentUser.userTypeID=='DV' || currentUser.userTypeID=='DVC'"><a
-            href="#/newCoupon"><i class="fa fa-plus"></i> <span data-i18n="Nuevo Cupon"></span></a>
-        </li>
-
-    </ul>
-</div>
+        </ul>
+    </div>

@@ -23,7 +23,7 @@
                     <div class="col-sm-3 col-xs-6 filter-result-info">
                         <span>
                             Mostrando {{filteredRedeemCoupons.length}}/{{redeemCoupons.length}} registros
-                        </span>              
+                        </span>
                     </div>
                 </div>
             </div>
@@ -67,7 +67,7 @@
                             data-ng-click=" order('-itemName') "
                             data-ng-class="{active: row == '-itemName'}"></span>
                         </div></th>
-                        <th><div class="th">
+                        <th ng-show="currentUser.userTypeID!='TEC'"><div class="th">
                             Status
                             <span class="glyphicon glyphicon-chevron-up"
                             data-ng-click=" order('status') "
@@ -84,7 +84,7 @@
                         <td>{{redeemCoupon.creationDate}}</td>
                         <td>{{redeemCoupon.coupons}}</td>
                         <td>{{redeemCoupon.itemName}}</td>
-                        <td>{{redeemCoupon.status}}</td>
+                        <td ng-show="currentUser.userTypeID!='TEC'">{{redeemCoupon.status}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -93,11 +93,11 @@
                 <div class="row">
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 page-num-info">
                         <span>
-                            Mostrar 
+                            Mostrar
                             <select id="selectNumPerPage" data-ng-model="numPerPage"
                             data-ng-options="num for num in numPerPageOpt"
                             data-ng-change="onNumPerPageChange()">
-                        </select> 
+                        </select>
                         registros por pagina
                     </span>
                 </div>

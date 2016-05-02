@@ -1,0 +1,70 @@
+<section class="page-form-ele page" data-ng-controller="newCouponCtrl">
+
+    <form id="serialsForm" name="serialsForm" class="form-validation" novalidate>
+
+        <section class="panel panel-box">
+            <div class="panel-left panel-item bg-success">
+                <i class="fa fa-ticket text-huge"></i>
+            </div>
+            <div class="panel-right panel-item bg-reverse">
+                <p class="size-h1">{{raffleCoupons.length}}</p>
+                <p ng-show="raffleCoupons.length==1" class="text-muted">Cupon en rifa</p>
+                <p ng-show="raffleCoupons.length!=1" class="text-muted">Cupones en rifas</p>
+            </div>
+        </section>
+
+        <alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)" ng-show="quantity>0">{{alert.msg}}</alert>
+
+        <section class="panel panel-default">
+            <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Cantidad de tokens a registrar</strong></div>
+
+            <div class="panel-body text-center">
+                <div class="col-xs-4 col-sm-2 col-md-2 col-lg-2 form-group">
+                    <input type="number" id="quantity" class="text-center form-control" data-min=0 ng-minlenght=0 ng-maxlenght=30 ng-model="quantity" placeholder="Cantidad">
+                </div>
+
+                <div class="col-xs-8 col-sm-4 col-md-4 col-lg-3 form-group">
+                    <button ng-click="loadInputs()" class="btn btn-primary btn-block"><span class="fa fa-file-o"></span>Preparar Formulario</button>
+                </div>
+
+                <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 form-group">
+                    <button class="btn btn-default btn-block"
+                            data-ng-disabled="!canRevert()"
+                            data-ng-click="revert()"
+                    ><span class="fa fa-eraser"></span> Borrar Tokens</button>
+                </div>
+
+                <div class="col-xs-12 col-sm-3 col-md-3 col-lg-4 form-group">
+                    <button type="submit"
+                            id="registerToken4rafffleButton"
+                            class="btn btn-success btn-block"
+                            ng-click="registerToken4raffle()"
+                            data-ng-disabled="!canSubmit()"
+                    ><span class="fa fa-database"></span> Inscribir Tokens</button>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="panel panel-default" ng-show="quantity>0">
+            <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Formulario de Tokens </strong></div>
+            <div class="panel-body" >
+                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2 form-group" ng-repeat="inp in inputs">
+                    <input
+                        type="text"
+                        required
+                        ng-maxlength=14
+                        ng-minlength=14
+                        ng-model="tokensito"
+                        ng-raffle-tokens-tabs="input{{$index+2}}"
+                        class="form-control input-warning initialism text-center"
+                        name="input{{$index+1}}" id="input{{$index+1}}"
+                    >
+                </div>
+
+            </div>
+        </section>
+
+    </form>
+
+</section>

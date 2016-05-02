@@ -12,13 +12,9 @@ $affectedsArray=array();
 
 $zGlobalResult=true; // our control variable 
 
-for ($i = -1; $i < sizeof($array["token"]); $i++) {
-	if ($i==-1){
-		$query="START TRANSACTION";
-	}
-	else{
-		$query="CALL `raffleCoupon10new`('" . $array["token"][$i] . "','" . $array["userID"] . "','" . $array["country"] . "','" . $array["userTypeID"] . "','" . $array["createdBy"] . "','$hoy')";
-	}
+for ($i = 0; $i < sizeof($array["token"]); $i++) {
+	$query="CALL `coupon10new`('" . $array["token"][$i] . "','" . $array["userID"] . "','" . $array["country"] . "','" . $array["userTypeID"] . "','" . $array["createdBy"] . "','$hoy')";
+	
 	$mysqli->query($query) ? false : $zGlobalResult=false;
 	array_push($queriesArray, $query);
 	array_push($errorsArray, $mysqli->error.__LINE__);
@@ -31,4 +27,3 @@ echo $json_response = json_encode($resultObj);
 $mysqli->close(); 
 
 ?>
-
