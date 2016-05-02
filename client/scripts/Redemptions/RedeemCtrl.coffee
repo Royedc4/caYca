@@ -16,7 +16,7 @@ angular.module('app.redemptions.ctrls', [])
         #Selected Quantity
         $scope.quantity = 0
         $scope.redeemedArticle= ''
-        
+
         # Form Manipulation
         $scope.revert = ->
             $scope.data2insert=
@@ -31,11 +31,11 @@ angular.module('app.redemptions.ctrls', [])
         $scope.canRevert = ->
             return !$scope.forms.tokensRedeemForm.$pristine
         $scope.canSubmit = ->
-            return $scope.forms.tokensRedeemForm.$valid 
+            return $scope.forms.tokensRedeemForm.$valid
 
         # Creation of Input Dinamically
         $scope.loadInputs = ->
-            console.log "loadInputs"        
+            console.log "loadInputs"
             # 4not Adding more
             $scope.inputs = []
             i=0
@@ -44,9 +44,9 @@ angular.module('app.redemptions.ctrls', [])
                 $scope.inputs.push({ placeholder: "Token # " + j})
                 i++
             setTimeout ->
-                    logger.log("Se ha preparado el formulario. Proceda a ingresar los tokens.") 
+                    logger.log("Se ha preparado el formulario. Proceda a ingresar los tokens.")
                 , 1000
-        
+
         # Saving Labels 4 Prints at bartender
         preparingData = ->
             $scope.data2insert=
@@ -144,11 +144,11 @@ angular.module('app.redemptions.ctrls', [])
             #             redeemableStuff()
             #             reachableItems4user()
             #             setTimeout ->
-            #                 logger.logSuccess "Has registrado Exitosamente el canje #"+ postResponse['results']['nextAi']+" por un " + $scope.forms.itemSelected.name + " !"    
+            #                 logger.logSuccess "Has registrado Exitosamente el canje #"+ postResponse['results']['nextAi']+" por un " + $scope.forms.itemSelected.name + " !"
             #                 $scope.forms.itemSelected=''
             #             , 750
-                        
-                        
+
+
         # Getting reachableItems4user
         reachableItems4user = ->
             $filters=
@@ -201,12 +201,12 @@ angular.module('app.redemptions.ctrls', [])
 
         $scope.onOrderChange = ->
             $scope.select(1)
-            $scope.currentPage = 1            
+            $scope.currentPage = 1
 
         $scope.search = ->
             $scope.filteredRedeems = $filter('filter')($scope.redeems, $scope.searchKeywords)
             $scope.onFilterChange()
-             
+
         # orderBy
         $scope.order = (rowName)->
             if $scope.row == rowName
@@ -248,7 +248,7 @@ angular.module('app.redemptions.ctrls', [])
                     for i in [0...$scope.redeems.length] by 1
                         $scope.redeems[i]['creationDate']=moment($scope.redeems[i]['creationDate']).format("DD/MM/YYYY")
                 else
-                    $scope.redeems=[]                
+                    $scope.redeems=[]
         $scope.getSellersRedeems()
 
         $scope.changeStatus = ->
@@ -336,12 +336,12 @@ angular.module('app.redemptions.ctrls', [])
                     logger.logError "No se encontraron canjes registrados en su cuenta."
                 else
                     logger.logSuccess "Tiene "+$scope.redeemCoupons.length+" canjes."
-                
+
                 if $scope.redeemCoupons['0']!=null
                     for i in [0...$scope.redeemCoupons.length] by 1
                         $scope.redeemCoupons[i]['creationDate']=moment($scope.redeemCoupons[i]['creationDate']).format("DD/MM/YYYY")
                 else
-                    $scope.redeemCoupons=[]                
+                    $scope.redeemCoupons=[]
         redeemCoupons4user()
 ])
 
@@ -378,7 +378,7 @@ angular.module('app.redemptions.ctrls', [])
 
         $scope.onOrderChange = ->
             $scope.select(1)
-            $scope.currentPage = 1            
+            $scope.currentPage = 1
 
         $scope.search = ->
             $scope.filteredRedeemCoupons = $filter('filter')($scope.redeemCoupons, $scope.searchKeywords)
@@ -413,7 +413,7 @@ angular.module('app.redemptions.ctrls', [])
                 $scope.redeemCoupons=postResponse
                 for i in [0...$scope.redeemCoupons.length] by 1
                     $scope.redeemCoupons[i]['creationDate']=moment($scope.redeemCoupons[i]['creationDate']).format("DD/MM/YYYY")
-            
+
                 $('#searchKeywords').focus()
                 $scope.init()
                 if $scope.filteredRedeemCoupons.length==0
@@ -429,7 +429,7 @@ angular.module('app.redemptions.ctrls', [])
                 #     else
                 #         logger.logSuccess "Tiene "+$scope.filteredRedeemCoupons.length+" cupones de canje."
                 # , 100
-                
+
         redeemCoupons4user()
 
 ])
@@ -475,7 +475,6 @@ angular.module('app.redemptions.ctrls', [])
             .success (postResponse) ->
                 if (typeof postResponse['0'])!='undefined'
                     if postResponse['0'].userTypeID=='TEC'
-                        $scope.minimito=0 
                         $scope.technicianInfo=postResponse['0']
                         console.log postResponse['0']
                         # Widget: redeemableStuff
@@ -487,9 +486,9 @@ angular.module('app.redemptions.ctrls', [])
                                 console.log postResponse['0']
                                 $scope.redeemableStuff = postResponse['0']
                                 $scope.maximito=$scope.redeemableStuff.coupons
-                        logger.log("Bienvenido: "+$scope.technicianInfo.fullName) 
+                        logger.log("Bienvenido: "+$scope.technicianInfo.fullName)
                     else
-                        logger.logError "La cedula: "+$scope.ID+", no pertenece a un tecnico!"    
+                        logger.logError "La cedula: "+$scope.ID+", no pertenece a un tecnico!"
                 else
                     logger.logError "La cedula: "+$scope.ID+", no se encuentra registrada!"
 
@@ -511,7 +510,7 @@ angular.module('app.redemptions.ctrls', [])
 
         # Creation of Input Dinamically
         $scope.loadInputs = ->
-            console.log "loadInputs"        
+            console.log "loadInputs"
             # 4not Adding more
             $scope.inputs = []
             i=0
@@ -520,9 +519,9 @@ angular.module('app.redemptions.ctrls', [])
                 $scope.inputs.push({ placeholder: "Token # " + j})
                 i++
             setTimeout ->
-                    logger.log("Se ha preparado el formulario. Proceda a ingresar los tokens.") 
+                    logger.log("Se ha preparado el formulario. Proceda a ingresar los tokens.")
                 , 1000
-        
+
         # Saving Labels 4 Prints at bartender
         preparingData = ->
             $scope.data2insert=
@@ -583,9 +582,6 @@ angular.module('app.redemptions.ctrls', [])
                 comment: $scope.forms.redeemedArticle
                 points: $scope.redeemableStuff.pointsPerCoupon*$scope.forms.redeemedCoupons
 
-
-                    # {{forms.redeemedCoupons}} cupones esta canjeando {{redeemableStuff.moneyPerCoupon*forms.redeemedCoupons}}
-        # registerRedemption
         $scope.registerRedemption = ->
             swal {
                     title: 'Confirmación de canje'
@@ -598,22 +594,22 @@ angular.module('app.redemptions.ctrls', [])
                     closeOnCancel: false
                 }, (isConfirm) ->
                         if isConfirm
-                            swal 'Operación Procesada!', 'Se ha dado teterito!', 'success'
+                            preparingData4redemption()
+                            $http({ url: REST_API.hostname+"/server/ajax/redeems/new.php", method: "POST", data: JSON.stringify($scope.data2insert) })
+                            .success (postResponse) ->
+                                console.log postResponse
+                                if (typeof postResponse) == "object"
+                                    if postResponse['results']['enoughPoints']=='1'
+                                        setTimeout ->
+                                            swal 'Operación Procesada!', "Se ha registrado Exitosamente el canje #"+ postResponse['results']['nextAi']+" por un " + $scope.forms.redeemedArticle + " !", 'success'
+                                            logger.logSuccess "Se ha registrado Exitosamente el canje #"+ postResponse['results']['nextAi']+" por un " + $scope.forms.redeemedArticle + " !"
+                                            $scope.forms.itemSelected=''
+                                            $scope.consultID()
+                                            $scope.minimito=6
+                                        , 750
+                                    else
+                                        swal 'Operación No Procesada', 'No dispones de puntos para procesar el canje.', 'error'
                         else
-                            swal 'Operación Cancelada', 'Todo bien, no se ha realizado el canje.', 'error'
+                            swal 'Operación Cancelada', 'Todo bien, aun no se procesamos el canje.', 'error'
                         return
-                    # preparingData4redemption()
-                    # $http({ url: REST_API.hostname+"/server/ajax/redeems/new.php", method: "POST", data: JSON.stringify($scope.data2insert) })
-                    # .success (postResponse) ->
-                    #     console.log postResponse
-                    #     if (typeof postResponse) == "object"
-                    #         if postResponse['results']['enoughPoints']=='1'
-                    #             setTimeout ->
-                    #                 logger.logSuccess "Se ha registrado Exitosamente el canje #"+ postResponse['results']['nextAi']+" por un " + $scope.forms.redeemedArticle + " !"    
-                    #                 $scope.forms.itemSelected=''
-                    #                 $scope.consultID()
-                    #                 $scope.minimito=6
-                    #             , 750
-                    #         else
-                    #             logger.logError "No tiene suficientes puntos para realizar este canje!"    
 ])
