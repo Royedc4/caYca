@@ -4,22 +4,13 @@ angular.module('app.landing.ctrls', [])
 .controller('ModalTerminosCtrl', [
     '$scope', '$modal', '$log'
     ($scope, $modal, $log) ->
-        $log.info "Entered ModalTerminosCtrl at: " + new Date()
         $scope.open = ->
-            $log.info "OPEN at: " + new Date()
             modalInstance = $modal.open(
                 templateUrl: "terminosModal.html"
                 controller: 'terminosModalInstanceCtrl'
             )
             modalInstance.result.then ((result) ->
                 $scope.messageResult = result
-            ), ->
-                $log.info "Modal dismissed at: " + new Date()
-        $scope.close = ->
-            $log.info "CLOSED at: " + new Date()
-            modalInstance = $modal.close(
-                templateUrl: "terminosModal.html"
-                controller: 'terminosModalInstanceCtrl'
             )
 ])
 
@@ -27,10 +18,8 @@ angular.module('app.landing.ctrls', [])
     '$scope', '$modalInstance', '$log'
     ($scope, $modalInstance, $log) ->
         $scope.ok = ->
-            $log.info "OK at: " + new Date()
             $modalInstance.close "ok"
         $scope.cancel = ->
-            $log.info "CANCEL at: " + new Date()
             $modalInstance.dismiss "cancel"
 ])
 
