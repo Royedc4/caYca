@@ -297,27 +297,134 @@
   </h1>
 
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-muted text-small landing-footer"> 
-      <p><i class="fa fa-map-marker"></i> Centro América y el Caribe</p>
-      <p>Copyright © 2015-2016 Cayca Samsung Compresores.   <a href="http://" target="_blank">Terminos de uso  </a><a href="http://" target="_blank">Politicas de Privacidad</a></p>
-  </div>
-</div>
+      <div class="panel-body" data-ng-controller="ModalTerminosCtrl">
+        <script type="text/ng-template" id="terminosModal.html">
+            <div class="modal-header">
+                <h3 class="text-center"> <a ng-click="cancel()" href="javascript:;" class="btn btn-primary btn-direction btn-left"><i class="fa fa-arrow-left"></i> Volver</a> Terminos y condiciones del sistema</h3>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">
+                    <h3 class="text-thin">Nombre de la Actividad: Juego Promocional:</h3> <h1 class="text-thin">“SAMSUNG TE PREMIA”</h1>
+                </div>
 
-<!-- Swiper JS -->
-<script src="/scripts/vendors/slider/swiper.min.js"></script>
+                <h3>Condiciones Generales.</h3>
 
-<!-- Initialize Swiper -->
-<script>
-    var swiper = new Swiper('.swiper-container', {
-        pagination: '.swiper-pagination',
-        nextButton: '.swiper-button-next',
-        prevButton: '.swiper-button-prev',
-        keyboardControl: true,
-        paginationClickable: true,
-        spaceBetween: 30,
-        centeredSlides: true,
-        autoplay: 5000,
-        loop: true,
-        grabCursor:true,
-        autoplayDisableOnInteraction: true
-    });
-</script>
+                <ul>
+                    <li><strong>Inicio:</strong> 1 de Octubre de 2015</li>
+                    <li><strong>Fecha final para registrarse en la rifa:</strong> hasta las 18:00 horas del día 29 de septiembre de 2016</li>
+                    <li><strong>Fecha del Sorteo:</strong> 30 de Septiembre de 2016</li>
+                    <li><strong>Lugar del Sorteo:</strong> Cota – Cundinamarca, Oficinas de Gallium de Colombia S.A.S.</li>
+                    <li><strong>Hora del Sorteo:</strong> 03:00 pm.</li>
+                </ul>
+
+                <p align="justify">Podrán participar en la actividad vendedores y técnicos de compresores SAMSUNG mayores de 18 años, que residan en el territorio Colombiano adquiridos a través de los Distribuidores o Clientes autorizados por GALLIUM DE COLOMBIA S.A.S.</p>
+
+                <h3>Responsable de la Actividad y Exclusión de la Responsabilidad</h3>
+
+                <p align="justify">Esta actividad tiene fines promocionales en Colombia de los compresores SAMSUNG, y es realizada bajo la responsabilidad y coordinación única y exclusiva de GALLIUM DE COLOMBIA S.A.S.
+                </p>
+                <p align="justify">Las empresas SAMSUNG en Colombia o del resto del mundo, así como sus afiliadas, sucursales, matrices, subordinadas o con cualquier tipo asociativo no son responsables de esta actividad por lo que no responderán, ni en forma directa ni indirecta, por los resultados del mismo.</p>
+
+                <h3>Autorización y Vigilancia</h3>
+
+                <p align="justify">La presente actividad: Juego promocional <strong>“SAMSUNG TE PREMIA”</strong> está debidamente autorizada y controlada por la Empresa Industrial y Comercial del Estado Administradora del Monopolio Rentístico de los Juegos de Suerte y Azar – COLJUEGOS. Mediante resolución No. 20151200008474 del 19 de octubre de 2015.</p>
+
+                <h3>Mecánica de la Actividad</h3>
+                <ul>
+                    <li align="justify">Dirigida a todos los Vendedores y Técnicos que adquieran compresores SAMSUNG en cualquier lugar de Colombia en las tiendas de los Clientes que GALLIUM haya autorizado a realizar esta actividad y que registren el cupón de su compresor en nuestra página web www.caycaSAMSUNGcompresores.com, podrán participar en la rifa de:
+                        <ul>
+                            <li align="justify"><strong>Para Vendedores 1 Moto Auteco Boxer.</strong></li>
+                            <li align="justify"><strong>Para Técnicos 1 Moto Auteco Boxer.</strong></li>
+                        </ul>
+                    </li>
+                    <li align="justify">Las personas al registrarse deberán diligenciar sus datos básicos que se encuentran en el formulario.</li>
+                    <li align="justify">El Ganador será anunciado el 01 de octubre de 2016 por correo electrónico y en la página web <a href="http://www.caycaSAMSUNGcompresores.com">http://www.caycaSAMSUNGcompresores.com</a></li>
+                    <li align="justify">Al ingresar en el sorteo cada concursante que se registre acepta quedar registrado en la base de datos de caycaSAMSUNGcompresores con el fin de recibir por correo electrónico ofertas y promociones. Sin embargo cuando las personas ya no quieran recibir los mails de ofertas y promociones podrán anular su suscripción en el momento que deseen.</li>
+
+                    <li align="justify">Los registros de los clientes participantes quedarán en una base de datos que se bajará en Excel. Cada Técnico quedará con un número consecutivo y en el Excel se usará la fórmula “Aleatorio” la cual generará un número aleatorio y a continuación se ordenará de forma descendente por el número generado y se tomarán como ganador la primera posición. Adicional se sacará un segundo y hasta un cuarto opcionado en caso de no encontrar al ganador inicial o que éste se rehúse a recibir el premio. Esto se hará en presencia de un delegado de la secretaría de Gobierno.</li>
+                </ul>
+                <h3>Aviso de Privacidad</h3>
+                <p align="justify">Gallium de Colombia S.A.S. como responsable de los datos personales objeto de tratamiento por parte de esta sociedad, comunica a los titulares de los mismos, que las políticas de tratamiento de la información recolectada pueden ser consultadas a través de los siguientes mecanismos que ponemos a su disposición:</p>
+                <ul>
+                    <li>Página web: http://www.caycaSamsungcompresores.com/politicaInformacion </li>
+                    <li>Correo electrónico: sugerencias@caycaSAMSUNGcompresores.com</li>
+                    <li>Autop. Medellin Km. 2.5 Via Parcelas 900mts. CIEM OIKOS OCCIDENTE Bodega D-63.</li>
+                    <li>PBX (+57 1) 876 4577</li>
+                </ul>
+                <p align="justify">Tanto el tratamiento como la finalidad a la cual serán sometidos los datos personales suministrados se sujetarán al descrito en la autorización suministrada para tal fin, dentro de la cual se incorpora:</p>
+                <p align="justify">..”La recolección, almacenamiento, utilización, circulación, supresión, y en general, la realización de cualquier otro tratamiento sobre los datos personales suministrados, necesarios para todos aquellos aspectos inherentes al vínculo contractual, civil, comercial, laboral y/o cualquier otro que se llegaren a derivar celebrado con el titular, así como aquellos relacionados con el desarrollo del objeto social principal de la sociedad responsable, lo que implica el uso de los datos en actividades de mercadeo, promoción y de ser el caso, cuando la actividad comercial lo requiera, la transferencia de los mismos a un tercero (incluyendo terceros países), bajo los parámetros de la ley 1581 de 2.012 y demás normatividad vigente que regule la materia...”</p>
+                <p align="justify">Conforme lo dispone la Ley 1581 de 2012, los titulares de datos personales tienen derecho a:</p>
+                <ol type="A">
+                    <li align="justify">Conocer, actualizar y rectificar sus datos personales frente a los Responsables del Tratamiento o Encargados del Tratamiento. Este derecho se podrá ejercer, entre otros frente a datos parciales, inexactos, incompletos, fraccionados, que induzcan a error, o aquellos cuyo Tratamiento esté expresamente prohibido o no haya sido autorizado;</li>
+                    <li align="justify">Solicitar prueba de la autorización otorgada al Responsable del Tratamiento salvo cuando expresamente se exceptúe como requisito para el Tratamiento, de conformidad con lo previsto en el artículo 10 de la presente ley;</li>
+                    <li align="justify">Ser informado por el Responsable del Tratamiento o el Encargado del Tratamiento, previa solicitud, respecto del uso que le ha dado a sus datos personales;</li>
+                    <li align="justify">Presentar ante la Superintendencia de Industria y Comercio quejas por infracciones a lo dispuesto en la presente ley y las demás normas que la modifiquen, adicionen o complementen;</li>
+                    <li align="justify">Revocar la autorización y/o solicitar la supresión del dato cuando en el Tratamiento no se respeten los principios, derechos y garantías constitucionales y legales. La revocatoria y/o supresión procederá cuando la
+                        Superintendencia de Industria y Comercio haya determinado que en el Tratamiento el Responsable o Encargado han incurrido en conductas contrarias a esta ley y a la Constitución;</li>
+                        <li align="justify">Acceder en forma gratuita a sus datos personales que hayan sido objeto de Tratamiento.</li>
+                    </ol>
+
+                    Cordialmente,<br>
+                    GALLIUM DE COLOMBIA S.A.S.<br>
+                    Autop. Medellin Km. 2.5 Via Parcelas 900mts<br>
+                    CIEM OIKOS OCCIDENTE Bodega D-63. PBX (+57 1) 876 4577<br>
+                    <h3>A tener en cuenta:</h3>
+                    <p align="justify">Todas las personas interesadas en participar deberán tener cédula de ciudadanía o de ser el caso, cédula de extranjería, la cual deberá presentarse si es acreedor del premio. Toda persona que desee participar en la actividad o reclamar el premio, deberá tener conocimiento de este Reglamento, ya que la aceptación y recibo del premio conlleva la forzosa e ineludible obligación de conocer las condiciones de participación así como las condiciones, limitaciones y responsabilidades, no solo de este reglamento, sino las que en virtud de este mismo documento conlleva el reclamo y aceptación del premio.</p>
+                    <h3>Premio:</h3>
+                    <p align="justify">Un único ganador de la lista de Vendedores participantes se llevará una Moto Auteco Boxer. Y Un único ganador de la lista de Técnicos participantes se llevará una Moto Auteco Boxer.</p>
+                    <p align="justify">El Ganador será anunciado el 01 de octubre de 2016 por correo electrónico y por el muro de Facebook de caycaSAMSUNGcompresores, adicional que se le contactará por teléfono y/o correo electrónico. En un periodo de 30 días se contactará al ganador, una vez se contacte él tendrá hasta un mes para reclamar el premio, vencido este término, se solicitará autorización de una nueva fecha para la realización del sorteo.</p>
+                    <p align="justify">Nota: Si el ganador respectivo no es localizado durante los siguientes 30 días posteriores al anuncio de que ha ganado y sus datos no corresponden con los que se aportaron vía mail para participar, o simplemente no acepta el premio o se negare a firmar el documento de aceptación del mismo, Gallium de Colombia S.A.S. otorgará el premio al ganador que haya quedado de segundas en el sorteo realizado, pues por seguridad en el sorteo sacamos un segundo opcionado en caso de no localizar al primer ganador. El nuevo ganador tendrá las mismas obligaciones indicadas en estos términos y así sucesivamente con el 3 o 4, hasta lograr que el premio se entregue. Los organizadores comunicarán por 2 vías al ganador de su condición: telefónicamente y correo electrónico /e-mail. Si no fuere localizado o no cumple con los requisitos reglamentarios para recibir el premio, de dicha circunstancia se dejará constancia en el acta de anulación de la actividad. Los organizadores no tendrán la obligación de investigar los motivos por los cuales una persona no es contactada en el número de teléfono registrado o sus datos no concuerdan con el registro respectivo o base de datos, ni tampoco el motivo de no aceptación de los premios.</p>
+                    <h3>Reclamo del premio.</h3>
+                    <p align="justify">Si el ganador vive en Bogotá, se deberá acercar personalmente a las instalaciones administrativas de GALLIUM DE COLOMBIA S.A.S. Autop. Medellín Km. 2.5 Vía Parcelas 900mts CIEM OIKOS OCCIDENTE Bodega D-63, en la cual se le indicará en el momento de la llamada y se le entregará el premio. Si vive en una de las ciudades principales de Colombia, se le hará llegar a través de una empresa de transporte de carga sin costo alguno; si vive en una vereda, o dirección donde no sea posible su envió a través de una empresa de transporte de carga, el ganador deberá suministrar una dirección alternativa de una ciudad principal donde sea posible el envío del premio. El ganador deberá presentarse con cédula de ciudadanía o de extranjería original de ser el caso; no tendrá validez ningún otro documento. Si el ganador vive fuera de Bogotá, deberá enviarla escaneada a sugerencias@caycaSAMSUNGcompresores.com.</p>
+                    <h3>Autorización tratamiento datos personales:</h3>
+                    <p align="justify">Mediante el diligenciamiento de este formulario, usted en calidad de titular(es) de la información; de manera libre, expresa, voluntaria e informada, autoriza a GALLIUM DE COLOMBIA S.A.S y/o a la persona natural o jurídica a quien éste encargue, a recolectar, almacenar, utilizar, circular, suprimir y en general, a realizar cualquier otro tratamiento a los datos personales por usted suministrados, para todos aquellos aspectos inherentes al presente concurso y/o actividad promocional, y cualquier otro relacionado con el desarrollo del objeto social principal del referida sociedad, lo que implica el uso de los datos en actividades de mercadeo, promoción y de ser el caso, cuando la actividad comercial lo requiera, la transferencia de los mismos a un tercero (incluyendo terceros países), bajo los parámetros de la ley 1581 de 2.012 y demás normatividad vigente que regule la materia. En todo caso, GALLIUM DE COLOMBIA S.A.S garantiza las condiciones de seguridad, privacidad y demás principios que impliquen el tratamiento de datos personales acorde con la legislación aplicable. Esta autorización se mantendrá por el tiempo de duración del vínculo o la prestación del servicio y por el tiempo de duración de la sociedad responsable, conforme lo establecido en sus estatutos.</p>
+                    <h3>Condiciones y Restricciones:</h3>
+                    <p align="justify">La participación de los interesados, así como la actividad y el premio, están sujetos a las condiciones y restricciones que se indican en estos términos. Cualquier situación que no se encuentre prevista en el presente reglamento, será resuelta por los organizadores, en estricto apego a las leyes de la República de Colombia. Deberá existir total coincidencia entre los datos brindados para participar y el documento de identificación del ganador, de otro modo el premio no será entregado. La responsabilidad de GALLIUM DE COLOMBIA S.A.S culmina con la entrega del premio. El ganador exime de toda responsabilidad a los organizadores del uso o destinación que diere al premio, más aún si se tratare de actividades ilícitas o que atenten contra la ley y/o las buenas costumbres. El ganador recibirá su premio y no se admiten cambios por dinero, valores o cualquier otro producto material. Si no acepta el premio o sus condiciones, este premio se considera renunciado y extinguido en relación al ganador y no tendrá derecho a reclamo o indemnización alguna, ni siquiera parcialmente. El ganador deberá firmar conforme el recibo de su premio.</p>
+                    <p align="justify">El derecho del premio no es transferible, negociable, ni puede ser comercializado o canjeado por dinero en efectivo, ni por ningún otro premio. Este premio es entregado únicamente a la persona ganadora.</p>
+                    <p align="justify">GALLIUM DE COLOMBIA S.A.S es el patrocinador del presente evento, y es el único administrador y organizador de la presente rifa. Así mismo Facebook no es el patrocinador del evento y por tanto tampoco tiene responsabilidad en esta actividad.</p>
+                    <p align="justify">GALLIUM DE COLOMBIA S.A.S se hace responsable por problemas o fallas en la conexión, o fuera de línea de la página web, fallas de sistemas, o aspectos técnicos del aplicativo del registro que inhiban el mismo registro de los participantes en la rifa.</p>
+                    <p align="justify">En el evento de generarse algún impuesto (ganancia ocasional) con la realización de esta actividad conforme la legislación vigente correrá por parte de GALLIUM DE COLOMBIA S.A.S.</p>
+                    <h3>Derechos de imagen:</h3>
+                    <p align="justify">Con el hecho de participar en la actividad, el ganador de manera libre, expresa, voluntaria e informada acepta y autoriza a GALLIUM DE COLOMBIA S.A.S y/o a la persona natural o jurídica a quien encargue, para que incluya en cualquier soporte audiovisual que sus nombres, copys, ideas e imágenes aparezcan en los programas, publicaciones y demás medios publicitarios y en general en todo material de divulgación con los fines promocionales que GALLIUM DE COLOMBIA S.A.S o los organizadores deseen hacer durante el evento o una vez finalizado el mismo, sin que ello implique la obligación de remunerarlos o compensarlos adicionalmente. Así mismo, renuncia a cualquier reclamo por derechos de imagen. Por virtud de esta autorización el ganador declara que es el propietario integral de los derechos sobre el contenido audiovisual y en consecuencia garantizan que pueden otorgar la presente autorización sin limitación alguna. En todo caso responderán por cualquier reclamo que en materia de derecho de autor se pueda presentar, exonerando de cualquier responsabilidad a GALLIUM DE COLOMBIA S.A.S</p>
+                    <h3>Suspensión:</h3>
+                    <p align="justify">En caso de haber motivos fundados en: fuerza mayor, caso fortuito, o hechos de terceros, tales como desastres naturales, guerras, huelgas o disturbios, así como también situaciones que afecten la actividad; o en caso de detectarse un fraude o intento de fraude en perjuicio de los organizadores o los participantes de la misma, GALLIUM DE COLOMBIA S.A.S podrá modificar en todo o en parte esta actividad, así como suspenderlo temporal o permanentemente sin asumir ninguna responsabilidad al respecto. En estos casos, el fundamento de las medidas que se adopten, así como las pruebas que demuestren la existencia de la causa invocada por los organizadores estarán a disposición de cualquier interesado.</p>
+                    <h3>Publicación:</h3>
+                    <p align="justify">Estos términos estarán publicados en nuestra página <a href="http://www.caycasamsungcompresores.com">http://www.caycasamsungcompresores.com</a></p>
+                    Además el nombre del ganador también será publicado en los sitios de Internet del organizador para disposición de todo el público. 
+                    <h3>Disposiciones finales:</h3>
+                    <p align="justify">El solo hecho de participar en esta Rifa implica la total aceptación de las bases de la Rifa, así como las decisiones de GALLIUM DE COLOMBIA S.A.S.
+                        No Podrán participar empleados ni Vendedores de GALLIUM DE COLOMBIA S.A.S</p>
+                        <p align="justify">Los participantes otorgarán una licencia no exclusiva con la cual autorizan a GALLIUM DE COLOMBIA S.A.S la fijación, reproducción, la puesta a disposición de la obra por cualquier medio o canal de comunicación. A publicarla en el sitio web <a href="http://www.caycasamsungcompresores.com">http://www.caycasamsungcompresores.com</a> y/o <a href="http://www.galliumdecolombia.com">http://www.galliumdecolombia.com</a> y a realizar todos los actos necesarios para tal fin.</p>
+                        <p align="justify">En caso de que la participación en esta rifa implique el envío de una foto o video, u otro similar; el participante autoriza a GALLIUM DE COLOMBIA S.A.S a su uso y/o modificación a través de internet, avisos publicitarios o cualquier otro medio de comunicación, sin que esto implique el reconocimiento de contraprestación alguna a favor del participante.</p>
+                        <p align="justify">Esta autorización se mantendrá de manera indefinida.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary btn-block" ng-click="ok()">Si, Acepto.</button>
+                    </div>
+
+                </script>
+                <p><i class="fa fa-map-marker"></i> Centro América y el Caribe</p>
+                <p>Copyright © 2015-2016 Cayca Samsung Compresores. <a href="#/landing" ng-click="open()">Terminos de uso y condiciones</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Swiper JS -->
+    <script src="/scripts/vendors/slider/swiper.min.js"></script>
+
+    <!-- Initialize Swiper -->
+    <script>
+        var swiper = new Swiper('.swiper-container', {
+            pagination: '.swiper-pagination',
+            nextButton: '.swiper-button-next',
+            prevButton: '.swiper-button-prev',
+            keyboardControl: true,
+            paginationClickable: true,
+            spaceBetween: 30,
+            centeredSlides: true,
+            autoplay: 5000,
+            loop: true,
+            grabCursor:true,
+            autoplayDisableOnInteraction: true
+        });
+    </script>

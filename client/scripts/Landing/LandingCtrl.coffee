@@ -1,9 +1,44 @@
 'use strict'
 angular.module('app.landing.ctrls', [])
 
+.controller('ModalTerminosCtrl', [
+    '$scope', '$modal', '$log'
+    ($scope, $modal, $log) ->
+        $log.info "Entered ModalTerminosCtrl at: " + new Date()
+        $scope.open = ->
+            $log.info "OPEN at: " + new Date()
+            modalInstance = $modal.open(
+                templateUrl: "terminosModal.html"
+                controller: 'terminosModalInstanceCtrl'
+            )
+            modalInstance.result.then ((result) ->
+                $scope.messageResult = result
+            ), ->
+                $log.info "Modal dismissed at: " + new Date()
+        $scope.close = ->
+            $log.info "CLOSED at: " + new Date()
+            modalInstance = $modal.close(
+                templateUrl: "terminosModal.html"
+                controller: 'terminosModalInstanceCtrl'
+            )
+])
+
+.controller('terminosModalInstanceCtrl', [
+    '$scope', '$modalInstance', '$log'
+    ($scope, $modalInstance, $log) ->
+        $scope.ok = ->
+            $log.info "OK at: " + new Date()
+            $modalInstance.close "ok"
+        $scope.cancel = ->
+            $log.info "CANCEL at: " + new Date()
+            $modalInstance.dismiss "cancel"
+])
+
 .controller('landingCtrl', [
     'REST_API','$scope', 'logger', '$http', '$window', '$document', '$animate'
     (REST_API,$scope, logger, $http, $window, $document, $animate) ->
+        console.log 'landingCtrl'
+
         # Checking compatibility browser and telling
         $scope.supportsGeo = $window.navigator;
         $window.navigator.geolocation.getCurrentPosition ((position) ->
