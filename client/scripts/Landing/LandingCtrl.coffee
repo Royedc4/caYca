@@ -1,9 +1,33 @@
 'use strict'
 angular.module('app.landing.ctrls', [])
 
+.controller('ModalTerminosCtrl', [
+    '$scope', '$modal', '$log'
+    ($scope, $modal, $log) ->
+        $scope.open = ->
+            modalInstance = $modal.open(
+                templateUrl: "terminosModal.html"
+                controller: 'terminosModalInstanceCtrl'
+            )
+            modalInstance.result.then ((result) ->
+                $scope.messageResult = result
+            )
+])
+
+.controller('terminosModalInstanceCtrl', [
+    '$scope', '$modalInstance', '$log'
+    ($scope, $modalInstance, $log) ->
+        $scope.ok = ->
+            $modalInstance.close "ok"
+        $scope.cancel = ->
+            $modalInstance.dismiss "cancel"
+])
+
 .controller('landingCtrl', [
     'REST_API','$scope', 'logger', '$http', '$window', '$document', '$animate'
     (REST_API,$scope, logger, $http, $window, $document, $animate) ->
+        console.log 'landingCtrl'
+
         # Checking compatibility browser and telling
         $scope.supportsGeo = $window.navigator;
         $window.navigator.geolocation.getCurrentPosition ((position) ->
