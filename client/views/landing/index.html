@@ -39,8 +39,8 @@
         -webkit-align-items: center;
         align-items: center;
     }
-    .swiper-slide img{ 
-        height:100%; 
+    .swiper-slide img{
+        height:100%;
     }
     .swiper-wrapper {
         width: 100%;
@@ -55,7 +55,7 @@
 <!-- Swiper -->
 <div class="swiper-container" style="padding-top: 50px;">
     <div class="swiper-wrapper">
-        <div class="swiper-slide"><img src="/images/l/s/1.jpg"></div>
+        <div class="swiper-slide"><img src="/images/l/s/CAYCA_winners.jpg"></div>
         <div class="swiper-slide"><img src="/images/l/s/2.jpg"></div>
     </div>
     <!-- Add Pagination -->
@@ -124,7 +124,7 @@
                     <hr>
                     <h2>SÍ USTED ES VENDEDOR</h2>
                     <p>Por la venta de un Compresor SAMSUNG, estará acumulando puntos que podrá canjear por productos especiales. Además, estarás participando en la rifa de una espectacular moto!</p>
-                </div>    
+                </div>
             </div>
         </div>
     </div>
@@ -143,7 +143,7 @@
 <div class="page page-canje">
     <div id="map"></div>
     <ng-map zoom="10" center="[{{userGPS.latitude}},{{userGPS.longitude}}]" scrollwheel="false" style="height:90%">
-    <directions 
+    <directions
     draggable="true"
     panel="directions-panel"
     travel-mode="DRIVING"
@@ -157,7 +157,7 @@
             <select ng-model="storeSelected" ng-options="t.address_components[3].short_name for t in tiendas" required>
                 <option value=""> Seleccione su ciudad </option>
             </select>
-        </span> 
+        </span>
         <li ng-show="storeSelected!=null"><i class="fa fa-building"></i><span>{{storeSelected.name}}</span></li>
         <li ng-show="storeSelected!=null"><i class="fa fa-map-marker"></i><span>{{storeSelected.vicinity}}</span></li>
         <li ng-show="storeSelected!=null"><i class="fa fa-phone"></i><span><a href="tel:{{storeSelected.international_phone_number}}">{{storeSelected.international_phone_number}}</a></span></li>
@@ -169,7 +169,7 @@
 <div id="retailers" class="landing-header">
     <div class="container text-center">
         <section class="logo">
-            SI DESEA ADQUIRIR COMPRESORES SAMSUNG AL DELTAL PUEDE IR A 
+            SI DESEA ADQUIRIR COMPRESORES SAMSUNG AL DELTAL PUEDE IR A
         </section>
     </div>
 </div>
@@ -203,12 +203,12 @@
         <div class="page-contact page">
             <div class="contact-info-container clearfix">
                 <ul>
-                    Mostrando {{filteredRetailers.length}} tiendas en 
+                    Mostrando {{filteredRetailers.length}} tiendas en
                     <span class="ui-select">
                         <select ng-model="stateSelected" ng-change="updateFilter()" ng-options="s for s in retailerStates" required>
                             <option value=""> Seleccione su estado </option>
                         </select>
-                    </span> 
+                    </span>
                     De {{retailers.length}} en todo el país
                 </ul>
             </div>
@@ -265,7 +265,7 @@
     <div class="lead text-center">
         <p> <strong>Cayca Samsung Compresores </strong>es una plataforma dirigida a distribuidores, técnicos y grupos de interés que brinda información y soporte técnico de Compresores Samsung disponibles en Colombia, Venezuela y Centro America y el Caribe (CAYCA). </p>
         <p>Es una aplicación informativa que asiste una promoción de canjes y rifas creada especialmente para tiendas al detal y técnicos que distribuyan y comercialicen Compresores Samsung en Colombia.</p>
-        <p> <strong>Cayca Samsung Compresores </strong>no es un tienda online, ni proporciona información de precios de venta de Compresores Samsung. Su principal objetivo, es servir como una herramienta informativa y de apoyo a eventos, promociones o aspectos de interés general relacionados a los Compresores Samsung que se comercializan y distribuyen en Colombia, Venezuela y CAYCA.</p> 
+        <p> <strong>Cayca Samsung Compresores </strong>no es un tienda online, ni proporciona información de precios de venta de Compresores Samsung. Su principal objetivo, es servir como una herramienta informativa y de apoyo a eventos, promociones o aspectos de interés general relacionados a los Compresores Samsung que se comercializan y distribuyen en Colombia, Venezuela y CAYCA.</p>
     </div>
 </div>
 
@@ -278,11 +278,11 @@
     </div>
 </div>
 <div id="suppliers" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center" style="padding-top: 50px;">
-    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-muted"> 
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-muted">
         <h4>Colombia & Centro America y el Caribe</h4>
         <p class="lead text-center"><a href="http://galliumdecolombia.com" target="_blank"> 🇨🇴 <i class="fa fa-external-link"> Gallium de Colombia S.A.S.</i></a></p><br>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-muted"> 
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-muted">
         <h4>Venezuela</h4>
         <p class="lead text-center"><a href="http://compresoresservicios.com" target="_blank"> 🇻🇪 <i class="fa fa-external-link"> Compresores Servicios C.A.</i></a></p><br>
     </div>
@@ -290,13 +290,13 @@
 
 <hr>
 
-<div class="text-center"> 
-    <h1>   
+<div class="text-center">
+    <h1>
       <a href="mailto:contacto@caycaSAMSUNGcompresores.com"><i class="fa fa-envelope"></i></a>
       <a href="https://www.facebook.com/caycaSAMSUNGcompresores" target="_blank"><i class="fa fa-facebook-square"></i></a> <a href="http://google.com/+Caycasamsungcompresores" target="_blank"><i class="fa fa-google-plus-square"> </i></a>
   </h1>
 
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-muted text-small landing-footer"> 
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-muted text-small landing-footer">
       <div class="panel-body" data-ng-controller="ModalTerminosCtrl">
         <script type="text/ng-template" id="terminosModal.html">
             <div class="modal-header">
@@ -390,7 +390,7 @@
                     <p align="justify">En caso de haber motivos fundados en: fuerza mayor, caso fortuito, o hechos de terceros, tales como desastres naturales, guerras, huelgas o disturbios, así como también situaciones que afecten la actividad; o en caso de detectarse un fraude o intento de fraude en perjuicio de los organizadores o los participantes de la misma, GALLIUM DE COLOMBIA S.A.S podrá modificar en todo o en parte esta actividad, así como suspenderlo temporal o permanentemente sin asumir ninguna responsabilidad al respecto. En estos casos, el fundamento de las medidas que se adopten, así como las pruebas que demuestren la existencia de la causa invocada por los organizadores estarán a disposición de cualquier interesado.</p>
                     <h3>Publicación:</h3>
                     <p align="justify">Estos términos estarán publicados en nuestra página <a href="http://www.caycasamsungcompresores.com">http://www.caycasamsungcompresores.com</a></p>
-                    Además el nombre del ganador también será publicado en los sitios de Internet del organizador para disposición de todo el público. 
+                    Además el nombre del ganador también será publicado en los sitios de Internet del organizador para disposición de todo el público.
                     <h3>Disposiciones finales:</h3>
                     <p align="justify">El solo hecho de participar en esta Rifa implica la total aceptación de las bases de la Rifa, así como las decisiones de GALLIUM DE COLOMBIA S.A.S.
                         No Podrán participar empleados ni Vendedores de GALLIUM DE COLOMBIA S.A.S</p>
@@ -404,7 +404,7 @@
 
                 </script>
                 <p><i class="fa fa-map-marker"></i> Centro América y el Caribe</p>
-                <p>Copyright © 2015-2016 Cayca Samsung Compresores. <a href="#/landing" ng-click="open()">Terminos de uso y condiciones</p>
+                <p>Copyright © 2015-2016 Cayca Samsung Compresores. <a href="#/landing" ng-click="open()">Terminos de uso y condiciones</a></p>
             </div>
         </div>
     </div>
